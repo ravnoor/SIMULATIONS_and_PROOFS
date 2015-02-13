@@ -1,0 +1,21 @@
+#Drawing a full house in poker.
+
+reps <- 100000
+
+success <- 0 #Initiates a vector that will count the number of full houses found.
+
+deck <- rep(1:13, 4) #There are 13 cards of each suit.
+
+for (i in 1: reps) {
+    success <- success +
+      
+      (sort(tabulate(sample(deck,5)), decreasing = T)[1]==3 & 
+      
+      sort(tabulate(sample(deck,5)), decreasing = T)[2]==2) 
+         
+  
+}
+
+prob_full_house <- c(success/reps * 100, "%")
+
+prob_full_house
