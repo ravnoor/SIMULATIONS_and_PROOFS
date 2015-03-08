@@ -1,0 +1,37 @@
+correlatedValue = function(x, r){
+  r2 = r**2
+  ve = 1-r2
+  SD = sqrt(ve)
+  e  = rnorm(length(x), mean=0, sd=SD)
+  y  = r*x + e
+  return(y)
+}
+
+par(mfrow=c(1,4))
+set.seed(5)
+x = rnorm(1000)
+y = correlatedValue(x=x, r=0.95)
+
+plot(y~x,pch=1,col="dark red",cex=0.1,main="r = 0.95")
+abline(lm(y~x),col='red',lwd=1.5,lty=1.5)
+
+set.seed(5)
+x = rnorm(1000)
+y = correlatedValue(x=x, r=.7)
+
+plot(y~x,pch=1,col="dark red",cex=0.1,main="r = 0.7")
+abline(lm(y~x),col='red',lwd=1.5,lty=1.5)
+
+set.seed(5)
+x = rnorm(1000)
+y = correlatedValue(x=x, r=.3)
+
+plot(y~x,pch=1,col="dark red",cex=0.1,main="r = 0.3")
+abline(lm(y~x),col='red',lwd=1.5,lty=1.5)
+
+set.seed(5)
+x = rnorm(1000)
+y = correlatedValue(x=x, r=.01)
+
+plot(y~x,pch=1,col="dark red",cex=0.1,main="r = 0.01")
+abline(lm(y~x),col='red',lwd=1.5,lty=1.5)
