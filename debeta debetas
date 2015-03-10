@@ -1,0 +1,38 @@
+x <- c(0.586, 0.166, -0.042, -0.614, 11.72)
+y <- c(0.549, -0.026, -0.127, -0.751, 1.344)
+
+x1 <- c(0.586, 0.166, -0.042, -0.614)
+y1 <- c(0.549, -0.026, -0.127, -0.751)
+
+fit <- lm(y ~ x)
+fit1 <- lm(y1 ~ x1)
+
+plot(y~x,pch=18,col="dark red",cex=2)
+abline(lm(y~x),col='red',lwd=1.5,lty=1.5)
+
+points(y1 ~ x1, 
+col=rgb(0,100,0,50,maxColorValue=255), pch=16, cex=3)
+
+abline(lm(y1 ~x1),col="red",lwd=1.5,lty=1.5)
+
+fit
+fit1
+
+fit$coeff[2] - fit1$coeff[2]
+
+
+dfbeta(fit)
+dfbetas(fit)
+
+influence.measures(lm(y ~ x))
+lm.influence(fit)
+
+summary(fit1)
+
+debeta <- (fit$coeff[2] - fit1$coeff[2])
+debeta
+
+summary(fit1)$coeff[4]
+
+debetas <- debeta/(summary(fit1)$coeff[4]*sqrt(lm.influence(fit)$hat[5]))
+debetas
