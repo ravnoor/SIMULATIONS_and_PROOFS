@@ -10,17 +10,11 @@ points(y[-5] ~ x[-5],
        col=rgb(0,100,0,50,maxColorValue=255), pch=16, cex=3)
 abline(lm(y[-5] ~ x[-5]),col="orange",lwd=2,lty=1.5)
 
-debeta <- fit1$coef[2] - fit2$coef[2]
-
+DFBETA <- fit1$coef[2] - fit2$coef[2]
 dfbeta(fit1)[10]
 
 lm.influence(fit1)
-
 summary(fit1)
 
-summary(fit1)$coeff[4]
-
-
-denominator<-sqrt((summary(fit2)$sigma^2)*diag(summary(fit1)$cov.unscaled)[2])
-DFBETAS<-debeta/denominator
+DFBETAS <- DEBETA/(sqrt((summary(fit2)$sigma^2)*diag(summary(fit1)$cov.unscaled)[2]))
 DFBETAS
