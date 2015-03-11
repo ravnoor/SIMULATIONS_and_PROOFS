@@ -20,5 +20,7 @@ summary(fit1)
 
 summary(fit1)$coeff[4]
 
-debetas <- fit2$coef[2]/summary(fit2)$coef[4]
-debetas
+
+denominator<-sqrt((summary(fit2)$sigma^2)*diag(summary(fit1)$cov.unscaled)[2])
+DFBETAS<-debeta/denominator
+DFBETAS
