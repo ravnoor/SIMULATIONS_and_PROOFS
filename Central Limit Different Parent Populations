@@ -1,5 +1,5 @@
-s = rbinom(500, 10, 0.7)
-m = s / 100
+n <- 30
+m <- rbinom(500, n, 0.7)/n
 plot(density(m))
 shapiro.test(m)
 qqnorm(m);qqline(m)
