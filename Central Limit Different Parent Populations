@@ -1,8 +1,15 @@
 n <- 30
-m <- rbinom(500, n, 0.7)/n
+m <- rbinom(n, 100, 0.7)/n
 plot(density(m))
 shapiro.test(m)
 qqnorm(m);qqline(m)
+
+vector <- NULL
+for (i in 1:1000){vector[i] = mean(rbinom(30,100,0.5))}
+head(vector)
+plot(density(vector))
+shapiro.test(vector)
+qqnorm(vector);qqline(vector)
 
 vector <- NULL
 for (i in 1:1000){vector[i] = mean(rnorm(500, 10, 5))}
