@@ -1,11 +1,7 @@
-n <- 30
-m <- rbinom(n, 100, 0.7)/n
-plot(density(m))
-shapiro.test(m)
-qqnorm(m);qqline(m)
-
+tosses <- 30
+samsize <- 1000
 vector <- NULL
-for (i in 1:1000){vector[i] = mean(rbinom(30,100,0.5))}
+for (i in 1:1000){vector[i] = mean(rbinom(samsize,tosses,0.7))}
 head(vector)
 plot(density(vector))
 shapiro.test(vector)
@@ -20,7 +16,7 @@ qqnorm(vector);qqline(vector)
 
 
 vector1 <- NULL
-for (i in 1:1000){vector1[i] = mean(runif(20))}
+for (i in 1:1000){vector1[i] = mean(runif(5))}
 head(vector1)
 plot(density(vector1))
 shapiro.test(vector1)
