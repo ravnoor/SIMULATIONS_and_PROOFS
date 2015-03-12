@@ -1,0 +1,20 @@
+s = rbinom(500, 10, 0.7)
+m = s / 100
+plot(density(m))
+shapiro.test(m)
+qqnorm(m);qqline(m)
+
+vector <- NULL
+for (i in 1:1000){vector[i] = mean(rnorm(500, 10, 5))}
+head(vector)
+plot(density(vector))
+shapiro.test(vector)
+qqnorm(vector);qqline(vector)
+
+
+vector1 <- NULL
+for (i in 1:1000){vector1[i] = mean(runif(20))}
+head(vector1)
+plot(density(vector1))
+shapiro.test(vector1)
+qqnorm(vector1);qqline(vector1)
