@@ -1,4 +1,4 @@
-#Drawing a full house in poker.
+#Drawing a full house in poker:
 
 reps <- 100000
 
