@@ -1,0 +1,42 @@
+# y = 7.2 + 2.3 * x1 + 0.1 * x2 + 1.5 * x3 + 0.013 * x4 + eps
+
+correlatedValue = function(x, r){
+  r2 = r**2
+  ve = 1 - r2
+  SD = sqrt(ve)
+  e  = rnorm(length(x), mean = 0, sd = SD)
+  y  = r * x + e
+  return(y)
+}
+
+
+x <- rnorm(1e4)
+x1 <- 50 + 15 * x
+x3 <- 28 + 11 * correlatedValue(x = x, r = 0.6)
+x2 <- runif(1e4, 0, 100)
+x4 <- rpois(1e4,50)
+eps <- rnorm(1e4,5, 7)
+
+y = 7.2 + 2.3 * x1 + 0.001 * x2 + 1.5 * x3 + 0.013 * x4 + eps
+
+dat <- as.data.frame(cbind(y, x1, x2, x3, x4))
+
+#Confirming the correlation between variables:
+round(cor(dat),3)
+
+head(dat)
+attach(dat)
+par(mfrow=c(1,5))
+plot(x1,y,pch=19,cex = 0.2, col="dark red")
+abline(lm(y ~ x1,dat), x1)
+plot(x2,y,pch=20,cex = 0.2, col="dark red")
+abline(lm(y~x2,dat),x2)
+plot(x3,y,pch=20,cex = 0.2, col="dark red")
+abline(lm(y~x3,dat),x3)
+plot(x4,y,pch=20,cex = 0.2, col="dark red")
+abline(lm(x1 ~ x3,dat),x3)
+plot(x3,x1,pch=20,cex = 0.2, col="dark red")
+abline(lm(x1 ~ x3,dat),x3)
+
+summary(lm(y ~.,dat))
+summary(lm(y ~ x2 + x3 + x4, dat))
