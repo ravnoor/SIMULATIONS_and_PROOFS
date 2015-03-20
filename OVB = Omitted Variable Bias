@@ -1,17 +1,25 @@
+
+#Covariance matrix for 4 simulated normally distributed variables:
 cov_matrix <- matrix(c(1, 0.9, -0.3, 0.7, 0.9, 1, -0.1, 0.9, -0.3, 
                        - 0.1, 1, 0.1, 0.7, 0.9, 0.1, 1), ncol = 4)
+
+#With means:
 means <- c(10, 5, -3, 0)
 
 require(MASS)
 
+set.seed(0)
 
-set.seed(123)
-dat <- as.data.frame(mvrnorm(100, means, cov_matrix))
+#1,000 observations for each variable:
+dat <- as.data.frame(mvrnorm(1000, means, cov_matrix))
+
+#The first column is assigned to the dependent variable:
 
 colnames(dat) <- c("y","x1","x2","x3")
-x4 <-  rpois(100,50) + rnorm(100,10,20)
-dat<-cbind(dat,x4)
-cor(dat)
+
+#Confirming the correlation between variables:
+round(cor(dat),3)
+
 head(dat)
 attach(dat)
 par(mfrow=c(1,4))
@@ -21,8 +29,8 @@ plot(x2,y,pch=20,col="dark red")
 abline(lm(y~x2,dat),x2)
 plot(x3,y,pch=20,col="dark red")
 abline(lm(y~x3,dat),x3)
-plot(x4,y,pch=20,col="dark red")
-abline(lm(y~x4,dat),x4)
+plot(x3,x1,pch=20,col="dark red")
+abline(lm(x1 ~ x3,dat),x3)
 
 summary(lm(y ~.,dat))
-summary(lm(y ~ x2 + x3 +x4, dat))
+summary(lm(y ~ x2 + x3, dat))
