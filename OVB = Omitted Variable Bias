@@ -6,37 +6,57 @@ correlatedValue = function(x, r){
   SD = sqrt(ve)
   e  = rnorm(length(x), mean = 0, sd = SD)
   y  = r * x + e
-  return(y)
+}
+
+variables <- function(){
+x <- rnorm(1000)
+x1 <- 50 + 15 * x
+x3 <- 28 + 11 * correlatedValue(x = x, r = 0.6)
+x2 <- runif(1000, 0, 100)
+x4 <- rpois(1000,50)
+eps <- rnorm(1000,5, 7)
+y = 7.2 + 2.3 * x1 + 0.001 * x2 + 1.5 * x3 + 0.013 * x4 + eps
+dat <- as.data.frame(cbind(y, x1, x2, x3, x4))
+c <- as.numeric(coef(lm(y ~ x2 + x3 + x4, dat))[3])
+d <- as.numeric(coef(lm(y ~ x1 + x2 + x3 + x4, dat))[4])
+c(c,d)
 }
 
 
-x <- rnorm(1e4)
+coef_x3 <- NULL
+coef_x3_full <- NULL
+for (i in 1:1000){
+  coef_x3[i] = variables()[1]
+  coef_x3_full[i] = variables()[2]
+}
+mean(coef_x3)
+mean(coef_x3_full)
+
+
+x <- rnorm(1000)
 x1 <- 50 + 15 * x
 x3 <- 28 + 11 * correlatedValue(x = x, r = 0.6)
-x2 <- runif(1e4, 0, 100)
-x4 <- rpois(1e4,50)
-eps <- rnorm(1e4,5, 7)
-
+x2 <- runif(1000, 0, 100)
+x4 <- rpois(1000,50)
+eps <- rnorm(1000,5, 7)
 y = 7.2 + 2.3 * x1 + 0.001 * x2 + 1.5 * x3 + 0.013 * x4 + eps
-
 dat <- as.data.frame(cbind(y, x1, x2, x3, x4))
-
-#Confirming the correlation between variables:
-round(cor(dat),3)
 
 head(dat)
 attach(dat)
+cor(dat)
+coef(lm(y~.,dat))[2:5]
+
+summary(lm(y~.,dat))
+
 par(mfrow=c(1,5))
 plot(x1,y,pch=19,cex = 0.2, col="dark red")
-abline(lm(y ~ x1,dat), x1)
+abline(lm(y ~ x1,dat), x1, lwd=2)
 plot(x2,y,pch=20,cex = 0.2, col="dark red")
-abline(lm(y~x2,dat),x2)
+abline(lm(y~x2,dat),x2, lwd=2)
 plot(x3,y,pch=20,cex = 0.2, col="dark red")
-abline(lm(y~x3,dat),x3)
+abline(lm(y~x3,dat),x3, lwd=2)
 plot(x4,y,pch=20,cex = 0.2, col="dark red")
-abline(lm(x1 ~ x3,dat),x3)
+abline(lm(x1 ~ x3,dat),x3, lwd=2)
 plot(x3,x1,pch=20,cex = 0.2, col="dark red")
-abline(lm(x1 ~ x3,dat),x3)
-
-summary(lm(y ~.,dat))
-summary(lm(y ~ x2 + x3 + x4, dat))
+abline(lm(x1 ~ x3,dat),x3, lwd=2)
