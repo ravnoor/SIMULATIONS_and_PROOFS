@@ -1,0 +1,26 @@
+#Obtain sample means with increasing number of subjects in the samples.
+#With increasing number of samples we should see progressive decrease in SE.
+#The sample means should be progressively better at estimating population parameter.
+
+sample_means <- NULL
+for (i in 1:1000) sample_means[i] <- mean(rnorm(i))
+plot(sample_means, cex = 0.2, pch = 19, col = 'red')
+lines(sample_means, col='orange')
+
+#The law of large numbers is a different story because we are not averaging the cummulative samples. 
+
+#If instead of just one sample for each different number of subjects we take the 
+#mean of the sample distribution of the sample mean - in this case with different subjects:
+
+hist(sample_means,col = 'dark red', border='dark red')
+
+#Taking same number of samples first with subjects = 1 and then with subjects = 10,000:
+
+par(mfrow=c(1,2))
+
+s_means_10 <- NULL
+  for(i in 1:1e4) s_means_10[i] <- mean(rnorm(10))
+hist(s_means_1,col="dark red", border = 'white', main = "Distr. Means of Samples of 10 rand. numbers")
+s_means_10k <- NULL
+  for(i in 1:1e4) s_means_10k[i] <- mean(rnorm(1e4))
+hist(s_means_10k,xlim=c(-4,4),border = "dark red",col="dark red", main = "Distr. Means of Samples of 10,000 numbers")
