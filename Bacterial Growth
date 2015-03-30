@@ -3,8 +3,8 @@ set.seed(5)
 x <- seq (0,30, by = 0.1)
 n <- 0.5
 p <- 0.2
-w <- ((1 + exp(- (n * (x - 10) - 0.1)))^-1) + 0.02 * x + .1 * rnorm(301)
-z <- ((1 + exp(- (p * (x - 10) - 0.1)))^-1) + .1 * rnorm(301)
+w <- ((1 + exp(- (n * (x - 10) - 3)))^-1) + 0.02 * x + .1 * rnorm(301)
+z <- ((1 + exp(- (p * (x - 10) - 1)))^-1) + .1 * rnorm(301)
 dat <- data.frame(cbind(x,w,z))
 library(reshape2)
 
@@ -48,5 +48,4 @@ ggplot(dat, aes(x, y = value, color = variable)) +
   geom_point(aes(y = w, col = "Bacterium A")) +
   geom_smooth(aes(y = w), col = "red") +
   geom_point(aes(y = z, col = "Bacterium B")) +
-  geom_smooth(aes(y = z),col ="blue") 
-
+  geom_smooth(aes(y = z),col ="blue")
