@@ -1,0 +1,51 @@
+set.seed(5)
+
+x <- seq (0,30, by = 0.1)
+n <- 0.5
+p <- 0.1
+w <- ((1 + exp(- (n * (x - 10) - 0.3)))^-1) + .1 * rnorm(301)
+z <- ((1 + exp(- (p * (x - 10) - 0.3)))^-1) + .1 * rnorm(301)
+dat <- data.frame(cbind(x,y,z))
+library(reshape2)
+
+colnames(dat) <- c("Time", "Bacterium A", "Bacterium B")
+
+l1 <- loess(w ~ x, data=dat, family = "gaussian", degree = 1, span=0.1)
+l2 <- loess(z ~ x, data =dat, family = "gaussian", degree = 1,span=0.1)
+
+new.x = seq(min(x),max(x))
+ci = cbind(
+  predict(l1, data.frame(x=new.x)),
+  predict(l1, data.frame(x=new.x))+
+    predict(l1, data.frame(x=new.x), se=TRUE)$se.fit * qnorm(1-.05/2),
+  predict(l1, data.frame(x=new.x))-
+    predict(l1, data.frame(x=new.x), se=TRUE)$se.fit * qnorm(1-.05/2)
+)
+
+ci2 = cbind(
+  predict(l2, data.frame(x=new.x)),
+  predict(l2, data.frame(x=new.x))+
+    predict(l2, data.frame(x=new.x), se=TRUE)$se.fit*qnorm(1-.05/2),
+  predict(l2, data.frame(x=new.x))-
+    predict(l2, data.frame(x=new.x), se=TRUE)$se.fit*qnorm(1-.05/2)
+)
+
+plot(x, w, pch = 19, cex=0.8, col="red", yaxt = 'n', ann=F)
+matplot(new.x, ci, col = c(1,1,1),type="l",add=T)
+par(new=T)
+plot(x, z, pch = 19, cex=0.8, col ="black", ylab = "Bacterial [ ]", xlab ="t")
+matplot(new.x, ci2, col =c(1,1,1), type="l",add=T)
+
+require(ggplot2)
+ggplot(dat, aes(x,w)) + 
+  geom_point(size=2,color='red') + 
+  geom_smooth(color="royalblue") +
+  theme_bw()
+
+library(ggplot2)
+
+ggplot(dat, aes(x, y = value, color = variable)) + 
+  geom_point(aes(y = w, col = "Bacterium A")) +
+  geom_smooth(aes(y = w), col = "red") +
+  geom_point(aes(y = z, col = "Bacterium B")) +
+  geom_smooth(aes(y = z),col ="blue") 
