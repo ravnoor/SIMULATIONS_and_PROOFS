@@ -1,0 +1,42 @@
+#The number 30 is indeed the figure to remember; at the same time it is the foggiest of empirical rules. 
+#In one sense it is usually the case that we can at least guess how badly behaved the distribution is that we are sampling from. Check out this:
+#Lets' start with a gamma distribution with a shape parameter of 0.001 and samples of 3,000 - 
+#so 100 times greater than the prescribed 30:
+
+vector9 <- NULL
+for (i in 1:5000){vector9[i] = mean(rgamma(30000,0.001))}
+plot(density(vector9),col='dark red',lwd = 2,main="Samples of 30,000 Subjects from Gamma, alpha = 0.001")
+shapiro.test(vector9)
+#data:  vector9
+#W = 0.9897, p-value < 2.2e-16
+#Gamma-3000.jpeg
+
+#It doesn't look too bad, but still not normal.
+#Now let's try with a uniform and samples of 5 subjects:
+#We are already there... at just 6 subjects and with Shapiro-Wilk normality test showing a p value of 0.007006.
+
+
+vector1 <- NULL
+for (i in 1:1000){vector1[i] = mean(runif(5))}
+head(vector1)
+plot(density(vector1))
+shapiro.test(vector1)
+qqnorm(vector1);qqline(vector1)
+
+
+#Even starting off from a beta distribution we can start using the CLT with samples of just 10 subjects:
+
+vector8 <- NULL
+for (i in 1:5000){vector8[i] = mean(rbeta(10, 0.5,0.5))}
+plot(density(vector8),col='dark red',lwd = 2,main="Samples of 30 Subjects from Beta")
+shapiro.test(vector8)
+
+	#Shapiro-Wilk normality test
+
+#data:  vector8
+#W = 0.9996, p-value = 0.4841
+#Pretty cool, isn't it?
+
+#Here's a great link:
+
+#https://stats.stackexchange.com/questions/61798/example-of-distribution-where-large-sample-size-is-n...
