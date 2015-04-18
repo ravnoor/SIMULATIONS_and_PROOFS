@@ -1,7 +1,7 @@
 plot(x=NULL,y=NULL,xlim= c(-0.3,0.3),
      ylim=c(0,3.5),main=
          "The Semicircle Law",
-     xlab="Eigenvalue$\lambda$ Random Matrix",
+     xlab="Eigenvalue Random Matrix",
      ylab="Density")
 set.seed(100)
 n <- 10000
@@ -21,6 +21,12 @@ for(i in 1:100){
                                   "cosine", "optcosine"))
     lines(d,col = i, lwd = 2)
 }
+x <- seq(-0.3,0.3,by=.001)
+a = 0.2
+b = 3.2
+y=(b/a)*sqrt(a^2-x^2)
+lines(x,y,col=rgb(0.9,0.3,0.5,alpha=0.5) ,lwd = 10)
+
 
 
 
