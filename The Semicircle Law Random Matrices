@@ -1,14 +1,26 @@
 plot(x=NULL,y=NULL,xlim= c(-0.3,0.3),
      ylim=c(0,3.5),main=
          "The Semicircle Law",
-     xlab="Eigenvalue Random Matrix",
+     xlab="Eigenvalue$\lambda$ Random Matrix",
      ylab="Density")
+set.seed(100)
+n <- 10000
+M <- matrix(rnorm(n),nrow=100)
+M <- 1/sqrt(2*n)*(M+t(M))
+eval <- eigen(M)$values
+hist(eval,freq=F,add=T)
 for(i in 1:100){
     set.seed(i)
     n <- 10000
     M <- matrix(rnorm(n),nrow=100)
     M <- 1/sqrt(2*n)*(M+t(M))
     eval <- eigen(M)$values
-    d <- density(eval)
+    d <- density(eval, 
+    kernel = c("gaussian", "epanechnikov", "rectangular",
+                                  "triangular", "biweight",
+                                  "cosine", "optcosine"))
     lines(d,col = i, lwd = 2)
 }
+
+
+
