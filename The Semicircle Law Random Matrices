@@ -13,7 +13,7 @@ for(i in 1:100){
     set.seed(i)
     n <- 10000
     M <- matrix(rnorm(n),nrow=100)
-    M <- 1/sqrt(2*n)*(M+t(M))
+    M <- 1/(2*n)*(M+t(M))
     eval <- eigen(M)$values
     d <- density(eval, 
     kernel = c("gaussian", "epanechnikov", "rectangular",
