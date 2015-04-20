@@ -1,40 +1,28 @@
-par(mfrow = c(1,2))
-
-plot(x=NULL,y=NULL,xlim= c(-0.04,0.04),ylim=c(0,40),
-     main= "The Semicircle Law",
+plot(x=NULL,y=NULL,xlim= c(-0.3,0.3),
+     ylim=c(0,3.5),main=
+         "The Semicircle Law",
      xlab="Eigenvalue Random Matrix",
      ylab="Density")
-
 set.seed(100)
-n <- 5000
-M <- matrix(rnorm(n^2),nrow=n)
-M <- 1/(2*n) * (M+t(M))
-e_val_hist <- eigen(M)$values
-hist(e_val_hist,freq=F,add=T)
-
-for(i in 1:10){
-  set.seed(i)
-  n <- 5000
-  M <- matrix(rnorm(n^2),nrow=n)
-  M <- 1/(2*n)*(M+t(M))
-  e_val <- eigen(M)$values
-  d <- density(e_val)
-  lines(d,col = i, lwd = 2)
+n <- 10000
+M <- matrix(rnorm(n),nrow=100)
+M <- 1/(2*n)*(M+t(M))
+eval <- eigen(M)$values
+hist(eval,freq=F,add=T)
+for(i in 1:100){
+    set.seed(i)
+    n <- 10000
+    M <- matrix(rnorm(n),nrow=100)
+    M <- 1/sqrt(2*n)*(M+t(M))
+    eval <- eigen(M)$values
+    d <- density(eval, 
+    kernel = c("gaussian", "epanechnikov", "rectangular",
+                                  "triangular", "biweight",
+                                  "cosine", "optcosine"))
+    lines(d,col = i, lwd = 2)
 }
-
-
-plot(x=NULL,y=NULL,xlim= c(-0.04,0.04),ylim=c(0,40),
-     main= "The Semicircle Law",
-     xlab="Eigenvalue Random Matrix, bw=1e-8",
-     ylab="Density")
-hist(e_val_hist,freq=F,add=T)
-
-for(i in 1:10){
-  set.seed(i)
-  n <- 5000
-  M <- matrix(rnorm(n^2),nrow=n)
-  M <- 1/(2*n)*(M+t(M))
-  e_val <- eigen(M)$values
-  d <- density(e_val, bw=1e-8)
-  lines(d,col = i, lwd = 2)
-}
+x <- seq(-0.3,0.3,by=.001)
+a = 0.2
+b = 3.2
+y=(b/a)*sqrt(a^2-x^2)
+lines(x,y,col=rgb(0.9,0.3,0.5,alpha=0.5) ,lwd = 10)
