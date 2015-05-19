@@ -1,0 +1,46 @@
+#The filling machine used by a dairy company to fill 1kg containers of yoghurt produces output which follows a 
+#normal distribution with mean 1030g (slightly more than 1kg) and standard deviation 20g.
+#Suppose that the company can change either the mean or the standard deviation of the filling amount (but not both).
+#If they require the probability of underfilling a container (i.e. contents less than 1000g) to equal 0.05, 
+#find (i) the smallest value of the mean; and (ii) the largest value of the standard deviation 
+#that satisfies this requirement (in each case to the nearest gram).
+
+
+mean <- 1030
+p <- 0.05
+lower <- 1000
+
+# mean - qnorm(0.95) * SD = 1,000
+
+# hence, SD = (lower - mean) /  - qnorm(0.9))
+
+
+SD <- (lower - mean) / - qnorm(0.95)
+
+SD
+
+#[1] 18.2387
+
+#Proof:
+
+qnorm(p, mean, SD)
+
+
+#[1] 1000
+
+
+#For the minimal mean with a given SD of 20:
+
+SD <- 20
+
+# mean = 1,000 + qnorm(0.95) * SD
+
+min_mean <- lower + qnorm(0.95) * SD
+
+min_mean
+
+#[1] 967.1029
+
+qnorm(p, min_mean, SD)
+
+#[1] 1000
