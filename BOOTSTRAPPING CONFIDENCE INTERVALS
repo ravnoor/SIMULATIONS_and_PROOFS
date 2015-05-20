@@ -1,0 +1,26 @@
+sample_means <- 0
+
+for (i in 1:1e4) {
+  
+    sample_means[i] <- mean(sample(x, 100, replace=T))
+    
+}
+ 
+print(quantile (sample_means, c(0.025, 0.975)))
+
+#    2.5%    97.5% 
+#  24.53575 26.99279 
+
+# Compare to Wald method (since we have more than 30 observations:
+
+mean(x) + c(-qnorm(0.975), qnorm(0.975)) * sqrt(var(x)/length(x))
+
+# [1] 24.52990 26.99452
+
+# If we use the Student t distribution:
+
+mean(x) + c(-qt(0.975, length(x) - 1), qt(0.975, length(x) - 1)) * sqrt(var(x)/ length(x))
+
+mean(x)
+
+# [1] 24.51466 27.00977
