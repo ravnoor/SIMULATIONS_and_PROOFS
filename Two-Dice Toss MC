@@ -1,0 +1,21 @@
+# mean of tossing two fair dice:
+
+dice <- c(1:6)
+dice
+
+# Analytically:
+
+mean(dice) +  mean(dice)
+
+# Computer simulation:
+
+# Simulate one toss: 
+
+sample(dice, 2, replace = T)
+
+ave <- 0
+for (i in 1:1e4){
+  ave[i] <- sum(sample(dice, 2, replace = T))
+}
+
+mean(ave)
