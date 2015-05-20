@@ -1,3 +1,8 @@
+# My posting to StackExchange on population growth of two bacterial populations:
+# http://stats.stackexchange.com/questions/144045/find-out-if-the-growth-of-two-populations-is-statistically-different/144145#144145
+
+# Bacterium B cultures grow differently depending on the presence of an interaction between Bacterium A and Compound X, which together act as an "Inhibitor". 
+# My focus is on the different growth over time of Bacterium B depending on the factor "Inhibitor".
 
 set.seed(5)
 
@@ -8,6 +13,13 @@ w <- ((1 + exp(- (n * (x - 10) - 3)))^-1) + 0.02 * x + .1 * rnorm(301)
 z <- ((1 + exp(- (p * (x - 10) - 1)))^-1) + .1 * rnorm(301)
 dat <- data.frame(cbind(x,w,z))
 colnames(dat) <- c("Time", "Uninhibited", "Inhibited")
+
+#   Time Concentration Inhibitor
+# 1  0.0   -0.06400915         0
+# 2  0.1    0.03670019         0
+# 3  0.2    0.04931492         0
+
+# Matplot:
 
 l1 <- loess(w ~ x, data=dat, family = "gaussian", degree = 1, span=0.1)
 l2 <- loess(z ~ x, data =dat, family = "gaussian", degree = 1,span=0.1)
@@ -35,6 +47,8 @@ par(new = T)
 plot(x, z, pch = 20, cex=0.3, col ="black", ylab = "Bacterial [ ]", xlab ="t")
 matplot(new.x, ci2, col =c(1,1,1), type="l",add=T)
 
+# ggplot:
+
 
 library(ggplot2)
 
@@ -45,6 +59,7 @@ ggplot(dat, aes(x, y = Concentration, color = Bacterium)) +
   geom_smooth(aes(y = z),col ="blue")
 
 # Combining data for lme analysis:
+
 x <- rep(seq (0,30, by = 0.1),2)
 r <- rep(seq (0,30, by = 0.1))
 n <- 0.5
@@ -59,3 +74,9 @@ colnames(dat) <- c("Time", "Concentration", "Inhibitor")
 require(nlme)
 fit <- lme(Concentration ~ Inhibitor,random=~1|Time,data=dat)
 anova.lme(fit, adjustSigma = F)
+
+#            numDF denDF  F-value p-value
+# (Intercept)     1   300 573.8239  <.0001
+# Inhibitor       1   300 206.2185  <.0001
+
+# And the presence of "Inhibitor" would predictably have a significant effect on Bacterium B growth.
