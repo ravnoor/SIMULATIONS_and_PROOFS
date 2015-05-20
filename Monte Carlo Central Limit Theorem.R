@@ -1,25 +1,44 @@
+# Simulating the central limit theorem, ending up with plots side-by-side showing the bell-curve distribution of an original
+# Normal distribution with chosen mean and SD, which will be broad-based, as compared to the distribution of the sample means,
+# also bell-shaped, but narrower at the base.
+
 set.seed(2)
+
 CentralLimit <- function(n){
-  means_of_samples <<-numeric()
-  for (i in 1:n){
-    means_of_samples <- c(means_of_samples,mean(rnorm(sampsize,mean,sd)))
-  }
-  samples_means <<- means_of_samples
-  sd(samples_means)
+     means_of_samples <<-numeric()
+     for (i in 1:n){
+         means_of_samples <- c(means_of_samples,mean(rnorm(sampsize,mean,sd)))
 }
+     samples_means <<- means_of_samples    ##The << makes the object available outside the function.
+     sd(samples_means)                     ## although only the sd of the samples_means will be returned
+}
+
+# Here were are going to decide on a sample size, mean and standard deviation:
 sampsize <- 100
 mean <- 0
 sd <- 1000
+
 CentralLimit(1000)
+# [1] 105.7034      Very close to theoretical: sd/sqrt(n) 1000/sqrt(100) = 100.
+
 head(samples_means)
-x   <- seq(-(5*sd),(5*sd),length=1000)
-y   <- dnorm(x,mean, sd)
+# [1]  -30.69816   29.21465  142.93250  314.10070 -147.08809  252.46291 
+
+# Building up the population distribution using the dnorm, which will give the pdf value for every quantile fed into it:
+x   <- seq(-(5 * sd),(5 * sd), length = 1000)
+y   <- dnorm(x, mean, sd)
+
 par(mfrow=c(1,2),oma=c(0,0,1,0))
+
 plot(x,y, type="l",ylab="pdf",xlab="population",
-     frame = FALSE,col="dark blue",lwd=2,yaxt="n")
-hist(samples_means,freq = F,yaxt="n",main = "",
-     xlim=c(-(5*sd(samples_means)),(5*sd(samples_means))))
-x <- seq(-(5*sd(samples_means)),(5*sd(samples_means)),
+     frame = FALSE, col="dark blue", lwd=2, yaxt="n")
+
+# And now the histogram of the sample means distribution:
+
+hist(samples_means, freq = F, yaxt="n", main = "",
+     xlim=c(-(5 * sd(samples_means)),(5 * sd(samples_means))))
+     
+x <- seq(-(5 * sd(samples_means)),(5 * sd(samples_means)),
          length=1000)
 curve(dnorm(x,mean=mean(samples_means),
             sd=sd(samples_means)),col="red",lwd=2,add=T)
