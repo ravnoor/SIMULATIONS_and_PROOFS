@@ -1,3 +1,6 @@
+# Code for my post on StackExchange:
+# http://stats.stackexchange.com/questions/142693/omitted-variable-bias-in-linear-regression-simulation
+
 # y = 7.2 + 2.3 * x1 + 0.1 * x2 + 1.5 * x3 + 0.013 * x4 + eps
 
 correlatedValue = function(x, r){
