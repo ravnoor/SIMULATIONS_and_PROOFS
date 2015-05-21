@@ -1,0 +1,48 @@
+# Monte Carlo and Analytical calculation of probabilities for different sums in tossing two dice. 
+# Review of compositions and partitions.
+
+# Monte Carlo:
+
+crap_toss <- 0
+
+for (i in 1:1e5) {
+    crap_toss[i] <- sum(sample(c(1:6), 2, replace=T))
+}
+
+table(crap_toss)
+round(100 * prop.table(table(crap_toss)),1)     # Probability in percentages.
+
+
+plot(prop.table(table(crap_toss)))
+
+
+
+# Analytical:
+
+library(partitions)
+
+sums <- c(2:12)       # All possible sums of two dice.
+
+permutations <- function(sums){
+    compis <- numeric()
+    for (i in seq(along = sums)){
+         C <- compositions(sums[i], m = 2)
+    compis[i] <- ncol(as.matrix(C[ ,which(apply(C, 2, function(x){all(0 < x & x < 7)}))]))
+    }
+    compis <<- compis
+    permuts <<- as.matrix(rbind(sums,compis))
+}
+
+permutations(sums)
+(total <- sum(compis))
+permuts
+freq <- round(100 * compis/total, 1)
+M <- as.data.frame(rbind(permuts,freq))
+colnames(M) <- as.character(sums)
+M             # Table of analytically calculated probabilities
+
+# Compare to M.C.:
+
+round(100*prop.table(table(crap_toss)),1)
+
+
