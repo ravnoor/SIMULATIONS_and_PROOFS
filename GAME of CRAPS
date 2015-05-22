@@ -45,4 +45,28 @@ M             # Table of analytically calculated probabilities
 
 round(100*prop.table(table(crap_toss)),1)
 
+==============================================================================================================================
+
+# We can find a function for a generalized number of dice:
+
+library(partitions)
+
+permutations <- function(d){
+  sums <- c(d:(d * 6)) 
+  compis <- numeric()
+  for (i in seq(along = sums)){
+    C <- compositions(sums[i], m = d)
+    compis[i] <- 
+      ncol(as.matrix (C[  , which(apply(C, 2, function(x) all(0 < x & x < 7)))]))
+  }
+  compis <<- compis
+  permuts <<- as.matrix(rbind(sums,compis))
+}
+
+permutations(2)
+(total <- sum(compis))
+permuts
+freq <- round(100 * compis/total, 1)
+M <- as.data.frame(rbind(permuts,freq))
+M             # Table of analytically calculated probabilities
 
