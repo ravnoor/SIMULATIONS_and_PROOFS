@@ -63,7 +63,7 @@ permutations <- function(d){
   permuts <<- as.matrix(rbind(sums,compis))
 }
 
-permutations(2)
+permutations(2)                         # Enter the number of dice; that's all that's needed.
 (total <- sum(compis))
 permuts
 freq <- round(100 * compis/total, 1)
