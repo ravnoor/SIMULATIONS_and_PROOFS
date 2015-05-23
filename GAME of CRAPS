@@ -70,3 +70,13 @@ freq <- round(100 * compis/total, 1)
 M <- as.data.frame(rbind(permuts,freq))
 M             # Table of analytically calculated probabilities
 
+=============================================================================================================================
+
+# Doing it as convolution we get the number of permutations possible for every sum:
+
+o2d6=c(outer(1:6,1:6,"+"))
+table(o2d6)
+
+# Now the probability for each one of the sums:
+
+print(round((table(o2d6)/6^2), 3))
