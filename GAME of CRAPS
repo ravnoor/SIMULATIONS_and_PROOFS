@@ -72,6 +72,8 @@ M             # Table of analytically calculated probabilities
 
 =============================================================================================================================
 
+https://stats.stackexchange.com/questions/123924/dice-rolls-simulation-vs-theory
+
 # Doing it as convolution we get the number of permutations possible for every sum:
 
 o2d6=c(outer(1:6,1:6,"+"))
