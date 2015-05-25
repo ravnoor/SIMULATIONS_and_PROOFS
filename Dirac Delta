@@ -1,0 +1,17 @@
+# Plots in different colors of a Normal distribution progressively narrow, and tending to a displaced delta (x - 100):
+
+plot(x= NULL, y=NULL, xlim= c(25,175), ylim=c(0,0.08),
+     main= "Dirac Delta")
+
+x <- seq(50, 140, 1)
+
+sdev <- seq(20,0, by=-3)
+
+y <- 0
+for(i in sdev){
+  
+  
+  y <- cbind(y, dnorm(x, 100, i))
+  lines(x, dnorm(x, 100, i), col = i)
+  
+}
