@@ -1,0 +1,36 @@
+##################################################
+#Proof that the p = exact number in a continuuous#
+#rv is zero                                      #
+##################################################
+
+
+par(mfrow=c(1,2))
+
+## We use an exponential distribution with rate = 1/5:
+
+x <- seq(0, 20, by=0.001)
+y <- dexp(x, rate=1/5)
+plot(y ~ x, type='l', col='firebrick')
+
+## We get the probabilities of the value of X being comprised
+# between 6 and a differential that goes from 0 to 0.1
+# and plot the vertical lines at each point:
+
+x <- seq(0,0.1,by=0.001)
+p <- 0
+for(i in seq(along=x)){
+  w <- 6 + x[i]
+p[i] <- pexp(w, rate = 1/5, lower.tail = T)-
+pexp(6, rate = 1/5, lower.tail = T)
+segments(x0 = w, y0 = 0, x1 = w, y1 = dexp(w, 1/5), col='darkgoldenrod')
+}
+
+abline(h = 0)
+
+# Now we plot the probability at each differential increament.
+
+plot(p ~ x, type='l', col='chocolate', xlab="Differential from 6")
+abline(h=0)
+abline(v=0)
+
+# @hen the differential is zero, i.e. exactly '6', p = 0.
