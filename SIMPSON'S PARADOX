@@ -1,3 +1,5 @@
+# Posted here: http://stats.stackexchange.com/q/168732/67822
+
 set.seed(0)
 #SIMPSON'S PARADOX:
 
@@ -10,36 +12,36 @@ plot(1, xlim = c(0,120), ylim = c(0,1200), type='n',
 
 x <- seq(0, 30, 0.3)
 d <- 400 - 5 * x + rnorm(x, 0, 150)
-points(d ~ x, pch = 20, cex=0.8, col='green')
-abline(lm(d ~ x), col='green')
+points(d ~ x, pch = 20, cex=0.8, col='green4')
+abline(lm(d ~ x), col='green4', lwd=2)
 cor_d <- cor(d,x)
 
 x <- seq(30, 60, 0.3)
 c <- 700 - 5 * x + rnorm(x, 0, 150)
-points(c ~ x, pch = 20, cex=0.8, col='blue')
-abline(lm(c ~ x), col='blue')
+points(c ~ x, pch = 20, cex=0.8, col='darkmagenta')
+abline(lm(c ~ x), col='darkmagenta', lwd=2)
 cor_c <- cor(c,x)
 
 x <- seq(60, 90, 0.3)
 b <- 1000 - 5 * x + rnorm(x, 0, 150)
-points(b ~ x, pch=20, cex=0.8, col='black')
-abline(lm(b ~ x), col='orange')
+points(b ~ x, pch=20, cex=0.8, col='gray8')
+abline(lm(b ~ x), col='gray8', lwd=2)
 cor_b <- cor(b,x)
 
 x <- seq(90, 120, 0.3)
 a <- 1300 - 5 * x + rnorm(x, 0, 150)
-points(a ~ x, pch=20, cex=0.8, col='red')
-abline(lm(a ~ x), col='red')
+points(a ~ x, pch=20, cex=0.8, col='darkorange')
+abline(lm(a ~ x), col='darkorange', lwd=2)
 cor_a <- cor(a,x)
 
 x <- c(seq(0, 30, 0.3),seq(10, 40, 0.3),
        seq(20, 50, 0.3),seq(30, 60, 0.3))
 y <- c(d,c,b,a)
 
-plot(y ~ x, ylim=c(0,1200),col='firebrick', pch=20, cex=0.5,
+plot(y ~ x, ylim=c(0,1200),col='gray20', pch=19, cex=0.5,
      xlab = "[Marker X]", ylab ="[Marker Y]",
      main = "Meta-Analysis")
-abline(lm(y ~ x), col='firebrick')
+abline(lm(y ~ x), col='gray20',lwd=2)
 
 groups <- length(x)/4
 simpson <- data.frame(x, y, Groups = c(rep("D",groups),
@@ -60,7 +62,6 @@ AIC(OLS,MEM)
 coef(OLS); coef(MEM)
 
 
-
 ## It's about correlation [Marker X] v [Marker Y]:
 
 # Correlation inside groups is of different sign than pooled together:
@@ -72,12 +73,8 @@ cor(y,x)
 # of the fitted lines of the different clusters:
 
 
-
-
-
 cor(simpson$x, simpson$y_intercepts)
 summary(lm(y_intercepts ~ x, simpson))
-
 
 
 
@@ -92,32 +89,32 @@ plot(1, xlim=c(0,62), ylim = c(0,1500), type='n',
 
 x <- seq(0, 60, 0.3)
 d <- 400 - 7 * x + rnorm(x, 0, 150)
-points(d ~ x, pch = 19, cex=0.6, col='green')
-abline(lm(d ~ x), col='green')
+points(d ~ x, pch = 19, cex=0.6, col='green4')
+abline(lm(d ~ x), col='green4', lwd=2)
 cor_d <- cor(d,x)
 
 c <- 700 - 7 * x + rnorm(x, 0, 150)
-points(c ~ x, pch = 19, cex=0.6, col='blue')
-abline(lm(c ~ x), col='blue')
+points(c ~ x, pch = 19, cex=0.6, col='darkmagenta')
+abline(lm(c ~ x), col='darkmagenta',lwd=2)
 cor_c <- cor(c,x)
 
 b <- 1000 - 7 * x + rnorm(x, 0, 150)
-points(b ~ x, pch=19, cex=0.6, col='black')
-abline(lm(b ~ x), col='orange')
+points(b ~ x, pch=19, cex=0.6, col='gray20')
+abline(lm(b ~ x), col='gray20', lwd=2)
 cor_b <- cor(b,x)
 
 a <- 1300 - 7 * x + rnorm(x, 0, 150)
-points(a ~ x, pch=19, cex=0.6, col='red')
-abline(lm(a ~ x), col='red')
+points(a ~ x, pch=19, cex=0.6, col='darkorange')
+abline(lm(a ~ x), col='darkorange', lwd=2)
 cor_a <- cor(a,x)
 
 x <- c(rep(seq(0, 60, 0.3),4))
 y <- c(d,c,b,a)
 
-plot(y ~ x, col='firebrick', pch=20, cex=0.5,
+plot(y ~ x, col='gray20', pch=20, cex=0.5,
      xlab = "[Marker X]", ylab ="[Marker Y]",
      main = "Increased Dispersion")
-abline(lm(y ~ x), col='firebrick')
+abline(lm(y ~ x), col='black', lwd=2)
 
 groups <- length(x)/4
 randeff <- data.frame(x, y, Groups = c(rep("D",groups),
@@ -149,7 +146,61 @@ plot(randeff$y_intercepts ~ randeff$x, pch=19, cex=0.3, col="navy",
      ylab= "y intercepts", xlab="x", main="No confounder")
 
 
-
-
 cor(randeff$x, randeff$y_intercepts)
 summary(lm(y_intercepts ~ x, randeff))
+
+
+
+# IDEAL SITUATION:
+
+
+par(mfrow=c(1,2))
+
+plot(1, xlim=c(0,62), ylim = c(0,1500), type='n',
+     xlab = "[Marker X]", ylab ="[Marker Y]",
+     main="Random Effects")
+
+
+x <- seq(0, 60, 0.3)
+d <- 780 - 7 * x + rnorm(x, 0, 150)
+points(d ~ x, pch = 19, cex=0.6, col='green4')
+abline(lm(d ~ x), col='green4', lwd=2)
+cor_d <- cor(d,x)
+
+c <- 800 - 7 * x + rnorm(x, 0, 150)
+points(c ~ x, pch = 19, cex=0.6, col='darkmagenta')
+abline(lm(c ~ x), col='darkmagenta',lwd=2)
+cor_c <- cor(c,x)
+
+b <- 820 - 7 * x + rnorm(x, 0, 150)
+points(b ~ x, pch=19, cex=0.6, col='gray20')
+abline(lm(b ~ x), col='gray20', lwd=2)
+cor_b <- cor(b,x)
+
+a <- 830 - 7 * x + rnorm(x, 0, 150)
+points(a ~ x, pch=19, cex=0.6, col='darkorange')
+abline(lm(a ~ x), col='darkorange', lwd=2)
+cor_a <- cor(a,x)
+
+x <- c(rep(seq(0, 60, 0.3),4))
+y <- c(d,c,b,a)
+
+plot(y ~ x, col='gray20', pch=20, cex=0.5,
+     xlab = "[Marker X]", ylab ="[Marker Y]",
+     main = "Increased Dispersion")
+abline(lm(y ~ x), col='black', lwd=2)
+
+groups <- length(x)/4
+randeff <- data.frame(x, y, Groups = c(rep("D",groups),
+                                       rep("C",groups), rep("B",groups), rep("A",groups)),
+                      y_intercepts = c(rep(400, groups), rep(700, groups), 
+                                       rep(1000,groups), rep(1300,groups)))
+
+OLS <- lm(y ~ x, randeff)
+MEM <- lmer(y ~ x + (1|Groups), randeff, REML = F)
+AIC(OLS, MEM)
+coef(OLS); coef(MEM)
+summary(residuals(OLS))
+summary(residuals(MEM))
+summary(MEM)
+summary(OLS)
