@@ -43,7 +43,9 @@ abline(lm(y ~ x), col='firebrick')
 
 groups <- length(x)/4
 simpson <- data.frame(x, y, Groups = c(rep("D",groups),
-    rep("C",groups), rep("B",groups), rep("A",groups)))
+          rep("C",groups), rep("B",groups), rep("A",groups)),
+          y_intercepts = c(rep(400, groups), rep(700, groups), 
+          rep(1000,groups), rep(1300,groups)))
 head(simpson)
 str(simpson)
 
@@ -51,16 +53,35 @@ str(simpson)
 OLS <- lm(y ~ x, simpson)
 library(lme4)
 MEM <- lmer(y ~ x + (1|Groups), simpson, REML=F)
+
+#The random effect model is better suited than the OLS:
 AIC(OLS,MEM)
+
 coef(OLS); coef(MEM)
+
+
 
 ## It's about correlation [Marker X] v [Marker Y]:
 
-# correlation inside groups:
+# Correlation inside groups is of different sign than pooled together:
+
 (within <- data.frame(Gr=c('D','C','B','A'),cor=c(cor_d,cor_c,cor_b,cor_a)))
 cor(y,x)
 
-## VERSUS RANDOM EFFECTS:
+# The reason why this happens is that there is a correlation between x and the intercept
+# of the fitted lines of the different clusters:
+
+
+
+
+
+cor(simpson$x, simpson$y_intercepts)
+summary(lm(y_intercepts ~ x, simpson))
+
+
+
+
+## VERSUS UNCORRELATED RANDOM EFFECTS:
 
 par(mfrow=c(1,2))
 
@@ -100,7 +121,9 @@ abline(lm(y ~ x), col='firebrick')
 
 groups <- length(x)/4
 randeff <- data.frame(x, y, Groups = c(rep("D",groups),
-        rep("C",groups), rep("B",groups), rep("A",groups)))
+          rep("C",groups), rep("B",groups), rep("A",groups)),
+          y_intercepts = c(rep(400, groups), rep(700, groups), 
+                 rep(1000,groups), rep(1300,groups)))
 
 OLS <- lm(y ~ x, randeff)
 MEM <- lmer(y ~ x + (1|Groups), randeff, REML = F)
@@ -114,5 +137,19 @@ summary(OLS)
 ## It's about correlation [Marker X] v [Marker Y]:
 
 # correlation inside groups:
+
 (within <- data.frame(Gr=c('D','C','B','A'),cor=c(cor_d,cor_c,cor_b,cor_a)))
 cor(y,x)
+
+
+plot(simpson$y_intercepts ~ simpson$x, pch=19, cex=0.3, col="navy",
+     ylab= "y intercepts", xlab="x", main="Simpson's Effect")
+
+plot(randeff$y_intercepts ~ randeff$x, pch=19, cex=0.3, col="navy",
+     ylab= "y intercepts", xlab="x", main="No confounder")
+
+
+
+
+cor(randeff$x, randeff$y_intercepts)
+summary(lm(y_intercepts ~ x, randeff))
