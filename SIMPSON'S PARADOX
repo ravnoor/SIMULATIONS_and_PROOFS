@@ -1,0 +1,118 @@
+set.seed(0)
+#SIMPSON'S PARADOX:
+
+par(mfrow=c(1,2))
+
+plot(1, xlim = c(0,120), ylim = c(0,1200), type='n',
+     xlab = "[Marker X]", ylab ="[Marker Y]",
+     main="Individual Studies")
+
+
+x <- seq(0, 30, 0.3)
+d <- 400 - 5 * x + rnorm(x, 0, 150)
+points(d ~ x, pch = 20, cex=0.8, col='green')
+abline(lm(d ~ x), col='green')
+cor_d <- cor(d,x)
+
+x <- seq(30, 60, 0.3)
+c <- 700 - 5 * x + rnorm(x, 0, 150)
+points(c ~ x, pch = 20, cex=0.8, col='blue')
+abline(lm(c ~ x), col='blue')
+cor_c <- cor(c,x)
+
+x <- seq(60, 90, 0.3)
+b <- 1000 - 5 * x + rnorm(x, 0, 150)
+points(b ~ x, pch=20, cex=0.8, col='black')
+abline(lm(b ~ x), col='orange')
+cor_b <- cor(b,x)
+
+x <- seq(90, 120, 0.3)
+a <- 1300 - 5 * x + rnorm(x, 0, 150)
+points(a ~ x, pch=20, cex=0.8, col='red')
+abline(lm(a ~ x), col='red')
+cor_a <- cor(a,x)
+
+x <- c(seq(0, 30, 0.3),seq(10, 40, 0.3),
+       seq(20, 50, 0.3),seq(30, 60, 0.3))
+y <- c(d,c,b,a)
+
+plot(y ~ x, ylim=c(0,1200),col='firebrick', pch=20, cex=0.5,
+     xlab = "[Marker X]", ylab ="[Marker Y]",
+     main = "Meta-Analysis")
+abline(lm(y ~ x), col='firebrick')
+
+groups <- length(x)/4
+simpson <- data.frame(x, y, Groups = c(rep("D",groups),
+    rep("C",groups), rep("B",groups), rep("A",groups)))
+head(simpson)
+str(simpson)
+
+
+OLS <- lm(y ~ x, simpson)
+library(lme4)
+MEM <- lmer(y ~ x + (1|Groups), simpson, REML=F)
+AIC(OLS,MEM)
+coef(OLS); coef(MEM)
+
+## It's about correlation [Marker X] v [Marker Y]:
+
+# correlation inside groups:
+(within <- data.frame(Gr=c('D','C','B','A'),cor=c(cor_d,cor_c,cor_b,cor_a)))
+cor(y,x)
+
+## VERSUS RANDOM EFFECTS:
+
+par(mfrow=c(1,2))
+
+plot(1, xlim=c(0,62), ylim = c(0,1500), type='n',
+     xlab = "[Marker X]", ylab ="[Marker Y]",
+     main="Random Effects")
+
+
+x <- seq(0, 60, 0.3)
+d <- 400 - 7 * x + rnorm(x, 0, 150)
+points(d ~ x, pch = 19, cex=0.6, col='green')
+abline(lm(d ~ x), col='green')
+cor_d <- cor(d,x)
+
+c <- 700 - 7 * x + rnorm(x, 0, 150)
+points(c ~ x, pch = 19, cex=0.6, col='blue')
+abline(lm(c ~ x), col='blue')
+cor_c <- cor(c,x)
+
+b <- 1000 - 7 * x + rnorm(x, 0, 150)
+points(b ~ x, pch=19, cex=0.6, col='black')
+abline(lm(b ~ x), col='orange')
+cor_b <- cor(b,x)
+
+a <- 1300 - 7 * x + rnorm(x, 0, 150)
+points(a ~ x, pch=19, cex=0.6, col='red')
+abline(lm(a ~ x), col='red')
+cor_a <- cor(a,x)
+
+x <- c(rep(seq(0, 60, 0.3),4))
+y <- c(d,c,b,a)
+
+plot(y ~ x, col='firebrick', pch=20, cex=0.5,
+     xlab = "[Marker X]", ylab ="[Marker Y]",
+     main = "Increased Dispersion")
+abline(lm(y ~ x), col='firebrick')
+
+groups <- length(x)/4
+randeff <- data.frame(x, y, Groups = c(rep("D",groups),
+        rep("C",groups), rep("B",groups), rep("A",groups)))
+
+OLS <- lm(y ~ x, randeff)
+MEM <- lmer(y ~ x + (1|Groups), randeff, REML = F)
+AIC(OLS, MEM)
+coef(OLS); coef(MEM)
+summary(residuals(OLS))
+summary(residuals(MEM))
+summary(MEM)
+summary(OLS)
+
+## It's about correlation [Marker X] v [Marker Y]:
+
+# correlation inside groups:
+(within <- data.frame(Gr=c('D','C','B','A'),cor=c(cor_d,cor_c,cor_b,cor_a)))
+cor(y,x)
