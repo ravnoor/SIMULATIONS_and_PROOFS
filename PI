@@ -1,0 +1,8 @@
+x <- runif(1e7)
+y <- runif(1e7)
+
+pythag <- sqrt(x^2 + y^2)
+
+circle <- pythag[pythag < 1]
+
+length(circle)/length(pythag) * 4
