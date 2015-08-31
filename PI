@@ -1,3 +1,16 @@
+# Initial concept:
+
+x <- runif(1e4)
+y <- runif(1e4)
+dat <- data.frame(x,y)
+pythag <- sqrt(x^2 + y^2)
+dat[ ,"pythag"] <- pythag 
+dat[ ,"inside"] <-pythag < 1
+with(dat[dat$inside==T,], plot(x , y, 
+                col='skyblue', pch=19, cex=0.3))
+
+# More precise approximation:
+
 x <- runif(1e6)
 y <- runif(1e6)
 dat <- data.frame(x,y)
@@ -7,6 +20,7 @@ dat[ ,"inside"] <-pythag < 1
 with(dat[dat$inside==T,], plot(x , y, 
      col='skyblue', pch=19))
 
+# Pi calculation:
 
 circle <- pythag[pythag < 1]
 
