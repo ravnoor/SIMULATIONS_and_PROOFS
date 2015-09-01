@@ -15,12 +15,16 @@ metropolis1 = function(n = 1000, eps= 0.5){ # eps = epsilon
     
     candidate_value = x + innovation # zero + random unif from -0.5 to 0.5
     # The proposed new value will be x + runif
-    ## THE CANDIDATE COMES FROM A UNIFORM
+    ## THE CANDIDATE (PROPOSED VALUE) COMES FROM A UNIFORM - the transition kernel
     
     acceptance_ratio = min(1, dnorm(candidate_value)/dnorm(x)) 
-    # dnorm(0) [1] 0.3989423 but we keep on updating the x
-    # so we are taking the ratio of the height on the bell curve of the 
+    # dnorm(0) [1] 0.3989423 but we keep on updating the x, so it changes.
+    # We are taking the ratio of the height on the bell curve of the 
     # candidate value to the height on the curve of the prior x.
+    # Since we only take values up to 1 ("min(1,...)") this is actually
+    # a probability!!! Because the higher the acceptance_ratio
+    # the more chances of passing the next test ("if (u < acceptance_ratio)")
+    
     # Acceptance probability = a(xnew|xold) = min(1, A)
     # ith A = p(xnew) q(xold|xnwe) / [p(old) q(xnew|xold)]
     # IFF the ratio is less than 1 (candidate shorter than prior x on bell) 
