@@ -5,8 +5,8 @@
 ## THE TRUE DATA:
 
 slope <- 5          # This is the slope
-intercept <- 0          # This is the intercept
-noise<- 10        # This is the noise
+intercept <- 0      # This is the intercept
+noise<- 10          # This is the noise
 sampleSize <- 31
 
 # create independent x-values 
