@@ -13,7 +13,7 @@ metropolis1 = function(n = 1000, eps= 0.5){ # eps = epsilon
     innovation = runif(1,-eps,eps) # One random uniform from -eps to eps
     # The values of x are updated by adding an "innovation" sampled from a symmetrical distr.
     
-    candidate_value = x + innovation # zero + random unif from -0.5 to 0.5
+    candidate_value = x + innovation # whatever the x was on prior round + random unif from -0.5 to 0.5
     # The proposed new value will be x + runif
     ## THE CANDIDATE (PROPOSED VALUE) COMES FROM A UNIFORM - the transition kernel
     
