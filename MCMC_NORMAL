@@ -26,7 +26,7 @@ metropolis1 = function(n = 1000, eps= 0.5){ # eps = epsilon
     # the more chances of passing the next test ("if (u < acceptance_ratio)")
     
     # Acceptance probability = a(xnew|xold) = min(1, A)
-    # ith A = p(xnew) q(xold|xnwe) / [p(old) q(xnew|xold)]
+    # with A = p(xnew) q(xold|xnwe) / [p(old) q(xnew|xold)]
     # IFF the ratio is less than 1 (candidate shorter than prior x on bell) 
     # we take the RATIO.
     
