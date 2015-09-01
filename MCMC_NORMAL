@@ -1,0 +1,59 @@
+#https://darrenjw.wordpress.com/2010/08/15/metropolis-hastings-mcmc-algorithms/
+
+metropolis1 = function(n = 1000, eps= 0.5){ # eps = epsilon
+  ## SO WE FEED NUMBER OF ITERATIONS AND SIZE OF THE STEPS
+  
+  vec = vector("numeric", n) # Start a numeric vector of length n
+ 
+  x = 0 
+  vec[1] = x # The first entry of the vector is 0.
+  
+  for (i in 2:n) {# The others entries in the vector "vec" (after the first) are....
+    
+    innovation = runif(1,-eps,eps) # One random uniform from -eps to eps
+    # The values of x are updated by adding an "innovation" sampled from a symmetrical distr.
+    
+    candidate_value = x + innovation # zero + random unif from -0.5 to 0.5
+    # The proposed new value will be x + runif
+    ## THE CANDIDATE COMES FROM A UNIFORM
+    
+    acceptance_ratio = min(1, dnorm(candidate_value)/dnorm(x)) 
+    # dnorm(0) [1] 0.3989423 but we keep on updating the x
+    # so we are taking the ratio of the height on the bell curve of the 
+    # candidate value to the height on the curve of the prior x.
+    # Acceptance probability = a(xnew|xold) = min(1, A)
+    # ith A = p(xnew) q(xold|xnwe) / [p(old) q(xnew|xold)]
+    # IFF the ratio is less than 1 (candidate shorter than prior x on bell) 
+    # we take the RATIO.
+    
+    ## THE TESTING OF THE CANDIDATE IS AGAINST A NORMAL DISTR.
+    
+    u = runif (1) # One draw from 0 to 1
+    
+    if (u < acceptance_ratio) 
+      
+    # Here we take a second random uniform, this time from 0 to 1.
+    # and only if the ratio is larger than it will we replace
+    # the prior x with the candidate value.
+      
+      x = candidate_value # Attention: here the x gets replaced, provided...
+    
+    vec[i] = x # And entered into the corresponding position in vec
+  
+  }
+  vec
+}
+
+plot.mcmc<-function(mcmc.out)
+{
+  op=par(mfrow=c(2,2))
+  plot(ts(mcmc.out),col=2) # ts = time series object
+  hist(mcmc.out,30,col=3)
+  qqnorm(mcmc.out,col=4)
+  abline(0,1,col=2)
+  acf(mcmc.out,col=2,lag.max=100)
+  par(op)
+}
+
+metrop.out<-metropolis1(1e4,1)
+plot.mcmc(metrop.out)
