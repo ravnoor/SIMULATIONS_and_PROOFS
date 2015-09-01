@@ -6,7 +6,7 @@
 
 slope <- 5          # This is the slope
 intercept <- 0          # This is the intercept
-trueSd <- 10        # This is the noise
+noise<- 10        # This is the noise
 sampleSize <- 31
 
 # create independent x-values 
@@ -17,7 +17,7 @@ x <- (-(sampleSize-1)/2):((sampleSize-1)/2)
 
 # create dependent values according to ax + b + N(0,sd):
 
-y <-  slope * x + intercept + rnorm(n=sampleSize, mean=0, sd = trueSd)
+y <-  slope * x + intercept + rnorm(n=sampleSize, mean=0, sd = noise)
 
 plot(x, y, main="Test Data")
 
