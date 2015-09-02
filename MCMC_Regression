@@ -88,7 +88,9 @@ run_metropolis_MCMC <- function(startvalue, iterations){
   return(chain)
 }
 
-startvalue = c(4,0,10)
+startvalue = c(4, 0, 10)
+# The startvalue is the first row of the chain. 4 above goes to slope; 0 to intercept, and 10 to noise or sd.
+
 chain = run_metropolis_MCMC(startvalue, 10000)
 
 #chain
