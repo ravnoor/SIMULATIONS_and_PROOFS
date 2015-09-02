@@ -42,7 +42,7 @@ likelihood <- function(param){
 # Example: plot the likelihood profile of the slope, leaving the 
 # intercept and noise unchanged:
 
-slopevalues <- function(x){return(likelihood(c(x, intercept, trueSd)))}
+slopevalues <- function(x){return(likelihood(c(x, intercept, noise)))}
 
 slopelikelihoods <- lapply(seq(3, 7, by=.05), slopevalues )
 plot (seq(3, 7, by=.05), slopelikelihoods , type="l", 
