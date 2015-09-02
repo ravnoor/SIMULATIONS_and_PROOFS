@@ -30,7 +30,7 @@ metropolis1 = function(n = 1000, eps= 0.5){ # eps = epsilon
     # IFF the ratio is less than 1 (candidate shorter than prior x on bell) 
     # we take the RATIO.
     
-    ## THE TESTING OF THE CANDIDATE IS AGAINST A NORMAL DISTR.
+    ##Therefore, THE TESTING OF THE CANDIDATE IS AGAINST A NORMAL DISTR.
     
     u = runif (1) # One draw from 0 to 1
     
