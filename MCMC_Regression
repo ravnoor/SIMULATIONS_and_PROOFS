@@ -1,6 +1,7 @@
 # MCMC Monte Carlo Markov Chains from
 # https://theoreticalecology.wordpress.com/2010/09/17/metropolis-hastings-mcmc-in-r/
 
+set.seed(123)
 
 ## THE TRUE DATA:
 
