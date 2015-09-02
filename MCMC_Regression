@@ -1,28 +1,28 @@
-# MCMC Monte Carlo Markov Chains from
-# https://theoreticalecology.wordpress.com/2010/09/17/metropolis-hastings-mcmc-in-r/
+      # MCMC Monte Carlo Markov Chains from
+      # https://theoreticalecology.wordpress.com/2010/09/17/metropolis-hastings-mcmc-in-r/
 
 set.seed(123)
 
-## THE TRUE DATA:
+      ## THE TRUE DATA:
 
 slope <- 5          # This is the slope
 intercept <- 0      # This is the intercept
 noise<- 10          # This is the noise
 sampleSize <- 31
 
-# create independent x-values 
+      # create independent x-values 
 
 x <- (-(sampleSize-1)/2):((sampleSize-1)/2)
 
-# As many (x,y) points as the sample.
+      # As many (x,y) points as the sampleSize
 
-# create dependent values according to ax + b + N(0,sd):
+      # create dependent values according to ax + b + N(0,sd):
 
 y <-  slope * x + intercept + rnorm(n=sampleSize, mean=0, sd = noise)
 
 plot(x, y, main="Test Data")
 
-## LIKELIHOOD FUNCTION:
+      ## LIKELIHOOD FUNCTION:
 
 likelihood <- function(param){
   
@@ -32,40 +32,47 @@ likelihood <- function(param){
   
   pred = a * x + b # predicted
   
-  # We use them to generate a predicted value with a line function.
+        # We use a, b, sd to generate a predicted value with a line function.
   
   singlelikelihoods = dnorm(y, mean = pred, sd = sd, log = T)
   
-  # And we see how "tall" the value corresponding to the defined (above) true (data) y's would be if the predicted
-  # value was the mean - we are really measuring in a way the residual.
-  # with homoskedesticity there is now a curve of errors distributed normally around 'pred'
+        # And we see how "tall" the value corresponding to the defined (above) true (data) y's would be if the predicted
+        # value was the mean - we are really measuring in a way the residual.
+        # with homoskedesticity there is now a curve of errors distributed normally around 'pred'
   
-  # This tells us how far the true proposed y is from the true y.
+        # This tells us how far the true proposed y is from the true y.
   
   sumll = sum(singlelikelihoods)
+        # Now we sum because the LOG likelihood function of independent y values is added, as much as the likelihood
+        # without log would be multiplied.
+        # So we are getting a likelihood measure for entire set of y values.
+  
   return(sumll)   
 }
 
-# Example: plot the likelihood profile of the slope, leaving the 
-# intercept and noise unchanged:
+        # How does the likelihood of the data change depending on the slopes:
 
 slopevalues <- function(x){return(likelihood(c(x, intercept, noise)))}
 
-slopelikelihoods <- lapply(seq(3, 7, by=.05), slopevalues )
+slopelikelihoods <- lapply(seq(3, 7, by=.05), slopevalues)
 plot (seq(3, 7, by=.05), slopelikelihoods , type="l", 
       xlab = "values of slope parameter a",
       ylab = "Log likelihood")
 
-# Prior distribution
+        # Prior distribution
 
 prior <- function(param){
   a =  param[1]
   b =  param[2]
   sd = param[3]
   aprior =  dunif(a, min=0, max=10, log = T)
+        # We calculate the probability of the slope based on a uniform from 0 to 10.
   bprior =  dnorm(b, sd = 5, log = T)
+        # We calculate the prior probability of the intercept based on normal with sd of 5.
   sdprior = dunif(sd, min=0, max=30, log = T)
+        # ... and the prior of the noise on a uniform from 0 to 30.
   return(aprior + bprior + bprior)
+        # The probability of these three values would have to be multiplied, if it weren't for "log = T".
 }
 
 posterior <- function(param){
@@ -73,6 +80,7 @@ posterior <- function(param){
 }
 
 # The param are going to be rows in the "chain" (see below), corresponding to slope / intercept / noise (sd).
+# Since both the prior likelihood and the likelihood itself are log-ed, we can add their values.
 
 ######## Metropolis algorithm ################
 
@@ -92,7 +100,7 @@ run_metropolis_MCMC <- function(startvalue, iterations){
   # [1,]     NA   NA   NA
   # [2,]     NA   NA   NA
   # ...
-  # [10001]  NA   NA   NA
+  # [10001]  NA   NA   NA                          for iterations = 10000
   
   chain[1,] = startvalue
   
@@ -102,9 +110,9 @@ run_metropolis_MCMC <- function(startvalue, iterations){
   
     proposal = proposalfunction(chain[i,])
     
-    # we run a function within run_metropolis_MCMC running on a loop through iterations. The proposalfunction
-    # was already defined above.
-    # it takes the three values of the row at time i and uses them as means in the proposal function,
+    # we run a function within run_metropolis_MCMC through iterations. 
+    # The proposalfunction was already defined above.
+    # It takes the three values of the row at time i and uses them as means in the proposal function,
     # which produces this for i = 1:
     
       # chain[1,]
@@ -120,60 +128,86 @@ run_metropolis_MCMC <- function(startvalue, iterations){
       # randoms will end up in similar rows:
       # [1]  4.1262954 -0.1631167 10.3989398
     
+    # So basically three similar, but not equal values to the row i.
+    
     probab = exp(posterior(proposal) - posterior(chain[i,]))
     
+    # Now we calculate the difference in the posterior probability of the proposed parameters with respect to
+    # the parameters in row i.
     
     if (runif(1) < probab){
-      chain[i+1,] = proposal
+      chain[i + 1,] = proposal
     }else{
-      chain[i+1,] = chain[i,]
+      chain[i + 1,] = chain[i,]
     }
   }
+    # and we toss a coin with the runif. If the difference is greater than the runif the proposal will occupy the next row
+    # otherwise, we duplicate the row i to fill in row i + 1.
   return(chain)
 }
 
 startvalue = c(4, 0, 10)
-# The startvalue is the first row of the chain. 4 above goes to slope; 0 to intercept, and 10 to noise or sd.
+     # The startvalue is the first row of the chain. 4 above goes to slope; 0 to intercept, and 10 to noise or sd.
 
 chain = run_metropolis_MCMC(startvalue, 10000)
 
-#chain
-#                 [,1]                 [,2]                  [,3]
-#[1,]          4.000000             0.00000000             10.00000
-#[2,]          4.000000             0.00000000             10.00000
-# ...
-# ...
-#[10000,]      4.980106             1.2658856              11.19833
-#[10001,]      4.930751             1.3969398              11.24195
-#              ~ 5 (slope)          ~ 0 (intercept)        ~ 10 for noise
+     # The object chain will be the result of running "run_metropolis_MCMC 10,000 times.
+
+     #chain
+     #                 [,1]                 [,2]                  [,3]
+     #[1,]          4.000000             0.00000000             10.00000
+     #[2,]          4.000000             0.00000000             10.00000
+     # ...
+     # ...
+     #[10000,]      4.980106             1.2658856              11.19833
+     #[10001,]      4.930751             1.3969398              11.24195
+     #              ~ 5 (slope)          ~ 0 (intercept)        ~ 10 for noise
 
 burnIn = 5000
+
+     # The first 5000 rows of proposed values will be thrown out to collect simulations after reaching a steady-state.
+
 acceptance = 1 - mean(duplicated(chain[-(1:burnIn),]))
 
-# chain[-(1:burnIn),] selects all the rows of "chain" excluding rows 1 through burnIn, which is 5000. So it results
-# in 5001 rows with three columns.
-# the function duplicated is boolean, and looks for duplicated values in the rows.
-# mean(...) is the percentage of duplicated rows from 5001 to 10001.
-
+    # chain[-(1:burnIn),] selects all the rows of "chain" excluding rows 1 through burnIn, which is 5000. So it results
+    # in 5001 rows with three columns.
+    # the function duplicated is boolean, and looks for duplicated values in the rows.
+    # mean(...) is the percentage of duplicated rows from 5001 to 10001.
+    # and 1 - (...) is the acceptance rate for the proposed new values.
 
 ### Summary: #######################
 
+
+    # Plotting of the slopes with mean and true value:
+    
 par(mfrow = c(2,3))
-hist(chain[-(1:burnIn),1],nclass=30, , main="Posterior of slope", xlab="True value = red line" )
-abline(v = mean(chain[-(1:burnIn),1]))
+hist(chain[-(1:burnIn), 1], nclass=30, , main="Posterior of slope", xlab="True value = red line" )
+abline(v = mean(chain[-(1:burnIn), 1]))
 abline(v = slope, col="red" )
-hist(chain[-(1:burnIn),2],nclass=30, main="Posterior of intercept", xlab="True value = red line")
+
+    # Plotting of the intercepts with mean and true value:
+    
+hist(chain[-(1:burnIn),2], nclass=30, main="Posterior of intercept", xlab="True value = red line")
 abline(v = mean(chain[-(1:burnIn),2]))
 abline(v = intercept, col="red" )
+
+    # Plotting of the noise with mean and true value
+    
 hist(chain[-(1:burnIn),3],nclass=30, main="Posterior of noise", xlab="True value = red line")
 abline(v = mean(chain[-(1:burnIn),3]) )
 abline(v = noise, col="red" )
-plot(chain[-(1:burnIn),1], type = "l", xlab="True value = red line" , main = "Chain values of slope", )
+
+    # Time sequence of the slopes:
+plot(chain[-(1:burnIn), 1], type = "l", xlab="True value = red line" , main = "Chain values of slope", )
 abline(h = slope, col="red" )
+
+    # Time sequence of intercepts:
 plot(chain[-(1:burnIn),2], type = "l", xlab="True value = red line" , main = "Chain values of intercept", )
 abline(h = intercept, col="red" )
+
+    # And noise:
 plot(chain[-(1:burnIn),3], type = "l", xlab="True value = red line" , main = "Chain values of noise", )
 abline(h = noise, col="red" )
 
-# for comparison:
+# for comparison these are OLS values for slope and intercept based on the data (not MCMC):
 summary(lm(y~x))
