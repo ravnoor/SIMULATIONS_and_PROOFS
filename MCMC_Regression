@@ -102,11 +102,12 @@ chain = run_metropolis_MCMC(startvalue, 10000)
 #              ~ 5 (slope)          ~ 0 (intercept)        ~ 10 for noise
 
 burnIn = 5000
-acceptance = 1 -mean(duplicated(chain[-(1:burnIn),]))
+acceptance = 1 - mean(duplicated(chain[-(1:burnIn),]))
 
 # chain[-(1:burnIn),] selects all the rows of "chain" excluding rows 1 through burnIn, which is 5000. So it results
 # in 5001 rows with three columns.
 # the function duplicated is boolean, and looks for duplicated values in the rows.
+# mean(...) is the percentage of duplicated rows from 5001 to 10001.
 
 
 ### Summary: #######################
