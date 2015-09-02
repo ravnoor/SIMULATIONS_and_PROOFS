@@ -1,5 +1,7 @@
 #https://darrenjw.wordpress.com/2010/08/15/metropolis-hastings-mcmc-algorithms/
 
+set.seed(123)
+
 metropolis1 = function(n = 1000, eps= 0.5){ # eps = epsilon
   ## SO WE FEED NUMBER OF ITERATIONS AND SIZE OF THE STEPS
   
