@@ -71,7 +71,7 @@ plot(post.den.plot ~ theta.seq, type='l', col='chocolate4', lwd=2)
 
 ## WHAT IF PRIOR IS A NORMAL CENTERED AT 0.3:
 
-posterior_unif <- function(theta, N =50, k = 20){
+posterior <- function(theta, N =50, k = 20){
   
   like <- (theta^(k)) * (1 - theta)^(N - k)
   
@@ -85,7 +85,7 @@ posterior_unif <- function(theta, N =50, k = 20){
 
 theta.seq <- seq(0, 1, by=0.001)
 
-post.den <- posterior_unif(theta.seq)
+post.den <- posterior(theta.seq)
 
 post.den.plot <- (post.den/sum(post.den)) * length(theta.seq)
 
@@ -95,3 +95,27 @@ plot(post.den.plot ~ theta.seq, type='l', col='tan1', lwd=2)
 
 ## The prior is drawn towards 0.3, but it's not insensitive to the
 ## effect of the data.
+
+## What if the tosses yielded 1 tail out of 6:
+
+posterior <- function(theta, N = 6, k = 1){
+  
+  like <- (theta^(k)) * (1 - theta)^(N - k)
+  
+  pr <- 1/6 # 0.1666667
+  
+  out <- pr * like
+  ifelse(theta > 1, 0, out)
+  ifelse(theta < 0, 0, out)
+  return(out)
+}
+
+theta.seq <- seq(0, 1, by=0.001)
+
+post.den <- posterior(theta.seq)
+
+post.den.plot <- (post.den/sum(post.den)) * length(theta.seq)
+
+sum(post.den.plot * 1/length(theta.seq))
+
+plot(post.den.plot ~ theta.seq, type='l', col='red', lwd=2)
