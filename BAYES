@@ -1,4 +1,4 @@
-## Coin flip
+## Coin flip from https://youtu.be/BOWNHl3qOVA
 
 rm(list=ls())
 set.seed(2391)
