@@ -1,0 +1,97 @@
+## Coin flip
+
+rm(list=ls())
+set.seed(2391)
+
+posterior <- function(theta, N =50, k = 20){
+  
+  # 20 heads in 50 flips
+  
+  ## Theta determines the prior or "guessed" probability in the coin flip dependent on
+  
+    like <- (theta^(k)) * (1 - theta)^(N - k)
+    
+    pr <- ifelse(abs(theta) < 0.2, 1, 0)
+    
+    ## If theta < 0.2 it is true; otherwise false.
+    ## BELIEF: coin is biased towards tails, and I give no chance 
+    ## to its being otherwise.
+    
+    out <- pr * like
+      ifelse(theta > 1, 0, out)
+      ifelse(theta < 0, 0, out)
+    return(out)
+}
+
+theta.seq <- seq(0, 0.4, by=0.001)
+
+post.den <- posterior(theta.seq)
+
+## This normalizes the pdf so that:
+
+
+post.den.plot <- (post.den/sum(post.den)) * length(theta.seq)
+
+  
+sum(post.den.plot * 1/length(theta.seq))
+
+plot(post.den.plot ~ theta.seq, type='l', col='gray50', lwd=2)
+
+
+## So it turns out that we have zero posterior probability assigned to the
+## logical expectation of 20/50 = 0.4 or 40% probability, because of the 
+## strong prior belief.
+
+## What if we have no prior belief:
+
+posterior_unif <- function(theta, N =50, k = 20){
+  
+  like <- (theta^(k)) * (1 - theta)^(N - k)
+  
+  pr <- 1
+  
+  out <- pr * like
+  ifelse(theta > 1, 0, out)
+  ifelse(theta < 0, 0, out)
+  return(out)
+}
+
+theta.seq <- seq(0, 1, by=0.001)
+
+post.den <- posterior_unif(theta.seq)
+
+post.den.plot <- (post.den/sum(post.den)) * length(theta.seq)
+
+sum(post.den.plot * 1/length(theta.seq))
+
+plot(post.den.plot ~ theta.seq, type='l', col='chocolate4', lwd=2)
+
+## This is consistent with MLE: optimization of likelihood function
+## p(getting this data | certain prior) -> prior is the proportion 20/50.
+
+## WHAT IF PRIOR IS A NORMAL CENTERED AT 0.3:
+
+posterior_unif <- function(theta, N =50, k = 20){
+  
+  like <- (theta^(k)) * (1 - theta)^(N - k)
+  
+  pr <- dnorm(theta, mean = 0.3, sd = 0.1)
+  
+  out <- pr * like
+  ifelse(theta > 1, 0, out)
+  ifelse(theta < 0, 0, out)
+  return(out)
+}
+
+theta.seq <- seq(0, 1, by=0.001)
+
+post.den <- posterior_unif(theta.seq)
+
+post.den.plot <- (post.den/sum(post.den)) * length(theta.seq)
+
+sum(post.den.plot * 1/length(theta.seq))
+
+plot(post.den.plot ~ theta.seq, type='l', col='tan1', lwd=2)
+
+## The prior is drawn towards 0.3, but it's not insensitive to the
+## effect of the data.
