@@ -1,0 +1,129 @@
+## Fair die?
+# Thanks to https://youtu.be/_nhn54l5dis
+
+n = 6 # Number of trials
+k = 1 # Number of heads
+
+# p(D|theta) = choose(n, k) * theta^k * (1 - theta)^(n - k)
+
+# Complete skepticism:
+
+# prior = p(theta) =Uniform distribution = beta(1, 1)
+
+# p(theta|D) = p(theta) * p(D|theta) * 1/p(D)
+
+# Since beta is a prior conjugate of the binomial, we can
+# directly calculate in closed form the posterior
+
+# posterior = beta(a + k, b + n - k)
+
+# SIMULATION IN R:
+
+# NO PRECONCEIVED IDEA: UNIFORM PRIOR:
+
+theta <- seq(0, 1,length.out = 1000)
+
+a = 1; b = 1
+
+prior_theta = dbeta(theta, a, b)
+
+par(mfrow = c(3,1))
+par(mar=c(2.5,4.1,2.5,2.1))
+
+plot(prior_theta ~ theta, type ='l', lwd = 3, col = 'gray50',
+     xlab ='theta', ylab = 'density', main = "Prior Density")
+
+likelihood = choose(n, k) * (theta^k) * ((1 - theta)^(n - k))
+
+plot(likelihood ~ theta, type ='l', lwd = 3, col = 'gray50',
+     xlab ='likelihood', ylab = 'value', main = "Likelihood")
+
+posterior = dbeta(theta, a + k, b + n - k)
+
+plot(likelihood ~ theta, type ='l', lwd = 3, col = 'gray50',
+     xlab ='posterior', ylab = 'density', main = "Posterior Density")
+
+
+
+#====================================================================================
+
+## What if we had a prior idea that the coin was biased towards tails:
+
+
+a = 1
+b = 7
+
+prior_theta = dbeta(theta, a, b)
+
+
+plot(prior_theta ~ theta, type ='l', lwd = 3, col = 'chocolate4',
+     xlab ='theta', ylab = 'density', main = "Prior Density")
+
+
+likelihood = choose(n, k) * (theta^k) * ((1 - theta)^(n - k))
+
+plot(likelihood ~ theta, type ='l', lwd = 3, col = 'chocolate4',
+     xlab ='likelihood', ylab = 'value', main = "Likelihood")
+
+
+posterior = dbeta(theta, a + k, b + n - k) # went from beta(2, 6) to beta(8, 6)
+
+
+plot(posterior ~ theta, type ='l', lwd = 3, col = 'chocolate4',
+     xlab ='posterior', ylab = 'density', main = "Posterior Density")
+#================================================================================
+
+# MISLED COMPLETELY:
+
+## What if we had a prior idea that the coin was biased towards tails:
+
+
+a = 7
+b = 1
+
+prior_theta = dbeta(theta, a, b)
+
+
+plot(prior_theta ~ theta, type ='l', lwd = 3, col = 'darkgoldenrod',
+     xlab ='theta', ylab = 'density', main = "Prior Density")
+
+
+likelihood = choose(n, k) * (theta^k) * ((1 - theta)^(n - k))
+
+plot(likelihood ~ theta, type ='l', lwd = 3, col = 'darkgoldenrod',
+     xlab ='likelihood', ylab = 'value', main = "Likelihood")
+
+
+posterior = dbeta(theta, a + k, b + n - k) # went from beta(2, 6) to beta(8, 6)
+
+
+plot(posterior ~ theta, type ='l', lwd = 3, col = 'darkgoldenrod',
+     xlab ='posterior', ylab = 'density', main = "Posterior Density")
+
+
+#================================================================================
+
+# What if we believed in fairness:
+
+
+a = 5
+b = 5
+
+prior_theta = dbeta(theta, a, b)
+
+
+plot(prior_theta ~ theta, type ='l', lwd = 3, col = 'darkorange',
+     xlab ='theta', ylab = 'density', main = "Prior Density")
+
+
+likelihood = choose(n, k) * (theta^k) * ((1 - theta)^(n - k))
+
+plot(likelihood ~ theta, type ='l', lwd = 3, col = 'darkorange',
+     xlab ='theta', ylab = 'value', main = "Likelihood")
+
+
+posterior = dbeta(theta, a + k, b + n - k) # went from beta(2, 6) to beta(8, 6)
+
+
+plot(posterior ~ theta, type ='l', lwd = 2, col = 'darkorange',
+     xlab ='theta', ylab = 'density', main = "Posterior Density")
