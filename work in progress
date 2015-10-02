@@ -5,6 +5,7 @@ Several concepts apropos of "seeing" the equality:
 2. In ANOVA we test the variability that remains unexplained even after accounting for the means of each level within a factor (I am here referring to the one-way ANOVA). Let's take a graphical look with the most treaded dataset ever: `mtcars`:
 
 
+
 require(ave)
 mtcars$num <- ave(mtcars$mpg, mtcars$cyl, FUN = seq_along)
 head(mtcars)
@@ -32,6 +33,13 @@ segments(x0 = ss$x0, x1 = ss$x0, y0 = ss$y0, y1 = ss$y1,
          col='red')
 
 
+points(mtcars[mtcars$cyl==4,"mpg"] ~ mtcars[mtcars$cyl==4, "num"], 
+       pch=19, cex = 1, col="blue")
+
+
+
+
+
 plot(mtcars[mtcars$cyl==6,"mpg"] ~ mtcars[mtcars$cyl==6, "num"], 
      xlim = c(1,8),, ylim=c(10, 35), pch=19, cex = 1, col="magenta")
 abline(h=mean(mtcars$mpg))
@@ -49,6 +57,11 @@ segments(x0 = ss1$x0, x1 = ss1$x0, y0 = ss1$y0, y1 = ss1$y1,
          col='red')
 
 
+points(mtcars[mtcars$cyl==6,"mpg"] ~ mtcars[mtcars$cyl==6, "num"], 
+     pch=19, cex = 1, col="magenta")
+
+
+
 plot(mtcars[mtcars$cyl==8,"mpg"] ~ mtcars[mtcars$cyl==8, "num"], 
      xlim = c(1,15),,ylim=c(10, 35), pch=19, cex = 1, col="gray60")
 abline(h=mean(mtcars$mpg))
@@ -64,6 +77,10 @@ ss2 <- errors.coord(mtcars[mtcars$cyl==8, "num"], mtcars[mtcars$cyl==8,"mpg"], l
 
 segments(x0 = ss2$x0, x1 = ss2$x0, y0 = ss2$y0, y1 = ss2$y1, 
          col='red')
+
+
+points(mtcars[mtcars$cyl==8,"mpg"] ~ mtcars[mtcars$cyl==8, "num"], 
+     pch=19, cex = 1, col="gray60")
 
 
 
@@ -86,3 +103,5 @@ ss3 <- errors.coord(mtcars$NUM, mtcars$mpg, line)
 
 segments(x0 = ss3$x0, x1 = ss3$x0, y0 = ss3$y0, y1 = ss3$y1, 
          col='red')
+
+points(mtcars$mpg ~ mtcars$NUM, pch=19, col=mtcars$cyl)
