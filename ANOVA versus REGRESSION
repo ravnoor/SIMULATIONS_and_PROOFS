@@ -153,7 +153,7 @@ par(mfrow=c(1,1))
 
 plot(mtcars$mpg ~ mtcars$wt, 
      pch=19, col=mtcars$cyl, ylim=c(10,35),
-     xlab='', ylab="mpg")
+     xlab='weight', ylab="mpg")
 points(mtcars[mtcars$cyl==8,"mpg"] ~ mtcars[mtcars$cyl==8,"wt"], 
        pch=19, col="gray20")
 
