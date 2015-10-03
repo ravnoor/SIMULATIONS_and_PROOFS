@@ -1,14 +1,17 @@
+# http://stats.stackexchange.com/a/175290/67822
+
 require(ave)
 mtcars$num <- ave(mtcars$mpg, mtcars$cyl, FUN = seq_along)
 head(mtcars)
 
+par(bg="gray90")
 par(mfrow=c(1,3))
 
 plot(mtcars[mtcars$cyl==4,"mpg"] ~ mtcars[mtcars$cyl==4, "num"], 
      xlim = c(1,15), ylim=c(10, 35), pch=19, cex = 1, col="blue",
      xlab="", ylab="4 cylinders")
 abline(h=mean(mtcars$mpg))
-abline(h=mean(mtcars[mtcars$cyl=="4","mpg"]), col = "red")
+abline(h=mean(mtcars[mtcars$cyl=="4","mpg"]), col = "blue", lwd=3)
 
 # WITHIN GROUP VARIANCE:
 
@@ -23,7 +26,7 @@ errors.coord <- function(x0, y0, line){
 ss <- errors.coord(mtcars[mtcars$cyl==4, "num"], mtcars[mtcars$cyl==4,"mpg"], line)
 
 segments(x0 = ss$x0, x1 = ss$x0, y0 = ss$y0, y1 = ss$y1, 
-         col='red')
+         col='blue')
 
 
 points(mtcars[mtcars$cyl==4,"mpg"] ~ mtcars[mtcars$cyl==4, "num"], 
@@ -46,7 +49,7 @@ plot(mtcars[mtcars$cyl==6,"mpg"] ~ mtcars[mtcars$cyl==6, "num"],
      xlim = c(1,8),, ylim=c(10, 35), pch=19, cex = 1, col="magenta",
      xlab='', ylab="6 cylinders")
 abline(h=mean(mtcars$mpg))
-abline(h=mean(mtcars[mtcars$cyl=="6","mpg"]), col = "red")
+abline(h=mean(mtcars[mtcars$cyl=="6","mpg"]), col = "magenta",lwd=3)
 
 
 errors.coord <- function(x0, y0, line){
@@ -57,7 +60,7 @@ errors.coord <- function(x0, y0, line){
 }
 ss1 <- errors.coord(mtcars[mtcars$cyl==6, "num"], mtcars[mtcars$cyl==6,"mpg"], line)
 segments(x0 = ss1$x0, x1 = ss1$x0, y0 = ss1$y0, y1 = ss1$y1, 
-         col='red')
+         col='magenta')
 
 
 points(mtcars[mtcars$cyl==6,"mpg"] ~ mtcars[mtcars$cyl==6, "num"], 
@@ -73,7 +76,7 @@ plot(mtcars[mtcars$cyl==8,"mpg"] ~ mtcars[mtcars$cyl==8, "num"],
      xlim = c(1,15),ylim=c(10, 35), pch=19, cex = 1, col="gray60",
      xlab='', ylab="8 cylinders")
 abline(h=mean(mtcars$mpg))
-abline(h=mean(mtcars[mtcars$cyl=="8","mpg"]), col = "red")
+abline(h=mean(mtcars[mtcars$cyl=="8","mpg"]), col = "gray20", lwd=3)
 
 errors.coord <- function(x0, y0, line){
   
@@ -84,7 +87,7 @@ errors.coord <- function(x0, y0, line){
 ss2 <- errors.coord(mtcars[mtcars$cyl==8, "num"], mtcars[mtcars$cyl==8,"mpg"], line)
 
 segments(x0 = ss2$x0, x1 = ss2$x0, y0 = ss2$y0, y1 = ss2$y1, 
-         col='red')
+         col='gray20')
 
 
 points(mtcars[mtcars$cyl==8,"mpg"] ~ mtcars[mtcars$cyl==8, "num"], 
@@ -147,16 +150,23 @@ anova(fit)
 
 par(mfrow=c(1,1))
 
+
 plot(mtcars$mpg ~ mtcars$wt, 
      pch=19, col=mtcars$cyl, ylim=c(10,35),
      xlab='', ylab="mpg")
+points(mtcars[mtcars$cyl==8,"mpg"] ~ mtcars[mtcars$cyl==8,"wt"], 
+       pch=19, col="gray20")
+
+
+
+
 
 fit2 <- lm(mpg ~ wt + as.factor(cyl), data = mtcars)
 summary(fit2)
 
 abline(coef(fit2)[1],coef(fit2)[2], col="blue", lwd=2)
 abline(coef(fit2)[1] + coef(fit2)[3],coef(fit2)[2], col="magenta", lwd=2)
-abline(coef(fit2)[1] + coef(fit2)[4],coef(fit2)[2], col="gray70", lwd=2)
+abline(coef(fit2)[1] + coef(fit2)[4],coef(fit2)[2], col="gray20", lwd=2)
 
 errors.coord2 <- function(x0, y0, line){
   x1 <- x0
@@ -222,7 +232,7 @@ old.points <- cbind(ss2$x0, ss2$y0)
 new.points <- cbind(ss2$x1, ss2$y1)
 
 segments(x0 = ss4$x0, x1 = ss4$x1, y0 = ss4$y0, y1 = ss4$y1, 
-         col='gray70')
+         col='gray20')
 
 lengths3 <- (old.points[,1] - new.points[,1]) +
   (old.points[,2] - new.points[,2])
