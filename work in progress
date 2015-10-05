@@ -48,9 +48,10 @@ mean(reg_lines$intercepts)
 
 
 plot(y ~ x, data = S, pch=19, col="darkblue", 
-     type ="n", xlim=c(0,100), ylim=c(0,50))
+     type ="n", xlim=c(0,100), ylim=c(0,50),
+     main= "Fitted Lines of Regression")
 fit <- lm(y ~ x, data = S)
-abline(fit, col = "turquoise", lwd = 3)
+
 
 
 for(i in 1: length(betas)){
