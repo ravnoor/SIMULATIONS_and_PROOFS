@@ -1,4 +1,4 @@
-
+par(bg="gray80")
 
 x <- seq(from = 0.001, to = 100, by = 0.0001)
 y <- 0.4 * x
@@ -39,14 +39,16 @@ for(i in 1:100){
 reg_lines <- data.frame(intercepts, betas)
 
 
-hist(reg_lines$betas)
+hist(reg_lines$betas, col="blue4",
+     xlab = "betas", main = "Hist. Beta Values Samples", border=F)
 
 sd(reg_lines$betas)
 mean(reg_lines$betas)
 mean(reg_lines$intercepts)
 
 
-plot(y ~ x, data = S, pch=19, col="darkblue", xlim=c(0,100), ylim=c(0,60))
+plot(y ~ x, data = S, pch=19, col="darkblue", 
+     type ="n", xlim=c(0,100), ylim=c(0,50))
 fit <- lm(y ~ x, data = S)
 abline(fit, col = "turquoise", lwd = 3)
 
