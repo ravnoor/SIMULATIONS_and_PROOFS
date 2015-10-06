@@ -1,6 +1,6 @@
 # Posted here: http://stats.stackexchange.com/a/175629/67822
 
-par(bg="gray80")
+par(bg="snow")
 
 # The population has with given slope and intercept:
 
@@ -33,7 +33,7 @@ reg_lines <- data.frame(intercepts, betas)
 
 hist(reg_lines$betas, col="blue4",
      xlab = "betas", main = "Hist. Beta Values Samples", border=F,
-     freq=F, ylim=c(0,12))
+     freq=F, ylim=c(0,7))
 lines(density(reg_lines$betas), col="brown", lwd=2)
 
 
@@ -48,7 +48,8 @@ quantile(reg_lines$intercepts)
 
 # Compare to summary of fit (fot just one random sample, S):
 
-S <- population[sample(nrow(population), 100),] + rnorm(100, 10, 5)
+S <- population[sample(nrow(population), 100),]
+S$y <- S$y + rnorm(100, 0, 15)
 fit <- lm(y ~ x, data = S)
 summary(fit)
 
@@ -68,7 +69,7 @@ for(i in 1: length(betas)){
 
 
 
-plot(y ~ x, data = S, pch=19, 
+plot(y ~ x, data = S, pch=19, cex=0.1,
      col="darkblue", xlim=c(0,100), ylim=c(0,60),
      main = "Just One Sample")
 
