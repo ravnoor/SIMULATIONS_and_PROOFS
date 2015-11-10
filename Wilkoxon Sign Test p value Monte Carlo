@@ -1,0 +1,17 @@
+#Determining via Monte Carlo simulation the p-value of Wilkoxon test:
+
+# Under the null hypothesis
+v <- c(1:10)
+nsim <- 1e4
+
+W <- 0
+for (i in 1:nsim){
+rank <- sample(v)
+sign <- sample(c(1, -1), length(v), replace = T)
+W[i] <- sum(rank * sign)
+}
+
+# Two tailed test:
+(Max_W <- sum(v))
+(W_cutoff_value <- 33)
+(p_value <- (sum(W>W_cutoff_value) + sum(W<-W_cutoff_value)) / nsim)
