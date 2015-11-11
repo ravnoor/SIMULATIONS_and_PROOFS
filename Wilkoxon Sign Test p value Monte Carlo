@@ -1,7 +1,7 @@
 #Determining via Monte Carlo simulation the p-value of Wilkoxon test:
 
 # Under the null hypothesis
-v <- c(1:10)
+v <- c(1:10) # We have 10 pairs to obtain differences.
 nsim <- 1e4
 
 W <- 0
