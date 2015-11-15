@@ -1,0 +1,21 @@
+# The following code goes with the post: http://stats.stackexchange.com/a/21901/67822
+
+Hope <- cbind(matrix(c("Operations","Successful"),nrow=2,dimnames=list(NULL,c("Type"))),
+    as.data.frame(matrix(as.numeric(c(88,514,222,86,45,955,70,391,113,12,2,588)),nrow=2,byrow=T,
+    dimnames=list(NULL,c("A","B","C","D","E","All")))))
+
+Mercy <- cbind(matrix(c("Operations","Successful"),nrow=2,dimnames=list(NULL,c("Type"))),
+    as.data.frame(matrix(as.numeric(c(359,1836,299,2086,149,4729,292,1449,179,434,13,2366)),nrow=2,byrow=T,
+    dimnames=list(NULL,c("A","B","C","D","E","All")))))
+
+data_combined <- cbind(Type=Mercy[,1], Mercy[-1] + Hope[-1])
+freq_success <- cbind(Type="Prob",round(data[2,-1]/data[1,-1],2))
+prop_diff_surg <- cbind(Type=c("Mercy","Hope"),
+        rbind(round(Mercy[1,2:6]/Mercy[1,7],2),
+              round(Hope[1,2:6]/Hope[1,7],2)))
+succ_over_100 <- cbind(Type=c("Mercy","Hope"),
+        rbind(round(Mercy[2,2:6]/Mercy[1,2:6],2)*100,
+              round(Hope[2,2:6]/Hope[1,2:6],2)*100),
+        All= rbind(sum(round(Mercy[2,2:6]/Mercy[1,2:6],2)*100),
+              sum(round(Hope[2,2:6]/Hope[1,2:6],2)*100)))
+succ_over_100
