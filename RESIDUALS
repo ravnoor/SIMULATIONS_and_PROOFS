@@ -1,0 +1,27 @@
+# Apropos of this post: http://docs.statwing.com/interpreting-residual-plots-to-improve-your-regression/
+# Made up example relating the sales of an ice-cream factory in $1,000 to the temperature of the day - tons of loose ends.
+
+temp <- seq(25,40,by = 0.2)
+weekend <- c((150 + rnorm(length(temp), 0, 10)) * temp)
+head(weekend)
+weekday <- c((50 + rnorm(length(temp), 0, 10)) * temp)
+head(weekday)
+
+
+day <- c(rep("weekday",length(weekday)),rep("weekend",length(weekend)))
+revenue <- c(weekday,weekend)
+temp <- rep(temp,2)
+dat <- data.frame(day, temp, revenue)
+head(dat)
+
+plot(revenue ~ temp, dat)
+abline(lm(revenue ~ temp, dat))
+
+predicted <- predict(lm(revenue ~ temp, dat))
+actual <- dat$revenue
+plot(predicted,actual)
+
+plot(lm(revenue~temp,dat))
+
+predicted2 <- predict(lm(revenue ~ temp + day, dat))
+plot(predicted2, actual)
