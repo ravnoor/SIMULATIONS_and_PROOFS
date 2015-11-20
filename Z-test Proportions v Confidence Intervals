@@ -27,12 +27,12 @@ d_a <- density(samples_a)
 
 
 
-arrows(0.05,-0.8, 0.05 + se,-0.8, col="darkorange4", lwd=2, angle=15)
-arrows(0.05 + se,-0.8, 0.05 + 2*se,-0.8, col="darkorange4", lwd=2, angle=15)
-arrows(0.05 + 2*se,-0.8, 0.05 + 3*se,-0.8, col="darkorange4", lwd=2, angle=15)
-arrows(0.05 + 3*se,-0.8, 0.05 + 4*se,-0.8, col="darkorange4", lwd=2, angle=15)
-arrows(0.05 + 4*se,-0.8, 0.05 + 5*se,-0.8, col="darkorange4", lwd=2, angle=15)
-arrows(0.05 + 5*se,-0.8, 0.05 + 6*se,-0.8, col="darkorange4", lwd=2, angle=15)
+arrows(0.05,-0.8, 0.05 + se,-0.8, col="darkorange4", lwd=2, angle=15, length = 0.2)
+arrows(0.05 + se,-0.8, 0.05 + 2*se,-0.8, col="darkorange4", lwd=2, angle=15, length = 0.2)
+arrows(0.05 + 2*se,-0.8, 0.05 + 3*se,-0.8, col="darkorange4", lwd=2, angle=15, length = 0.2)
+arrows(0.05 + 3*se,-0.8, 0.05 + 4*se,-0.8, col="darkorange4", lwd=2, angle=15, length = 0.2)
+arrows(0.05 + 4*se,-0.8, 0.05 + 5*se,-0.8, col="darkorange4", lwd=2, angle=15, length = 0.2)
+arrows(0.05 + 5*se,-0.8, 0.05 + 6*se,-0.8, col="darkorange4", lwd=2, angle=15, length = 0.2)
 
 points(0.12,-0.8, col="red", pch = 19, cex=1.5)
 points(0.05, -0.8, col="black", pch = 19, cex = 1.5)
@@ -44,8 +44,8 @@ text(0.12,2, labels="Sample Proportion",col="red",cex=0.7)
 hist(samples_a, xlim=c(0.0,0.15), ylim=c(0,45), col="burlywood1", border=F, prob=T,
      main = "Confidence Interval Around Sample", xlab = "samples")
 lines(d_a, col="darkred", lwd = 1, lty=3)
-arrows(0.12,-0.8, 0.08,-0.8, col="darkorange", lwd=2, angle=15)
-arrows(0.12,-0.8, 0.15,-0.8, col="darkorange", lwd=2, angle=15)
+arrows(0.12,-0.8, 0.08,-0.8, col="darkorange", lwd=2, angle=15, length = 0.2)
+arrows(0.12,-0.8, 0.15,-0.8, col="darkorange", lwd=2, angle=15, length = 0.2)
 
 
 points(0.12,-0.8, col="red", pch = 19, cex=1.5)
