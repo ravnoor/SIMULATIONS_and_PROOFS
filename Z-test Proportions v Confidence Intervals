@@ -9,7 +9,7 @@ samples <- replicate(1000, rbinom(1, size = n, prob= mu)/n)
 mean(samples)
 sd(samples)
 
-hist(samples, xlim=c(0.0,0.15), ylim=c(0,60), prob = T, border = F, col="tan",
+hist(samples, xlim=c(0.0,0.15), ylim=c(0,45), prob = T, border = F, col="tan",
      main = "Standard Errors Away From Population", xlab="population")
 
 d_n <- density(samples)
