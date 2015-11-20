@@ -1,5 +1,7 @@
 # This codes generates the answer to this question: http://stats.stackexchange.com/a/182677/67822
 
+# This codes generates the answer to this question: http://stats.stackexchange.com/a/182677/67822
+
 set.seed(0)
 n <- 384
 mu <- 0.05
@@ -43,7 +45,7 @@ mean(samples_a)
 sd(samples_a)
 (se_a <- sqrt(0.12*(1-0.12)/n))
 
-hist(samples_a, xlim=c(0.0,0.15), ylim=c(0,45), col="burlywood1", border=F, prob=T,
+hist(samples_a, xlim=c(0.0,0.18), ylim=c(0,45), col="burlywood1", border=F, prob=T,
      main = "Confidence Interval Around Sample", xlab = "samples")
 lines(d_a, col="darkred", lwd = 1, lty=3)
 arrows(mu_a,-0.8, mu_a+1.96 * sd(samples_a),-0.8, col="burlywood4", lwd=1, angle=15, length = 0.2)
