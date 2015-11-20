@@ -1,3 +1,5 @@
+# This codes generates the answer to this question: http://stats.stackexchange.com/a/182677/67822
+
 set.seed(0)
 n <- 384
 mu <- 0.05
