@@ -1,8 +1,6 @@
 # This codes generates the answer to this question: http://stats.stackexchange.com/a/182677/67822
 
-# This codes generates the answer to this question: http://stats.stackexchange.com/a/182677/67822
-
-set.seed(0)
+set.seed(47)
 n <- 384
 mu <- 0.05
 
@@ -39,17 +37,19 @@ text(0.12,2, labels="Sample Proportion",col="red",cex=0.7)
 
 
 mu_a <- 0.12
-samples_a <- replicate(1e4, rbinom(1, size = n, prob= mu_a)/n)
-d_a <- density(samples_a)
+samples_a <- replicate(1000, rbinom(1, size = n, prob= mu_a)/n)
+d_a<- density(samples_a)
 mean(samples_a)
 sd(samples_a)
 (se_a <- sqrt(0.12*(1-0.12)/n))
 
-hist(samples_a, xlim=c(0.0,0.18), ylim=c(0,45), col="burlywood1", border=F, prob=T,
+hist(samples_a, xlim=c(0.0,0.17), ylim=c(0,35), col="burlywood1", border=F, prob=T,
      main = "Confidence Interval Around Sample", xlab = "samples")
 lines(d_a, col="darkred", lwd = 1, lty=3)
-arrows(mu_a,-0.8, mu_a+1.96 * sd(samples_a),-0.8, col="burlywood4", lwd=1, angle=15, length = 0.2)
-arrows(mu_a,-0.8, mu_a-1.96 * sd(samples_a),-0.8, col="burlywood4", lwd=1, angle=15, length = 0.2)
+arrows(mu_a,-0.8, mu_a + se_a,-0.8, col="burlywood4", lwd=1, angle=15, length = 0.2)
+arrows(mu_a + se_a,-0.8, mu_a + 2*se_a,-0.8, col="burlywood4", lwd=1, angle=15, length = 0.2)
+arrows(mu_a,-0.8, mu_a - se_a,-0.8, col="burlywood4", lwd=1, angle=15, length = 0.2)
+arrows(mu_a + se_a,-0.8, mu_a - 2*se_a,-0.8, col="burlywood4", lwd=1, angle=15, length = 0.2)
 
 
 points(0.12,-0.8, col="red", pch = 19, cex=1.5)
