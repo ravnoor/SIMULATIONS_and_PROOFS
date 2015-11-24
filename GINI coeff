@@ -3,7 +3,7 @@ n <- length(x)
 w <- 4 * ((1:n) - (n - 1)/2)/n/(n - 1)
 z <- sum(w * sort(x - mean(x))) # Gini coeff.
 plot(z ~ 1, xlim=c(1, 3), 
-     ylim=c(1, 4),
+     ylim=c(1, 3.5),
      col="red", pch= 20,
      main = "Gini Index (red) v SD (blue)",
      xlab = "Upper/Lower Abs. Values Range",
