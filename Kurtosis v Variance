@@ -1,0 +1,10 @@
+set.seed(98)
+a <- rnorm(1e4, 0.5, 0.22)
+hist(a, freq = T, breaks = 40, col = "gray40", border = F,
+     main="High kurtosis (gray) v Low kurtosis (blue)",
+     xlab="")
+b <- rbeta(1e4, 2, 2)
+hist(b, col=rgb(0,0,1, alpha = 0.8), add=T, freq=T, border = F)
+
+sd(a)
+sd(b)
