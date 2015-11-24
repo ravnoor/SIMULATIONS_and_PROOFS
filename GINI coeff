@@ -1,0 +1,20 @@
+x <- seq(-3.1,3.1,by=0.001)
+n <- length(x)
+w <- 4 * ((1:n) - (n - 1)/2)/n/(n - 1)
+z <- sum(w * sort(x - mean(x)))
+plot(z ~ abs(-3.1), xlim=c(0,3.2), 
+     ylim=c(0,2.5),
+     col="red", pch=20,
+     main = "Gini Index (red) v SD (blue)",
+     xlab = "Upper/Lower Abs. Values Range",
+     ylab = "Dispersion")
+points(abs(-3.1), sd(x), col="blue", pch=20)
+
+for (i in seq(-3,-0.1,by=0.1)){
+    x <- seq(i, -i, by=0.001) 
+    n <- length(x)
+    w <- 4 * ((1:n) - (n - 1)/2)/n/(n - 1)
+    z <- sum(w * sort(x - mean(x)))
+    points(abs(i), z, col= "red", pch=20)
+    points(abs(i), sd(x), col="blue", pch=20)
+}
