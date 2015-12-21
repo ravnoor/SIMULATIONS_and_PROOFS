@@ -32,7 +32,7 @@ require(lme4); require(lmerTest)
 fit <- lmer(length ~ treatment + organ + tissue + (1|tree/organ/sample), data = trees) 
 summary(fit)
 # Interpreting coefficients: http://stats.stackexchange.com/a/186994/67822
-predict(fit, 
+
     newdata = data.frame(treatment = "C", organ = "root", tissue = "phloem"), re.form = NA)
 predict(fit, 
     newdata = data.frame(treatment = "T", organ = "root", tissue = "phloem"), re.form = NA)
@@ -46,3 +46,6 @@ predict(fit,
 predict(fit, 
     newdata = data.frame(treatment = "C", organ = "stem", tissue = "xylem"), re.form = NA)
 #same as: 93.7903 + 8.1326 +  13.9814
+predict(fit, 
+    newdata = data.frame(treatment = "C", organ = "root", tissue = "xylem"), re.form = NA)
+#same as: 93.7903 + 13.9814
