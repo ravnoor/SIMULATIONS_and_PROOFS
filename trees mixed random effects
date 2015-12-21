@@ -39,7 +39,7 @@ fit <- lmer(length ~ treatment + organ + tissue + (1|tree/organ/sample), data = 
 summary(fit)
 # Interpreting coefficients: http://stats.stackexchange.com/a/186994/67822
 
-    newdata = data.frame(treatment = "C", organ = "root", tissue = "phloem"), re.form = NA)
+
 predict(fit, 
     newdata = data.frame(treatment = "T", organ = "root", tissue = "phloem"), re.form = NA)
 
