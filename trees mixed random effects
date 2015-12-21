@@ -1,0 +1,33 @@
+# http://stats.stackexchange.com/q/79360/67822
+#n <- 30 # Number of trees
+#site <- c(rep("L", 1/2 * length(organ)), rep("R", 1/2*length(organ)))
+#tree <- c(rep("LT01",12), rep("LT02",12), rep("LT03",12),
+#          rep("LT04",12), rep("LT05",12), rep("LT06",12),
+#          rep("LT07",12), rep("LT08",12), rep("LT09",12),
+#          rep("LT10",12), rep("LT11",12), rep("LT12",12),
+#          rep("LT13",12), rep("LT14",12), rep("LT15",12),
+#          rep("RT01",12), rep("RT02",12), rep("RT03",12),
+#          rep("RT04",12), rep("RT05",12), rep("RT06",12),
+#          rep("RT07",12), rep("RT08",12), rep("RT09",12),
+#          rep("RT10",12), rep("RT11",12), rep("RT12",12),
+#          rep("RT13",12), rep("RT14",12), rep("RT15",12))
+#treatment <- c(rep("T", 1/2 * length(organ)), rep("C", 1/2 * length(organ)))
+#organ <-  rep(c(rep("root", 6), rep("stem", 6)), n)
+#sample <- rep(c(1,1,2,2,3,3), n * 2)
+#tissue <- rep(c("phloem","xylem"), n * 6)
+#length <- imported from Google drive
+#trees <- data.frame(site,tree,treatment,organ,sample,tissue,length)
+
+
+library(gsheet)
+trees <- read.csv(text = 
+        gsheet2text('https://docs.google.com/spreadsheets/d/1EURgjIrMIWEtW1gIhL6CLfDR1HuV1pXDcJodFVYdzJI/edit?usp=sharing',
+                                 format ='csv'))
+head(trees)
+
+str(trees)
+trees[1:12,]
+
+require(lme4); require(lmerTest)
+fit <- lmer(length ~ treatment + organ + tissue + (1|tree/organ/sample), data = trees) 
+summary(fit)
