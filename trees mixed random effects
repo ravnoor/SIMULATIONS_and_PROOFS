@@ -1,32 +1,38 @@
 # http://stats.stackexchange.com/q/79360/67822
-#n <- 30 # Number of trees
-#site <- c(rep("L", 1/2 * length(organ)), rep("R", 1/2*length(organ)))
-#tree <- c(rep("LT01",12), rep("LT02",12), rep("LT03",12),
-#          rep("LT04",12), rep("LT05",12), rep("LT06",12),
-#          rep("LT07",12), rep("LT08",12), rep("LT09",12),
-#          rep("LT10",12), rep("LT11",12), rep("LT12",12),
-#          rep("LT13",12), rep("LT14",12), rep("LT15",12),
-#          rep("RT01",12), rep("RT02",12), rep("RT03",12),
-#          rep("RT04",12), rep("RT05",12), rep("RT06",12),
-#          rep("RT07",12), rep("RT08",12), rep("RT09",12),
-#          rep("RT10",12), rep("RT11",12), rep("RT12",12),
-#          rep("RT13",12), rep("RT14",12), rep("RT15",12))
-#treatment <- c(rep("T", 1/2 * length(organ)), rep("C", 1/2 * length(organ)))
-#organ <-  rep(c(rep("root", 6), rep("stem", 6)), n)
-#sample <- rep(c(1,1,2,2,3,3), n * 2)
-#tissue <- rep(c("phloem","xylem"), n * 6)
-#length <- imported from Google drive
-#trees <- data.frame(site,tree,treatment,organ,sample,tissue,length)
+
+n         <- 30 # Number of trees
+
+organ <-  rep(c(rep("root", 6), rep("stem", 6)), n)
+site <- c(rep("L", 1/2 * length(organ)), rep("R", 1/2*length(organ)))
+tree <- c(rep("LT01",12), rep("LT02",12), rep("LT03",12),
+                    rep("LT04",12), rep("LT05",12), rep("LT06",12),
+                    rep("LT07",12), rep("LT08",12), rep("LT09",12),
+                    rep("LT10",12), rep("LT11",12), rep("LT12",12),
+                    rep("LT13",12), rep("LT14",12), rep("LT15",12),
+                    rep("RT01",12), rep("RT02",12), rep("RT03",12),
+                    rep("RT04",12), rep("RT05",12), rep("RT06",12),
+                    rep("RT07",12), rep("RT08",12), rep("RT09",12),
+                    rep("RT10",12), rep("RT11",12), rep("RT12",12),
+                    rep("RT13",12), rep("RT14",12), rep("RT15",12))
+sample <- rep(c(1,1,2,2,3,3), n * 2)
+treatment <- c(rep("T", 1/2 * length(organ)), rep("C", 1/2 * length(organ)))
+tissue <- rep(c("phloem","xylem"), n * 6)
 
 
-library(gsheet)
-trees <- read.csv(text = 
-        gsheet2text('https://docs.google.com/spreadsheets/d/1EURgjIrMIWEtW1gIhL6CLfDR1HuV1pXDcJodFVYdzJI/edit?usp=sharing',
-                                 format ='csv'))
-head(trees)
 
+organ_contribution     <- as.vector(replicate(n, c(rnorm(6,0,1),rnorm(6,2,1))))
+treatment_contribution <- c(rnorm(180, 100, 20), rnorm(180, 70, 20))
+tissue_contribution    <- as.vector(replicate(n*6, c(rnorm(1,0,1), rnorm(1,2,1))))
+sample_contribution    <- as.vector(replicate(n*2, c(rnorm(2,2,1), rnorm(2,3,1), rnorm(2,4,1))))
+tree_contribution      <- as.vector(replicate(n, c(rnorm(12, sample(1:10, 2), 1))))
+site_contribution      <- c(rnorm(180), rnorm(180, 2, 2))
+length    <- site_contribution + tree_contribution + sample_contribution + 
+  tissue_contribution + treatment_contribution + organ_contribution
+
+
+trees <- data.frame(site,tree,treatment,organ,sample,tissue,length)
+trees[1:15,]
 str(trees)
-trees[1:12,]
 
 require(lme4); require(lmerTest)
 fit <- lmer(length ~ treatment + organ + tissue + (1|tree/organ/sample), data = trees) 
