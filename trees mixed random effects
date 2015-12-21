@@ -31,3 +31,4 @@ trees[1:12,]
 require(lme4); require(lmerTest)
 fit <- lmer(length ~ treatment + organ + tissue + (1|tree/organ/sample), data = trees) 
 summary(fit)
+# Interpreting coefficients: http://stats.stackexchange.com/a/186994/67822
