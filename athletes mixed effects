@@ -1,82 +1,43 @@
 # From http://anythingbutrbitrary.blogspot.in/2012/10/hierarchical-linear-models-and-lmer.html
-# and http://anythingbutrbitrary.blogspot.in/2012/06/random-regression-coefficients-using.html
 
-# WE LOOK AT THE REGRESSION OF [GLUCOSE] ~ [AMINOACID_A] IN 30 athletesS after 15 racesS:
+# WE LOOK AT THE REGRESSION OF [GLUCOSE] ~ [AMINOACID_A] IN 30 athletes after 15 races:
+
+# we'll make the covariance of the slopes between athletes 0.5, 
+# and the covariance between intercepts of different athletes 0.2
+# Further we'll establish a correlation between intercepts and slopes of 0.8.
+
+rm(list = ls())
 set.seed(0)
-
-athletes <- 30
-races <- 15
-data <- data.frame(athletes = sort(rep(c(1:athletes),races)), races = rep(c(1:races), athletes),
-        AAA = rnorm(athletes * races, 50, 5))# I made [AMINO ACID_A] 1/2 [glucose]
-
-# Slopes for each athletes:
-
-beta <- 2 + 0.2 * rnorm(athletes) 
-# So the betas will follow distribution N(2, 0.2). The "2" should show later as the slope
-# in the fixed effects, while the 0.2 should show up in the SD of random effects if we include
-# the intercept and the [AAA] as a random term. Clearly we are only changing the spread of the
-# slopes across athletess - leaving the intercept unchanged.
-
-length(beta) #30
-data$beta <- beta[data$athletes]; length(data$beta) #450
-head(data)
-
-# Now for the [glucose]:
-
-data$glucose <- 1 + data$AAA * data$beta + 0.75 * rnorm(athletes*races) # ~N(0,0.75) is epsilon
-
-library(lme4); library(lmerTest)
-fit <- lmer(glucose ~ AAA + (1 + AAA|athletes), data = data) 
-summary(fit) # So we recover the "2" for the fixed effects as "1.97712"; the "0.2" as 0.2102.
-# and the 0.75 corresponding to the epsilon as 0.7400 under Residual.
-# The "1" intercept in data$glucose is recovered as (Intercept) "1.50093".
-# The intercept variance is 0 (we set it fixed at "1"), and the estimated variance is "0.03653".
-
-########################################################
-
-#SAME WITH RANDOM INTERCEPTS and SLOPES:
-
-# Intercepts and slopes for each athlete:
-
-athletes.df = data.frame(athletes = c(1:athletes), a = rnorm(athletes)) # a is a mystery parameter for a sec.
-head(athletes.df, 3)
-
-# The intercept and slope for [glucose] ~ [AAA] will come from this random "a". So it is very
-# much alike beta <- 2 + 0.2 * rnorm(athletes) in the preceding example with random betas:
-
-athletes.df <-  within(athletes.df, {
-    alpha_a <-  1 - 0.15 * a
-    beta_a  <-  2 + 0.1  * a
-})
-
-head(athletes.df, 3)
-
-# So both the intercept and the slope are related linearly to the same "a".
-# We'll modify this simple linear relationship by making the covariance of the slopes
-# between athletess 0.5, and also changing the intercepts - although not as much, just 0.2
-# in covariance. Further we'll establish a correlation between intercepts and slopes of 0.9.
-
 library(mvtnorm)
-i = 0.2
-r = 0.9
-s = 0.5
-cov.matrix <-  matrix(c(i^2, r * i * s, r * i * s, s^2), nrow = 2,
-                      byrow = TRUE)
+
+athletes = 30
+races = 15
+
+# Setting up covariance matrix:
+
+i = 0.2 # sd between intercepts
+s = 0.5 # sd between slopes
+r = 0.8 # correlation between intercepts and slopes
+
+(cov.matrix <-  matrix(c(i^2, r * i * s, r * i * s, s^2), nrow = 2, byrow = T))
+
+# Getting a random sample from this bi-variate normal distribution for each athlete:
+
 random.effects <-  rmvnorm(athletes, mean = c(0, 0), sigma = cov.matrix)
 
-# Now we add this variation to the alpha_a (alpha related to a) and beta_a (beta given a):
+athletes.df = data.frame(athletes = c(1:athletes)) 
 
-athletes.df$alpha = athletes.df$alpha_a + random.effects[, 1]
-athletes.df$beta =  athletes.df$beta_a + random.effects[, 2]
+# We establish now the mean of these random intercepts and slopes:
+
+athletes.df$alpha = 1 + random.effects[, 1]
+athletes.df$beta =  2 + random.effects[, 2]
+
 head(athletes.df, 3)
-summary(athletes.df$beta) #slope is around 2, which I got by empirically 
-# changing the line with "a", but its basically the intercept of the that line for beta_a.
-sd(athletes.df$beta) # with a SD of 0.5 as we set it up: between athletes the SD in the 
-# slopes was s=0.5.
-summary(athletes.df$alpha) # The intercept has a mean of 1, corresponding to the intercept
-# in the line with "a" above, calculating alpha_a.
-sd(athletes.df$alpha) # with a SD of 0.26, which corresponds to the variability of intercepts
-# between athletes above: i=0.2.
+
+summary(athletes.df$beta)  # The mean is the slope in the fixed effects
+sd(athletes.df$beta)       # The sd of the slopes as random effects (we wanted 0.5)
+summary(athletes.df$alpha) # The intercept has a mean of 1: (Intercept) fixed eff's
+sd(athletes.df$alpha)      # with a SD intercept as random eff (we wanted 0.2)
 
 #SO THERE IS CORRELATION BETWEEN INTERCEPTS AND SLOPES OF 0.9 WITHIN A SINGLE ATHLETE,
 #AND BOTH INTERCEPTS AND SLOPES HAVE COMMON MEAN AND SD ACROSS ATHLETES.
@@ -89,9 +50,11 @@ observations.df <-  data.frame(athletes = sort(rep(c(1:athletes), races)),
                     races = rep(c(1:races), athletes), 
                     AAA = rep(rnorm(athletes * races, 50, 5)))
 # Again we give [AAA] a mean of 50 and sd of 5 as in the simulation with random slopes:
-head(observations.df)
+
 # Merging the [AAA] dataframe with the dataframe of coefficients: 
+
 df <-  merge(athletes.df, observations.df)
+head(df)
 
 # And calculating the [glucose]:
 
@@ -101,8 +64,10 @@ head(df)
 
 fit2 <-  lmer(glucose ~ AAA + (1 + AAA | athletes), data = df)
 summary(fit2)
-# random effects correlation of .9 is 0.92. The standard deviation of .2 of intercepts is 0.2613.
-# the 0.5 sd for slopes is 0.5317.
-# the sd of epsilon set at 0.75 is 0.7649.
-# the intercept of fixed effects was supposed to be 1 (the mean of alpha or intercept in "a" eq's)
-# and it returns 0.79513. For the slope it was "2", and the estimate:  1.96303.
+# random effects correlation of .8 is 1. 
+# The standard deviation of ~ 0.2 of rd intercepts is in athletes(Intercept) Std.Dev.
+# the ~ 0.5 sd for rd slopes is in AAA Std.Dev
+# the sd of epsilon set at 0.75 is in Residual Std.Dev.
+# the intercept of fixed effects was supposed to be 1 
+# and it returns Fixed effects (Intercept).
+#For the slope it was 2, and the estimate is in Fixed effects AAA.
