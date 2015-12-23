@@ -73,365 +73,364 @@ predict(fit, newdata = data.frame(treatment = "C", organ = "root", tissue = "xyl
 
 
 The data:
-trees
-    site tree treatment organ sample tissue    length
-1      L LT01         T  root      1 phloem 101.62281
-2      L LT01         T  root      1  xylem  99.31664
-3      L LT01         T  root      2 phloem 106.84463
-4      L LT01         T  root      2  xylem 103.20058
-5      L LT01         T  root      3 phloem  67.13502
-6      L LT01         T  root      3  xylem  63.28923
-7      L LT01         T  stem      1 phloem  78.00734
-8      L LT01         T  stem      1  xylem  71.07529
-9      L LT01         T  stem      2 phloem  88.21948
-10     L LT01         T  stem      2  xylem 119.75379
-11     L LT01         T  stem      3 phloem  87.22840
-12     L LT01         T  stem      3  xylem 110.17714
-13     L LT02         T  root      1 phloem 106.36321
-14     L LT02         T  root      1  xylem  96.10490
-15     L LT02         T  root      2 phloem 138.25287
-16     L LT02         T  root      2  xylem 132.06563
-17     L LT02         T  root      3 phloem  81.95584
-18     L LT02         T  root      3  xylem 105.81615
-19     L LT02         T  stem      1 phloem 106.60414
-20     L LT02         T  stem      1  xylem  67.63055
-21     L LT02         T  stem      2 phloem 107.91591
-22     L LT02         T  stem      2  xylem 103.99832
-23     L LT02         T  stem      3 phloem 126.03789
-24     L LT02         T  stem      3  xylem 136.55618
-25     L LT03         T  root      1 phloem 114.95384
-26     L LT03         T  root      1  xylem  59.10219
-27     L LT03         T  root      2 phloem 106.21235
-28     L LT03         T  root      2  xylem 127.09012
-29     L LT03         T  root      3 phloem  94.37258
-30     L LT03         T  root      3  xylem 109.14081
-31     L LT03         T  stem      1 phloem  83.47901
-32     L LT03         T  stem      1  xylem  86.53756
-33     L LT03         T  stem      2 phloem 146.25531
-34     L LT03         T  stem      2  xylem 106.81538
-35     L LT03         T  stem      3 phloem  91.93761
-36     L LT03         T  stem      3  xylem  84.74103
-37     L LT04         T  root      1 phloem  87.13968
-38     L LT04         T  root      1  xylem 120.36564
-39     L LT04         T  root      2 phloem 134.76031
-40     L LT04         T  root      2  xylem 102.22086
-41     L LT04         T  root      3 phloem 132.95393
-42     L LT04         T  root      3  xylem 101.79481
-43     L LT04         T  stem      1 phloem  84.08566
-44     L LT04         T  stem      1  xylem 107.12133
-45     L LT04         T  stem      2 phloem 123.58576
-46     L LT04         T  stem      2  xylem 110.79736
-47     L LT04         T  stem      3 phloem 102.79166
-48     L LT04         T  stem      3  xylem  78.41870
-49     L LT05         T  root      1 phloem  85.01316
-50     L LT05         T  root      1  xylem  84.71700
-51     L LT05         T  root      2 phloem 127.94241
-52     L LT05         T  root      2  xylem  74.42423
-53     L LT05         T  root      3 phloem 116.22725
-54     L LT05         T  root      3  xylem  82.59103
-55     L LT05         T  stem      1 phloem 139.12821
-56     L LT05         T  stem      1  xylem 111.65913
-57     L LT05         T  stem      2 phloem 117.91121
-58     L LT05         T  stem      2  xylem  93.97934
-59     L LT05         T  stem      3 phloem  87.20279
-60     L LT05         T  stem      3  xylem 100.86473
-61     L LT06         T  root      1 phloem 123.86349
-62     L LT06         T  root      1  xylem  90.92055
-63     L LT06         T  root      2 phloem  98.61630
-64     L LT06         T  root      2  xylem  97.92118
-65     L LT06         T  root      3 phloem  52.68413
-66     L LT06         T  root      3  xylem 116.02086
-67     L LT06         T  stem      1 phloem 122.14600
-68     L LT06         T  stem      1  xylem 108.44947
-69     L LT06         T  stem      2 phloem  74.85936
-70     L LT06         T  stem      2  xylem 144.07907
-71     L LT06         T  stem      3 phloem 114.09201
-72     L LT06         T  stem      3  xylem  59.79946
-73     L LT07         T  root      1 phloem  83.20467
-74     L LT07         T  root      1  xylem 105.56043
-75     L LT07         T  root      2 phloem  97.51150
-76     L LT07         T  root      2  xylem 103.58743
-77     L LT07         T  root      3 phloem  97.25996
-78     L LT07         T  root      3  xylem  84.08954
-79     L LT07         T  stem      1 phloem 103.49259
-80     L LT07         T  stem      1  xylem 105.19842
-81     L LT07         T  stem      2 phloem 144.73149
-82     L LT07         T  stem      2  xylem 142.97034
-83     L LT07         T  stem      3 phloem 101.67019
-84     L LT07         T  stem      3  xylem 102.95115
-85     L LT08         T  root      1 phloem  97.88173
-86     L LT08         T  root      1  xylem  63.46614
-87     L LT08         T  root      2 phloem 108.75453
-88     L LT08         T  root      2  xylem 142.50735
-89     L LT08         T  root      3 phloem  91.89845
-90     L LT08         T  root      3  xylem 104.38935
-91     L LT08         T  stem      1 phloem 104.91474
-92     L LT08         T  stem      1  xylem 116.08402
-93     L LT08         T  stem      2 phloem 107.93192
-94     L LT08         T  stem      2  xylem 129.81339
-95     L LT08         T  stem      3 phloem 105.75577
-96     L LT08         T  stem      3  xylem 103.35236
-97     L LT09         T  root      1 phloem  64.78767
-98     L LT09         T  root      1  xylem  81.21188
-99     L LT09         T  root      2 phloem 108.62857
-100    L LT09         T  root      2  xylem  83.78553
-101    L LT09         T  root      3 phloem  31.11739
-102    L LT09         T  root      3  xylem 120.23450
-103    L LT09         T  stem      1 phloem 122.23764
-104    L LT09         T  stem      1  xylem 125.50504
-105    L LT09         T  stem      2 phloem  92.95169
-106    L LT09         T  stem      2  xylem  93.47735
-107    L LT09         T  stem      3 phloem 107.16206
-108    L LT09         T  stem      3  xylem  98.79611
-109    L LT10         T  root      1 phloem  73.24718
-110    L LT10         T  root      1  xylem  86.22190
-111    L LT10         T  root      2 phloem  60.07630
-112    L LT10         T  root      2  xylem  87.23735
-113    L LT10         T  root      3 phloem  89.24351
-114    L LT10         T  root      3  xylem  84.91060
-115    L LT10         T  stem      1 phloem  75.82439
-116    L LT10         T  stem      1  xylem 102.44165
-117    L LT10         T  stem      2 phloem 132.84277
-118    L LT10         T  stem      2  xylem 112.31928
-119    L LT10         T  stem      3 phloem  84.33148
-120    L LT10         T  stem      3  xylem  92.42385
-121    L LT11         T  root      1 phloem  73.83372
-122    L LT11         T  root      1  xylem 101.85146
-123    L LT11         T  root      2 phloem 150.26492
-124    L LT11         T  root      2  xylem 137.82466
-125    L LT11         T  root      3 phloem 112.83376
-126    L LT11         T  root      3  xylem 134.39103
-127    L LT11         T  stem      1 phloem 113.50390
-128    L LT11         T  stem      1  xylem 119.29099
-129    L LT11         T  stem      2 phloem 138.38852
-130    L LT11         T  stem      2  xylem 146.15507
-131    L LT11         T  stem      3 phloem  96.22054
-132    L LT11         T  stem      3  xylem 104.19146
-133    L LT12         T  root      1 phloem 116.70402
-134    L LT12         T  root      1  xylem  88.13752
-135    L LT12         T  root      2 phloem 120.94218
-136    L LT12         T  root      2  xylem  98.76200
-137    L LT12         T  root      3 phloem 105.82639
-138    L LT12         T  root      3  xylem  75.11015
-139    L LT12         T  stem      1 phloem 112.73711
-140    L LT12         T  stem      1  xylem  88.10927
-141    L LT12         T  stem      2 phloem  62.65651
-142    L LT12         T  stem      2  xylem  99.51999
-143    L LT12         T  stem      3 phloem  71.93020
-144    L LT12         T  stem      3  xylem  94.85023
-145    L LT13         T  root      1 phloem 107.78949
-146    L LT13         T  root      1  xylem 106.48105
-147    L LT13         T  root      2 phloem 125.08531
-148    L LT13         T  root      2  xylem 123.87771
-149    L LT13         T  root      3 phloem  95.14046
-150    L LT13         T  root      3  xylem 108.65206
-151    L LT13         T  stem      1 phloem 130.94283
-152    L LT13         T  stem      1  xylem 135.43595
-153    L LT13         T  stem      2 phloem 124.38040
-154    L LT13         T  stem      2  xylem 119.74385
-155    L LT13         T  stem      3 phloem 108.74328
-156    L LT13         T  stem      3  xylem 117.71852
-157    L LT14         T  root      1 phloem 116.30996
-158    L LT14         T  root      1  xylem 140.52378
-159    L LT14         T  root      2 phloem 129.55159
-160    L LT14         T  root      2  xylem  86.01373
-161    L LT14         T  root      3 phloem 128.25500
-162    L LT14         T  root      3  xylem 144.20944
-163    L LT14         T  stem      1 phloem 154.33744
-164    L LT14         T  stem      1  xylem 108.04026
-165    L LT14         T  stem      2 phloem 135.59938
-166    L LT14         T  stem      2  xylem 120.13421
-167    L LT14         T  stem      3 phloem 113.59614
-168    L LT14         T  stem      3  xylem 126.20672
-169    L LT15         T  root      1 phloem  62.91736
-170    L LT15         T  root      1  xylem  71.62817
-171    L LT15         T  root      2 phloem 101.27827
-172    L LT15         T  root      2  xylem 102.05493
-173    L LT15         T  root      3 phloem  68.94923
-174    L LT15         T  root      3  xylem 120.15328
-175    L LT15         T  stem      1 phloem 130.58748
-176    L LT15         T  stem      1  xylem 100.45946
-177    L LT15         T  stem      2 phloem 121.02100
-178    L LT15         T  stem      2  xylem 104.99902
-179    L LT15         T  stem      3 phloem  82.98755
-180    L LT15         T  stem      3  xylem  97.03451
-181    R RT01         C  root      1 phloem  54.62100
-182    R RT01         C  root      1  xylem  61.71862
-183    R RT01         C  root      2 phloem  95.23424
-184    R RT01         C  root      2  xylem  77.93620
-185    R RT01         C  root      3 phloem  59.68946
-186    R RT01         C  root      3  xylem  62.15302
-187    R RT01         C  stem      1 phloem  88.82720
-188    R RT01         C  stem      1  xylem  54.80915
-189    R RT01         C  stem      2 phloem  80.37570
-190    R RT01         C  stem      2  xylem 104.17302
-191    R RT01         C  stem      3 phloem  71.77609
-192    R RT01         C  stem      3  xylem  84.31624
-193    R RT02         C  root      1 phloem  40.32941
-194    R RT02         C  root      1  xylem  80.47243
-195    R RT02         C  root      2 phloem  83.67850
-196    R RT02         C  root      2  xylem  70.89210
-197    R RT02         C  root      3 phloem 126.17285
-198    R RT02         C  root      3  xylem  62.85706
-199    R RT02         C  stem      1 phloem  81.70935
-200    R RT02         C  stem      1  xylem  78.23202
-201    R RT02         C  stem      2 phloem  85.01761
-202    R RT02         C  stem      2  xylem  82.32745
-203    R RT02         C  stem      3 phloem  87.14543
-204    R RT02         C  stem      3  xylem  98.28344
-205    R RT03         C  root      1 phloem  50.28618
-206    R RT03         C  root      1  xylem  63.44474
-207    R RT03         C  root      2 phloem  81.60021
-208    R RT03         C  root      2  xylem  67.91615
-209    R RT03         C  root      3 phloem  95.02706
-210    R RT03         C  root      3  xylem  68.37916
-211    R RT03         C  stem      1 phloem  47.91596
-212    R RT03         C  stem      1  xylem  41.18470
-213    R RT03         C  stem      2 phloem  90.17676
-214    R RT03         C  stem      2  xylem  79.48771
-215    R RT03         C  stem      3 phloem 112.59992
-216    R RT03         C  stem      3  xylem  80.85996
-217    R RT04         C  root      1 phloem  74.37762
-218    R RT04         C  root      1  xylem  44.48295
-219    R RT04         C  root      2 phloem  48.95837
-220    R RT04         C  root      2  xylem  52.92391
-221    R RT04         C  root      3 phloem 124.85651
-222    R RT04         C  root      3  xylem  51.48065
-223    R RT04         C  stem      1 phloem  48.88845
-224    R RT04         C  stem      1  xylem  85.14305
-225    R RT04         C  stem      2 phloem  89.31414
-226    R RT04         C  stem      2  xylem  62.21639
-227    R RT04         C  stem      3 phloem  44.43239
-228    R RT04         C  stem      3  xylem  40.65331
-229    R RT05         C  root      1 phloem  58.48939
-230    R RT05         C  root      1  xylem  42.69953
-231    R RT05         C  root      2 phloem  72.64341
-232    R RT05         C  root      2  xylem  84.07157
-233    R RT05         C  root      3 phloem  85.57002
-234    R RT05         C  root      3  xylem  75.24645
-235    R RT05         C  stem      1 phloem  86.60418
-236    R RT05         C  stem      1  xylem  40.07048
-237    R RT05         C  stem      2 phloem  35.15872
-238    R RT05         C  stem      2  xylem  86.94174
-239    R RT05         C  stem      3 phloem  83.08052
-240    R RT05         C  stem      3  xylem  76.44976
-241    R RT06         C  root      1 phloem  91.37420
-242    R RT06         C  root      1  xylem  60.11956
-243    R RT06         C  root      2 phloem  95.85315
-244    R RT06         C  root      2  xylem  66.98104
-245    R RT06         C  root      3 phloem  74.71170
-246    R RT06         C  root      3  xylem  72.83388
-247    R RT06         C  stem      1 phloem  86.65079
-248    R RT06         C  stem      1  xylem  89.70815
-249    R RT06         C  stem      2 phloem  99.15226
-250    R RT06         C  stem      2  xylem 101.57200
-251    R RT06         C  stem      3 phloem 118.22377
-252    R RT06         C  stem      3  xylem  85.14627
-253    R RT07         C  root      1 phloem  59.28603
-254    R RT07         C  root      1  xylem  44.73286
-255    R RT07         C  root      2 phloem  55.44053
-256    R RT07         C  root      2  xylem  76.73056
-257    R RT07         C  root      3 phloem 102.57838
-258    R RT07         C  root      3  xylem  83.73378
-259    R RT07         C  stem      1 phloem  69.55223
-260    R RT07         C  stem      1  xylem  71.00928
-261    R RT07         C  stem      2 phloem 112.04524
-262    R RT07         C  stem      2  xylem 114.01793
-263    R RT07         C  stem      3 phloem  89.04858
-264    R RT07         C  stem      3  xylem  89.71607
-265    R RT08         C  root      1 phloem  81.44576
-266    R RT08         C  root      1  xylem  25.48156
-267    R RT08         C  root      2 phloem  82.10323
-268    R RT08         C  root      2  xylem  98.12937
-269    R RT08         C  root      3 phloem  61.10278
-270    R RT08         C  root      3  xylem 115.32567
-271    R RT08         C  stem      1 phloem  93.18077
-272    R RT08         C  stem      1  xylem  58.57144
-273    R RT08         C  stem      2 phloem  83.69128
-274    R RT08         C  stem      2  xylem  96.55314
-275    R RT08         C  stem      3 phloem  93.44137
-276    R RT08         C  stem      3  xylem 100.94544
-277    R RT09         C  root      1 phloem  50.96021
-278    R RT09         C  root      1  xylem  37.46782
-279    R RT09         C  root      2 phloem  87.85871
-280    R RT09         C  root      2  xylem  49.69097
-281    R RT09         C  root      3 phloem  59.43259
-282    R RT09         C  root      3  xylem  49.25387
-283    R RT09         C  stem      1 phloem  73.94539
-284    R RT09         C  stem      1  xylem 108.27138
-285    R RT09         C  stem      2 phloem  66.83250
-286    R RT09         C  stem      2  xylem  89.23960
-287    R RT09         C  stem      3 phloem  83.84703
-288    R RT09         C  stem      3  xylem  56.86194
-289    R RT10         C  root      1 phloem  81.02715
-290    R RT10         C  root      1  xylem  40.75771
-291    R RT10         C  root      2 phloem  95.18134
-292    R RT10         C  root      2  xylem 104.01949
-293    R RT10         C  root      3 phloem  81.68361
-294    R RT10         C  root      3  xylem  71.53602
-295    R RT10         C  stem      1 phloem  98.55900
-296    R RT10         C  stem      1  xylem  81.73561
-297    R RT10         C  stem      2 phloem  78.30214
-298    R RT10         C  stem      2  xylem 113.54381
-299    R RT10         C  stem      3 phloem  83.07493
-300    R RT10         C  stem      3  xylem  89.95237
-301    R RT11         C  root      1 phloem  71.17556
-302    R RT11         C  root      1  xylem  85.71896
-303    R RT11         C  root      2 phloem 113.98845
-304    R RT11         C  root      2  xylem 135.07097
-305    R RT11         C  root      3 phloem  84.44245
-306    R RT11         C  root      3  xylem 103.16881
-307    R RT11         C  stem      1 phloem 113.54484
-308    R RT11         C  stem      1  xylem  48.20872
-309    R RT11         C  stem      2 phloem  53.41427
-310    R RT11         C  stem      2  xylem  62.51044
-311    R RT11         C  stem      3 phloem 113.85099
-312    R RT11         C  stem      3  xylem 116.23310
-313    R RT12         C  root      1 phloem  71.31181
-314    R RT12         C  root      1  xylem  84.76594
-315    R RT12         C  root      2 phloem  17.39266
-316    R RT12         C  root      2  xylem  90.86900
-317    R RT12         C  root      3 phloem  81.23755
-318    R RT12         C  root      3  xylem  28.59912
-319    R RT12         C  stem      1 phloem 103.22779
-320    R RT12         C  stem      1  xylem  58.25146
-321    R RT12         C  stem      2 phloem 104.29950
-322    R RT12         C  stem      2  xylem  92.28170
-323    R RT12         C  stem      3 phloem  88.45757
-324    R RT12         C  stem      3  xylem  97.96031
-325    R RT13         C  root      1 phloem  73.72394
-326    R RT13         C  root      1  xylem  95.76228
-327    R RT13         C  root      2 phloem  47.53509
-328    R RT13         C  root      2  xylem  77.88808
-329    R RT13         C  root      3 phloem 100.76951
-330    R RT13         C  root      3  xylem  52.30059
-331    R RT13         C  stem      1 phloem  65.87047
-332    R RT13         C  stem      1  xylem 111.33829
-333    R RT13         C  stem      2 phloem 112.99429
-334    R RT13         C  stem      2  xylem 113.39281
-335    R RT13         C  stem      3 phloem  64.54025
-336    R RT13         C  stem      3  xylem 121.41588
-337    R RT14         C  root      1 phloem  73.21057
-338    R RT14         C  root      1  xylem  76.83301
-339    R RT14         C  root      2 phloem  89.36147
-340    R RT14         C  root      2  xylem  43.40143
-341    R RT14         C  root      3 phloem  75.15808
-342    R RT14         C  root      3  xylem  65.56964
-343    R RT14         C  stem      1 phloem  51.34607
-344    R RT14         C  stem      1  xylem  47.37279
-345    R RT14         C  stem      2 phloem  50.26129
-346    R RT14         C  stem      2  xylem 111.51599
-347    R RT14         C  stem      3 phloem  55.94712
-348    R RT14         C  stem      3  xylem  71.25356
-349    R RT15         C  root      1 phloem  70.20964
-350    R RT15         C  root      1  xylem  71.42069
-351    R RT15         C  root      2 phloem 117.75325
-352    R RT15         C  root      2  xylem 100.22277
-353    R RT15         C  root      3 phloem  95.39149
-354    R RT15         C  root      3  xylem  98.06884
-355    R RT15         C  stem      1 phloem  96.24332
-356    R RT15         C  stem      1  xylem 129.65736
-357    R RT15         C  stem      2 phloem 105.40192
-358    R RT15         C  stem      2  xylem  79.71421
-359    R RT15         C  stem      3 phloem 109.26504
-360    R RT15         C  stem      3  xylem 136.96690
+    site    site_c tree      tree_c treatment treatment_c organ  organ_c sample   sample_c tissue tissue_c    length
+1      L  5.827570 LT01  -5.5712732         T    96.91019  root 5.305643      1  3.1620540 phloem 4.353973 109.98816
+2      L  5.827570 LT01  -5.5712732         T   104.91677  root 5.305643      1  3.1620540  xylem 7.850413 121.49117
+3      L  5.827570 LT01  -5.5712732         T    94.92673  root 5.305643      2 -0.6535629 phloem 4.353973 104.18908
+4      L  5.827570 LT01  -5.5712732         T    95.94434  root 5.305643      2 -0.6535629  xylem 7.850413 108.70313
+5      L  5.827570 LT01  -5.5712732         T    47.86291  root 5.305643      3  3.7955414 phloem 4.353973  61.57437
+6      L  5.827570 LT01  -5.5712732         T    70.19588  root 5.305643      3  3.7955414  xylem 7.850413  87.40377
+7      L  5.827570 LT01  -5.5712732         T   102.76145  stem 5.305643      1  3.1620540 phloem 4.353973 115.83941
+8      L  5.827570 LT01  -5.5712732         T   134.54957  stem 5.305643      1  3.1620540  xylem 7.850413 151.12398
+9      L  5.827570 LT01  -5.5712732         T    92.70400  stem 5.305643      2 -0.6535629 phloem 4.353973 101.96635
+10     L  5.827570 LT01  -5.5712732         T    98.68270  stem 5.305643      2 -0.6535629  xylem 7.850413 111.44149
+11     L  5.827570 LT01  -5.5712732         T    96.70221  stem 5.305643      3  3.7955414 phloem 4.353973 110.41367
+12     L  5.827570 LT01  -5.5712732         T   115.01730  stem 5.305643      3  3.7955414  xylem 7.850413 132.22520
+13     L  5.827570 LT02  -0.1826676         T   107.28367  root 5.305643      1  3.1620540 phloem 4.353973 125.75025
+14     L  5.827570 LT02  -0.1826676         T   102.44566  root 5.305643      1  3.1620540  xylem 7.850413 124.40867
+15     L  5.827570 LT02  -0.1826676         T    93.84666  root 5.305643      2 -0.6535629 phloem 4.353973 108.49762
+16     L  5.827570 LT02  -0.1826676         T   121.86385  root 5.305643      2 -0.6535629  xylem 7.850413 140.01124
+17     L  5.827570 LT02  -0.1826676         T   134.29519  root 5.305643      3  3.7955414 phloem 4.353973 153.39525
+18     L  5.827570 LT02  -0.1826676         T   164.80682  root 5.305643      3  3.7955414  xylem 7.850413 187.40332
+19     L  5.827570 LT02  -0.1826676         T    72.96017  stem 5.305643      1  3.1620540 phloem 4.353973  91.42674
+20     L  5.827570 LT02  -0.1826676         T   114.28386  stem 5.305643      1  3.1620540  xylem 7.850413 136.24687
+21     L  5.827570 LT02  -0.1826676         T   114.57453  stem 5.305643      2 -0.6535629 phloem 4.353973 129.22549
+22     L  5.827570 LT02  -0.1826676         T   104.77715  stem 5.305643      2 -0.6535629  xylem 7.850413 122.92455
+23     L  5.827570 LT02  -0.1826676         T    99.28231  stem 5.305643      3  3.7955414 phloem 4.353973 118.38237
+24     L  5.827570 LT02  -0.1826676         T   121.16503  stem 5.305643      3  3.7955414  xylem 7.850413 143.76152
+25     L  5.827570 LT03  13.1541431         T    79.32247  root 5.305643      1  3.1620540 phloem 4.353973 111.12585
+26     L  5.827570 LT03  13.1541431         T    98.98374  root 5.305643      1  3.1620540  xylem 7.850413 134.28356
+27     L  5.827570 LT03  13.1541431         T    84.82034  root 5.305643      2 -0.6535629 phloem 4.353973 112.80810
+28     L  5.827570 LT03  13.1541431         T    99.20794  root 5.305643      2 -0.6535629  xylem 7.850413 130.69214
+29     L  5.827570 LT03  13.1541431         T    70.41464  root 5.305643      3  3.7955414 phloem 4.353973 102.85151
+30     L  5.827570 LT03  13.1541431         T    57.27424  root 5.305643      3  3.7955414  xylem 7.850413  93.20755
+31     L  5.827570 LT03  13.1541431         T   108.94706  stem 5.305643      1  3.1620540 phloem 4.353973 140.75045
+32     L  5.827570 LT03  13.1541431         T    87.88628  stem 5.305643      1  3.1620540  xylem 7.850413 123.18611
+33     L  5.827570 LT03  13.1541431         T    95.79850  stem 5.305643      2 -0.6535629 phloem 4.353973 123.78627
+34     L  5.827570 LT03  13.1541431         T   120.34575  stem 5.305643      2 -0.6535629  xylem 7.850413 151.82996
+35     L  5.827570 LT03  13.1541431         T   120.56111  stem 5.305643      3  3.7955414 phloem 4.353973 152.99798
+36     L  5.827570 LT03  13.1541431         T    93.36913  stem 5.305643      3  3.7955414  xylem 7.850413 129.30244
+37     L  5.827570 LT04  -7.5020150         T    78.25037  root 5.305643      1  3.1620540 phloem 4.353973  89.39760
+38     L  5.827570 LT04  -7.5020150         T   102.18104  root 5.305643      1  3.1620540  xylem 7.850413 116.82470
+39     L  5.827570 LT04  -7.5020150         T    75.92228  root 5.305643      2 -0.6535629 phloem 4.353973  83.25389
+40     L  5.827570 LT04  -7.5020150         T   121.98415  root 5.305643      2 -0.6535629  xylem 7.850413 132.81220
+41     L  5.827570 LT04  -7.5020150         T   100.15516  root 5.305643      3  3.7955414 phloem 4.353973 111.93587
+42     L  5.827570 LT04  -7.5020150         T    98.32432  root 5.305643      3  3.7955414  xylem 7.850413 113.60147
+43     L  5.827570 LT04  -7.5020150         T    80.64970  stem 5.305643      1  3.1620540 phloem 4.353973  91.79693
+44     L  5.827570 LT04  -7.5020150         T    78.65203  stem 5.305643      1  3.1620540  xylem 7.850413  93.29569
+45     L  5.827570 LT04  -7.5020150         T   119.04156  stem 5.305643      2 -0.6535629 phloem 4.353973 126.37317
+46     L  5.827570 LT04  -7.5020150         T    87.47099  stem 5.305643      2 -0.6535629  xylem 7.850413  98.29904
+47     L  5.827570 LT04  -7.5020150         T    94.50450  stem 5.305643      3  3.7955414 phloem 4.353973 106.28522
+48     L  5.827570 LT04  -7.5020150         T    63.93936  stem 5.305643      3  3.7955414  xylem 7.850413  79.21651
+49     L  5.827570 LT05  -6.2517407         T   137.95337  root 5.305643      1  3.1620540 phloem 4.353973 150.35087
+50     L  5.827570 LT05  -6.2517407         T    71.62681  root 5.305643      1  3.1620540  xylem 7.850413  87.52075
+51     L  5.827570 LT05  -6.2517407         T   118.95747  root 5.305643      2 -0.6535629 phloem 4.353973 127.53936
+52     L  5.827570 LT05  -6.2517407         T   133.55456  root 5.305643      2 -0.6535629  xylem 7.850413 145.63288
+53     L  5.827570 LT05  -6.2517407         T   129.32331  root 5.305643      3  3.7955414 phloem 4.353973 142.35430
+54     L  5.827570 LT05  -6.2517407         T   142.70158  root 5.305643      3  3.7955414  xylem 7.850413 159.22901
+55     L  5.827570 LT05  -6.2517407         T   121.69933  stem 5.305643      1  3.1620540 phloem 4.353973 134.09683
+56     L  5.827570 LT05  -6.2517407         T   114.05377  stem 5.305643      1  3.1620540  xylem 7.850413 129.94771
+57     L  5.827570 LT05  -6.2517407         T   118.02091  stem 5.305643      2 -0.6535629 phloem 4.353973 126.60279
+58     L  5.827570 LT05  -6.2517407         T   104.54523  stem 5.305643      2 -0.6535629  xylem 7.850413 116.62355
+59     L  5.827570 LT05  -6.2517407         T   105.66446  stem 5.305643      3  3.7955414 phloem 4.353973 118.69544
+60     L  5.827570 LT05  -6.2517407         T   116.94830  stem 5.305643      3  3.7955414  xylem 7.850413 133.47573
+61     L  5.827570 LT06  -1.1006416         T   111.88498  root 5.305643      1  3.1620540 phloem 4.353973 129.43358
+62     L  5.827570 LT06  -1.1006416         T   135.21716  root 5.305643      1  3.1620540  xylem 7.850413 156.26220
+63     L  5.827570 LT06  -1.1006416         T    94.96577  root 5.305643      2 -0.6535629 phloem 4.353973 108.69875
+64     L  5.827570 LT06  -1.1006416         T    96.10419  root 5.305643      2 -0.6535629  xylem 7.850413 113.33361
+65     L  5.827570 LT06  -1.1006416         T   108.36240  root 5.305643      3  3.7955414 phloem 4.353973 126.54448
+66     L  5.827570 LT06  -1.1006416         T   132.30332  root 5.305643      3  3.7955414  xylem 7.850413 153.98184
+67     L  5.827570 LT06  -1.1006416         T   116.29291  stem 5.305643      1  3.1620540 phloem 4.353973 133.84150
+68     L  5.827570 LT06  -1.1006416         T   104.38098  stem 5.305643      1  3.1620540  xylem 7.850413 125.42602
+69     L  5.827570 LT06  -1.1006416         T   122.43698  stem 5.305643      2 -0.6535629 phloem 4.353973 136.16997
+70     L  5.827570 LT06  -1.1006416         T    79.69026  stem 5.305643      2 -0.6535629  xylem 7.850413  96.91968
+71     L  5.827570 LT06  -1.1006416         T   117.27788  stem 5.305643      3  3.7955414 phloem 4.353973 135.45997
+72     L  5.827570 LT06  -1.1006416         T   104.76520  stem 5.305643      3  3.7955414  xylem 7.850413 126.44373
+73     L  5.827570 LT07   6.4154653         T   115.91375  root 5.305643      1  3.1620540 phloem 4.353973 140.97845
+74     L  5.827570 LT07   6.4154653         T    91.67656  root 5.305643      1  3.1620540  xylem 7.850413 120.23771
+75     L  5.827570 LT07   6.4154653         T    86.18647  root 5.305643      2 -0.6535629 phloem 4.353973 107.43556
+76     L  5.827570 LT07   6.4154653         T   112.21255  root 5.305643      2 -0.6535629  xylem 7.850413 136.95808
+77     L  5.827570 LT07   6.4154653         T    73.00619  root 5.305643      3  3.7955414 phloem 4.353973  98.70438
+78     L  5.827570 LT07   6.4154653         T   100.93236  root 5.305643      3  3.7955414  xylem 7.850413 130.12699
+79     L  5.827570 LT07   6.4154653         T   124.89602  stem 5.305643      1  3.1620540 phloem 4.353973 149.96073
+80     L  5.827570 LT07   6.4154653         T   111.30199  stem 5.305643      1  3.1620540  xylem 7.850413 139.86313
+81     L  5.827570 LT07   6.4154653         T   119.23190  stem 5.305643      2 -0.6535629 phloem 4.353973 140.48099
+82     L  5.827570 LT07   6.4154653         T   114.09915  stem 5.305643      2 -0.6535629  xylem 7.850413 138.84468
+83     L  5.827570 LT07   6.4154653         T   107.93895  stem 5.305643      3  3.7955414 phloem 4.353973 133.63714
+84     L  5.827570 LT07   6.4154653         T    94.35926  stem 5.305643      3  3.7955414  xylem 7.850413 123.55389
+85     L  5.827570 LT08   5.1389699         T    97.89811  root 5.305643      1  3.1620540 phloem 4.353973 121.68632
+86     L  5.827570 LT08   5.1389699         T    87.66820  root 5.305643      1  3.1620540  xylem 7.850413 114.95285
+87     L  5.827570 LT08   5.1389699         T   109.48209  root 5.305643      2 -0.6535629 phloem 4.353973 129.45468
+88     L  5.827570 LT08   5.1389699         T    96.56697  root 5.305643      2 -0.6535629  xylem 7.850413 120.03600
+89     L  5.827570 LT08   5.1389699         T   138.21425  root 5.305643      3  3.7955414 phloem 4.353973 162.63595
+90     L  5.827570 LT08   5.1389699         T   108.25941  root 5.305643      3  3.7955414  xylem 7.850413 136.17755
+91     L  5.827570 LT08   5.1389699         T   117.23940  stem 5.305643      1  3.1620540 phloem 4.353973 141.02761
+92     L  5.827570 LT08   5.1389699         T    51.08195  stem 5.305643      1  3.1620540  xylem 7.850413  78.36660
+93     L  5.827570 LT08   5.1389699         T    96.98888  stem 5.305643      2 -0.6535629 phloem 4.353973 116.96147
+94     L  5.827570 LT08   5.1389699         T   103.65116  stem 5.305643      2 -0.6535629  xylem 7.850413 127.12020
+95     L  5.827570 LT08   5.1389699         T   108.45665  stem 5.305643      3  3.7955414 phloem 4.353973 132.87835
+96     L  5.827570 LT08   5.1389699         T    94.45908  stem 5.305643      3  3.7955414  xylem 7.850413 122.37721
+97     L  5.827570 LT09  -1.4099692         T   103.98814  root 5.305643      1  3.1620540 phloem 4.353973 121.22741
+98     L  5.827570 LT09  -1.4099692         T    65.39853  root 5.305643      1  3.1620540  xylem 7.850413  86.13424
+99     L  5.827570 LT09  -1.4099692         T    87.45782  root 5.305643      2 -0.6535629 phloem 4.353973 100.88147
+100    L  5.827570 LT09  -1.4099692         T   108.64738  root 5.305643      2 -0.6535629  xylem 7.850413 125.56748
+101    L  5.827570 LT09  -1.4099692         T   133.77958  root 5.305643      3  3.7955414 phloem 4.353973 151.65234
+102    L  5.827570 LT09  -1.4099692         T    92.73199  root 5.305643      3  3.7955414  xylem 7.850413 114.10119
+103    L  5.827570 LT09  -1.4099692         T    74.18083  stem 5.305643      1  3.1620540 phloem 4.353973  91.42010
+104    L  5.827570 LT09  -1.4099692         T   100.45778  stem 5.305643      1  3.1620540  xylem 7.850413 121.19349
+105    L  5.827570 LT09  -1.4099692         T   130.51403  stem 5.305643      2 -0.6535629 phloem 4.353973 143.93768
+106    L  5.827570 LT09  -1.4099692         T    93.44251  stem 5.305643      2 -0.6535629  xylem 7.850413 110.36261
+107    L  5.827570 LT09  -1.4099692         T    89.67286  stem 5.305643      3  3.7955414 phloem 4.353973 107.54561
+108    L  5.827570 LT09  -1.4099692         T   112.02331  stem 5.305643      3  3.7955414  xylem 7.850413 133.39250
+109    L  5.827570 LT10  12.9334344         T   112.09407  root 5.305643      1  3.1620540 phloem 4.353973 143.67675
+110    L  5.827570 LT10  12.9334344         T    99.19982  root 5.305643      1  3.1620540  xylem 7.850413 134.27893
+111    L  5.827570 LT10  12.9334344         T    35.74120  root 5.305643      2 -0.6535629 phloem 4.353973  63.50826
+112    L  5.827570 LT10  12.9334344         T   107.39905  root 5.305643      2 -0.6535629  xylem 7.850413 138.66255
+113    L  5.827570 LT10  12.9334344         T    82.10468  root 5.305643      3  3.7955414 phloem 4.353973 114.32085
+114    L  5.827570 LT10  12.9334344         T   101.36251  root 5.305643      3  3.7955414  xylem 7.850413 137.07511
+115    L  5.827570 LT10  12.9334344         T    88.47823  stem 5.305643      1  3.1620540 phloem 4.353973 120.06091
+116    L  5.827570 LT10  12.9334344         T    88.47691  stem 5.305643      1  3.1620540  xylem 7.850413 123.55603
+117    L  5.827570 LT10  12.9334344         T    78.32392  stem 5.305643      2 -0.6535629 phloem 4.353973 106.09097
+118    L  5.827570 LT10  12.9334344         T    93.02572  stem 5.305643      2 -0.6535629  xylem 7.850413 124.28922
+119    L  5.827570 LT10  12.9334344         T    98.80698  stem 5.305643      3  3.7955414 phloem 4.353973 131.02314
+120    L  5.827570 LT10  12.9334344         T   111.63949  stem 5.305643      3  3.7955414  xylem 7.850413 147.35210
+121    L  5.827570 LT11  -0.6782430         T   132.32692  root 5.305643      1  3.1620540 phloem 4.353973 150.29791
+122    L  5.827570 LT11  -0.6782430         T    76.06493  root 5.305643      1  3.1620540  xylem 7.850413  97.53237
+123    L  5.827570 LT11  -0.6782430         T    85.29670  root 5.305643      2 -0.6535629 phloem 4.353973  99.45208
+124    L  5.827570 LT11  -0.6782430         T   103.62689  root 5.305643      2 -0.6535629  xylem 7.850413 121.27871
+125    L  5.827570 LT11  -0.6782430         T    81.30061  root 5.305643      3  3.7955414 phloem 4.353973  99.90509
+126    L  5.827570 LT11  -0.6782430         T   104.83521  root 5.305643      3  3.7955414  xylem 7.850413 126.93613
+127    L  5.827570 LT11  -0.6782430         T    95.01742  stem 5.305643      1  3.1620540 phloem 4.353973 112.98842
+128    L  5.827570 LT11  -0.6782430         T   134.54914  stem 5.305643      1  3.1620540  xylem 7.850413 156.01658
+129    L  5.827570 LT11  -0.6782430         T    55.97600  stem 5.305643      2 -0.6535629 phloem 4.353973  70.13138
+130    L  5.827570 LT11  -0.6782430         T    92.05411  stem 5.305643      2 -0.6535629  xylem 7.850413 109.70593
+131    L  5.827570 LT11  -0.6782430         T   120.14384  stem 5.305643      3  3.7955414 phloem 4.353973 138.74833
+132    L  5.827570 LT11  -0.6782430         T   131.95585  stem 5.305643      3  3.7955414  xylem 7.850413 154.05678
+133    L  5.827570 LT12   0.9154833         T    88.83914  root 5.305643      1  3.1620540 phloem 4.353973 108.40387
+134    L  5.827570 LT12   0.9154833         T   109.70550  root 5.305643      1  3.1620540  xylem 7.850413 132.76666
+135    L  5.827570 LT12   0.9154833         T    88.08554  root 5.305643      2 -0.6535629 phloem 4.353973 103.83465
+136    L  5.827570 LT12   0.9154833         T    96.47593  root 5.305643      2 -0.6535629  xylem 7.850413 115.72148
+137    L  5.827570 LT12   0.9154833         T    98.47878  root 5.305643      3  3.7955414 phloem 4.353973 118.67699
+138    L  5.827570 LT12   0.9154833         T   143.18485  root 5.305643      3  3.7955414  xylem 7.850413 166.87950
+139    L  5.827570 LT12   0.9154833         T   128.18642  stem 5.305643      1  3.1620540 phloem 4.353973 147.75114
+140    L  5.827570 LT12   0.9154833         T   116.53828  stem 5.305643      1  3.1620540  xylem 7.850413 139.59944
+141    L  5.827570 LT12   0.9154833         T   124.72561  stem 5.305643      2 -0.6535629 phloem 4.353973 140.47472
+142    L  5.827570 LT12   0.9154833         T   100.49360  stem 5.305643      2 -0.6535629  xylem 7.850413 119.73915
+143    L  5.827570 LT12   0.9154833         T    96.42023  stem 5.305643      3  3.7955414 phloem 4.353973 116.61844
+144    L  5.827570 LT12   0.9154833         T   100.51371  stem 5.305643      3  3.7955414  xylem 7.850413 124.20836
+145    L  5.827570 LT13  -4.5850334         T   111.55833  root 5.305643      1  3.1620540 phloem 4.353973 125.62253
+146    L  5.827570 LT13  -4.5850334         T   108.54749  root 5.305643      1  3.1620540  xylem 7.850413 126.10813
+147    L  5.827570 LT13  -4.5850334         T   109.22604  root 5.305643      2 -0.6535629 phloem 4.353973 119.47463
+148    L  5.827570 LT13  -4.5850334         T    99.23365  root 5.305643      2 -0.6535629  xylem 7.850413 112.97868
+149    L  5.827570 LT13  -4.5850334         T    79.43906  root 5.305643      3  3.7955414 phloem 4.353973  94.13676
+150    L  5.827570 LT13  -4.5850334         T    97.46027  root 5.305643      3  3.7955414  xylem 7.850413 115.65441
+151    L  5.827570 LT13  -4.5850334         T   113.21973  stem 5.305643      1  3.1620540 phloem 4.353973 127.28393
+152    L  5.827570 LT13  -4.5850334         T   121.05622  stem 5.305643      1  3.1620540  xylem 7.850413 138.61687
+153    L  5.827570 LT13  -4.5850334         T    80.50514  stem 5.305643      2 -0.6535629 phloem 4.353973  90.75373
+154    L  5.827570 LT13  -4.5850334         T    93.73993  stem 5.305643      2 -0.6535629  xylem 7.850413 107.48496
+155    L  5.827570 LT13  -4.5850334         T   107.02722  stem 5.305643      3  3.7955414 phloem 4.353973 121.72492
+156    L  5.827570 LT13  -4.5850334         T   103.18400  stem 5.305643      3  3.7955414  xylem 7.850413 121.37813
+157    L  5.827570 LT14  -2.8850107         T   100.49046  root 5.305643      1  3.1620540 phloem 4.353973 116.25469
+158    L  5.827570 LT14  -2.8850107         T    96.62154  root 5.305643      1  3.1620540  xylem 7.850413 115.88221
+159    L  5.827570 LT14  -2.8850107         T    90.51096  root 5.305643      2 -0.6535629 phloem 4.353973 102.45957
+160    L  5.827570 LT14  -2.8850107         T   101.72870  root 5.305643      2 -0.6535629  xylem 7.850413 117.17375
+161    L  5.827570 LT14  -2.8850107         T   108.54191  root 5.305643      3  3.7955414 phloem 4.353973 124.93963
+162    L  5.827570 LT14  -2.8850107         T   108.54754  root 5.305643      3  3.7955414  xylem 7.850413 128.44170
+163    L  5.827570 LT14  -2.8850107         T    72.75688  stem 5.305643      1  3.1620540 phloem 4.353973  88.52111
+164    L  5.827570 LT14  -2.8850107         T   100.21979  stem 5.305643      1  3.1620540  xylem 7.850413 119.48046
+165    L  5.827570 LT14  -2.8850107         T   139.49030  stem 5.305643      2 -0.6535629 phloem 4.353973 151.43891
+166    L  5.827570 LT14  -2.8850107         T   117.95680  stem 5.305643      2 -0.6535629  xylem 7.850413 133.40185
+167    L  5.827570 LT14  -2.8850107         T    98.42447  stem 5.305643      3  3.7955414 phloem 4.353973 114.82219
+168    L  5.827570 LT14  -2.8850107         T    67.65496  stem 5.305643      3  3.7955414  xylem 7.850413  87.54912
+169    L  5.827570 LT15  -9.5238074         T   102.07502  root 5.305643      1  3.1620540 phloem 4.353973 111.20045
+170    L  5.827570 LT15  -9.5238074         T   108.30739  root 5.305643      1  3.1620540  xylem 7.850413 120.92927
+171    L  5.827570 LT15  -9.5238074         T    93.67319  root 5.305643      2 -0.6535629 phloem 4.353973  98.98301
+172    L  5.827570 LT15  -9.5238074         T    78.68472  root 5.305643      2 -0.6535629  xylem 7.850413  87.49098
+173    L  5.827570 LT15  -9.5238074         T    99.12955  root 5.305643      3  3.7955414 phloem 4.353973 108.88847
+174    L  5.827570 LT15  -9.5238074         T   111.16115  root 5.305643      3  3.7955414  xylem 7.850413 124.41651
+175    L  5.827570 LT15  -9.5238074         T    91.67569  stem 5.305643      1  3.1620540 phloem 4.353973 100.80113
+176    L  5.827570 LT15  -9.5238074         T    98.85645  stem 5.305643      1  3.1620540  xylem 7.850413 111.47832
+177    L  5.827570 LT15  -9.5238074         T    76.09608  stem 5.305643      2 -0.6535629 phloem 4.353973  81.40590
+178    L  5.827570 LT15  -9.5238074         T   103.50480  stem 5.305643      2 -0.6535629  xylem 7.850413 112.31105
+179    L  5.827570 LT15  -9.5238074         T   134.92235  stem 5.305643      3  3.7955414 phloem 4.353973 144.68127
+180    L  5.827570 LT15  -9.5238074         T   115.13355  stem 5.305643      3  3.7955414  xylem 7.850413 128.38891
+181    R -6.005095 RT01 -21.2296602         C    65.45585  root 5.305643      1  3.1620540 phloem 4.353973  51.04276
+182    R -6.005095 RT01 -21.2296602         C    59.39034  root 5.305643      1  3.1620540  xylem 7.850413  48.47369
+183    R -6.005095 RT01 -21.2296602         C    79.44594  root 5.305643      2 -0.6535629 phloem 4.353973  61.21724
+184    R -6.005095 RT01 -21.2296602         C    67.81471  root 5.305643      2 -0.6535629  xylem 7.850413  53.08244
+185    R -6.005095 RT01 -21.2296602         C    76.60722  root 5.305643      3  3.7955414 phloem 4.353973  62.82762
+186    R -6.005095 RT01 -21.2296602         C    60.84462  root 5.305643      3  3.7955414  xylem 7.850413  50.56146
+187    R -6.005095 RT01 -21.2296602         C    45.23504  stem 5.305643      1  3.1620540 phloem 4.353973  30.82196
+188    R -6.005095 RT01 -21.2296602         C    83.69178  stem 5.305643      1  3.1620540  xylem 7.850413  72.77514
+189    R -6.005095 RT01 -21.2296602         C    90.33918  stem 5.305643      2 -0.6535629 phloem 4.353973  72.11048
+190    R -6.005095 RT01 -21.2296602         C    74.63680  stem 5.305643      2 -0.6535629  xylem 7.850413  59.90454
+191    R -6.005095 RT01 -21.2296602         C    53.72321  stem 5.305643      3  3.7955414 phloem 4.353973  39.94361
+192    R -6.005095 RT01 -21.2296602         C    77.33712  stem 5.305643      3  3.7955414  xylem 7.850413  67.05397
+193    R -6.005095 RT02  -0.1745937         C    68.52171  root 5.305643      1  3.1620540 phloem 4.353973  75.16369
+194    R -6.005095 RT02  -0.1745937         C    59.82600  root 5.305643      1  3.1620540  xylem 7.850413  69.96443
+195    R -6.005095 RT02  -0.1745937         C    77.19204  root 5.305643      2 -0.6535629 phloem 4.353973  80.01840
+196    R -6.005095 RT02  -0.1745937         C    50.07241  root 5.305643      2 -0.6535629  xylem 7.850413  56.39521
+197    R -6.005095 RT02  -0.1745937         C    47.11377  root 5.305643      3  3.7955414 phloem 4.353973  54.38924
+198    R -6.005095 RT02  -0.1745937         C    57.29996  root 5.305643      3  3.7955414  xylem 7.850413  68.07187
+199    R -6.005095 RT02  -0.1745937         C    69.44270  stem 5.305643      1  3.1620540 phloem 4.353973  76.08468
+200    R -6.005095 RT02  -0.1745937         C    95.06429  stem 5.305643      1  3.1620540  xylem 7.850413 105.20271
+201    R -6.005095 RT02  -0.1745937         C    84.51934  stem 5.305643      2 -0.6535629 phloem 4.353973  87.34571
+202    R -6.005095 RT02  -0.1745937         C    44.08665  stem 5.305643      2 -0.6535629  xylem 7.850413  50.40945
+203    R -6.005095 RT02  -0.1745937         C    66.57296  stem 5.305643      3  3.7955414 phloem 4.353973  73.84843
+204    R -6.005095 RT02  -0.1745937         C    45.26659  stem 5.305643      3  3.7955414  xylem 7.850413  56.03850
+205    R -6.005095 RT03  -7.6905371         C    51.38868  root 5.305643      1  3.1620540 phloem 4.353973  50.51472
+206    R -6.005095 RT03  -7.6905371         C    58.61862  root 5.305643      1  3.1620540  xylem 7.850413  61.24110
+207    R -6.005095 RT03  -7.6905371         C    97.02626  root 5.305643      2 -0.6535629 phloem 4.353973  92.33668
+208    R -6.005095 RT03  -7.6905371         C    91.01721  root 5.305643      2 -0.6535629  xylem 7.850413  89.82407
+209    R -6.005095 RT03  -7.6905371         C    52.85022  root 5.305643      3  3.7955414 phloem 4.353973  52.60974
+210    R -6.005095 RT03  -7.6905371         C    45.49917  root 5.305643      3  3.7955414  xylem 7.850413  48.75513
+211    R -6.005095 RT03  -7.6905371         C    78.23320  stem 5.305643      1  3.1620540 phloem 4.353973  77.35923
+212    R -6.005095 RT03  -7.6905371         C    72.89926  stem 5.305643      1  3.1620540  xylem 7.850413  75.52174
+213    R -6.005095 RT03  -7.6905371         C    56.14035  stem 5.305643      2 -0.6535629 phloem 4.353973  51.45078
+214    R -6.005095 RT03  -7.6905371         C    65.86672  stem 5.305643      2 -0.6535629  xylem 7.850413  64.67358
+215    R -6.005095 RT03  -7.6905371         C    45.02715  stem 5.305643      3  3.7955414 phloem 4.353973  44.78668
+216    R -6.005095 RT03  -7.6905371         C    73.41748  stem 5.305643      3  3.7955414  xylem 7.850413  76.67345
+217    R -6.005095 RT04  -7.4658650         C    70.90616  root 5.305643      1  3.1620540 phloem 4.353973  70.25687
+218    R -6.005095 RT04  -7.4658650         C    79.66522  root 5.305643      1  3.1620540  xylem 7.850413  82.51237
+219    R -6.005095 RT04  -7.4658650         C    59.27887  root 5.305643      2 -0.6535629 phloem 4.353973  54.81396
+220    R -6.005095 RT04  -7.4658650         C    66.38901  root 5.305643      2 -0.6535629  xylem 7.850413  65.42055
+221    R -6.005095 RT04  -7.4658650         C    83.61484  root 5.305643      3  3.7955414 phloem 4.353973  83.59903
+222    R -6.005095 RT04  -7.4658650         C    85.97324  root 5.305643      3  3.7955414  xylem 7.850413  89.45388
+223    R -6.005095 RT04  -7.4658650         C    47.70635  stem 5.305643      1  3.1620540 phloem 4.353973  47.05706
+224    R -6.005095 RT04  -7.4658650         C    84.86227  stem 5.305643      1  3.1620540  xylem 7.850413  87.70942
+225    R -6.005095 RT04  -7.4658650         C    76.86880  stem 5.305643      2 -0.6535629 phloem 4.353973  72.40390
+226    R -6.005095 RT04  -7.4658650         C    88.18174  stem 5.305643      2 -0.6535629  xylem 7.850413  87.21327
+227    R -6.005095 RT04  -7.4658650         C    80.00779  stem 5.305643      3  3.7955414 phloem 4.353973  79.99199
+228    R -6.005095 RT04  -7.4658650         C    53.44588  stem 5.305643      3  3.7955414  xylem 7.850413  56.92652
+229    R -6.005095 RT05   8.4019977         C    55.25762  root 5.305643      1  3.1620540 phloem 4.353973  70.47619
+230    R -6.005095 RT05   8.4019977         C    61.52171  root 5.305643      1  3.1620540  xylem 7.850413  80.23673
+231    R -6.005095 RT05   8.4019977         C    89.06304  root 5.305643      2 -0.6535629 phloem 4.353973 100.46599
+232    R -6.005095 RT05   8.4019977         C    75.76267  root 5.305643      2 -0.6535629  xylem 7.850413  90.66207
+233    R -6.005095 RT05   8.4019977         C    46.25220  root 5.305643      3  3.7955414 phloem 4.353973  62.10426
+234    R -6.005095 RT05   8.4019977         C    54.82781  root 5.305643      3  3.7955414  xylem 7.850413  74.17631
+235    R -6.005095 RT05   8.4019977         C    65.98610  stem 5.305643      1  3.1620540 phloem 4.353973  81.20468
+236    R -6.005095 RT05   8.4019977         C    59.91282  stem 5.305643      1  3.1620540  xylem 7.850413  78.62784
+237    R -6.005095 RT05   8.4019977         C    64.14643  stem 5.305643      2 -0.6535629 phloem 4.353973  75.54939
+238    R -6.005095 RT05   8.4019977         C    34.33700  stem 5.305643      2 -0.6535629  xylem 7.850413  49.23640
+239    R -6.005095 RT05   8.4019977         C    67.48270  stem 5.305643      3  3.7955414 phloem 4.353973  83.33476
+240    R -6.005095 RT05   8.4019977         C    66.32730  stem 5.305643      3  3.7955414  xylem 7.850413  85.67580
+241    R -6.005095 RT06  -7.1100031         C    63.58305  root 5.305643      1  3.1620540 phloem 4.353973  63.28962
+242    R -6.005095 RT06  -7.1100031         C    67.98060  root 5.305643      1  3.1620540  xylem 7.850413  71.18361
+243    R -6.005095 RT06  -7.1100031         C    66.32914  root 5.305643      2 -0.6535629 phloem 4.353973  62.22010
+244    R -6.005095 RT06  -7.1100031         C    77.15760  root 5.305643      2 -0.6535629  xylem 7.850413  76.54499
+245    R -6.005095 RT06  -7.1100031         C    57.36550  root 5.305643      3  3.7955414 phloem 4.353973  57.70556
+246    R -6.005095 RT06  -7.1100031         C    86.40130  root 5.305643      3  3.7955414  xylem 7.850413  90.23780
+247    R -6.005095 RT06  -7.1100031         C    99.62190  stem 5.305643      1  3.1620540 phloem 4.353973  99.32847
+248    R -6.005095 RT06  -7.1100031         C   102.05489  stem 5.305643      1  3.1620540  xylem 7.850413 105.25791
+249    R -6.005095 RT06  -7.1100031         C   100.23692  stem 5.305643      2 -0.6535629 phloem 4.353973  96.12788
+250    R -6.005095 RT06  -7.1100031         C    60.40486  stem 5.305643      2 -0.6535629  xylem 7.850413  59.79226
+251    R -6.005095 RT06  -7.1100031         C    54.33246  stem 5.305643      3  3.7955414 phloem 4.353973  54.67252
+252    R -6.005095 RT06  -7.1100031         C    80.65037  stem 5.305643      3  3.7955414  xylem 7.850413  84.48687
+253    R -6.005095 RT07  -4.1978385         C    79.72167  root 5.305643      1  3.1620540 phloem 4.353973  82.34041
+254    R -6.005095 RT07  -4.1978385         C    61.20758  root 5.305643      1  3.1620540  xylem 7.850413  67.32276
+255    R -6.005095 RT07  -4.1978385         C    88.49703  root 5.305643      2 -0.6535629 phloem 4.353973  87.30015
+256    R -6.005095 RT07  -4.1978385         C    82.73494  root 5.305643      2 -0.6535629  xylem 7.850413  85.03450
+257    R -6.005095 RT07  -4.1978385         C    66.31527  root 5.305643      3  3.7955414 phloem 4.353973  69.56750
+258    R -6.005095 RT07  -4.1978385         C    64.27367  root 5.305643      3  3.7955414  xylem 7.850413  71.02234
+259    R -6.005095 RT07  -4.1978385         C    76.73413  stem 5.305643      1  3.1620540 phloem 4.353973  79.35287
+260    R -6.005095 RT07  -4.1978385         C    40.15251  stem 5.305643      1  3.1620540  xylem 7.850413  46.26769
+261    R -6.005095 RT07  -4.1978385         C   104.00509  stem 5.305643      2 -0.6535629 phloem 4.353973 102.80821
+262    R -6.005095 RT07  -4.1978385         C    54.99975  stem 5.305643      2 -0.6535629  xylem 7.850413  57.29931
+263    R -6.005095 RT07  -4.1978385         C    47.79869  stem 5.305643      3  3.7955414 phloem 4.353973  51.05092
+264    R -6.005095 RT07  -4.1978385         C    75.77977  stem 5.305643      3  3.7955414  xylem 7.850413  82.52844
+265    R -6.005095 RT08   7.6428046         C    55.38115  root 5.305643      1  3.1620540 phloem 4.353973  69.84053
+266    R -6.005095 RT08   7.6428046         C    72.10535  root 5.305643      1  3.1620540  xylem 7.850413  90.06117
+267    R -6.005095 RT08   7.6428046         C    71.34835  root 5.305643      2 -0.6535629 phloem 4.353973  81.99212
+268    R -6.005095 RT08   7.6428046         C    73.19646  root 5.305643      2 -0.6535629  xylem 7.850413  87.33667
+269    R -6.005095 RT08   7.6428046         C    64.95210  root 5.305643      3  3.7955414 phloem 4.353973  80.04497
+270    R -6.005095 RT08   7.6428046         C    53.50133  root 5.305643      3  3.7955414  xylem 7.850413  72.09064
+271    R -6.005095 RT08   7.6428046         C    77.60966  stem 5.305643      1  3.1620540 phloem 4.353973  92.06904
+272    R -6.005095 RT08   7.6428046         C    75.86929  stem 5.305643      1  3.1620540  xylem 7.850413  93.82511
+273    R -6.005095 RT08   7.6428046         C   102.75449  stem 5.305643      2 -0.6535629 phloem 4.353973 113.39826
+274    R -6.005095 RT08   7.6428046         C    63.67365  stem 5.305643      2 -0.6535629  xylem 7.850413  77.81386
+275    R -6.005095 RT08   7.6428046         C    98.75262  stem 5.305643      3  3.7955414 phloem 4.353973 113.84549
+276    R -6.005095 RT08   7.6428046         C    84.40284  stem 5.305643      3  3.7955414  xylem 7.850413 102.99214
+277    R -6.005095 RT09  -3.2689387         C    64.82614  root 5.305643      1  3.1620540 phloem 4.353973  68.37378
+278    R -6.005095 RT09  -3.2689387         C    44.64798  root 5.305643      1  3.1620540  xylem 7.850413  51.69206
+279    R -6.005095 RT09  -3.2689387         C    70.68179  root 5.305643      2 -0.6535629 phloem 4.353973  70.41381
+280    R -6.005095 RT09  -3.2689387         C    72.70779  root 5.305643      2 -0.6535629  xylem 7.850413  75.93625
+281    R -6.005095 RT09  -3.2689387         C    52.75628  root 5.305643      3  3.7955414 phloem 4.353973  56.93741
+282    R -6.005095 RT09  -3.2689387         C    65.55914  root 5.305643      3  3.7955414  xylem 7.850413  73.23671
+283    R -6.005095 RT09  -3.2689387         C    84.69527  stem 5.305643      1  3.1620540 phloem 4.353973  88.24291
+284    R -6.005095 RT09  -3.2689387         C    49.16996  stem 5.305643      1  3.1620540  xylem 7.850413  56.21404
+285    R -6.005095 RT09  -3.2689387         C    99.71305  stem 5.305643      2 -0.6535629 phloem 4.353973  99.44507
+286    R -6.005095 RT09  -3.2689387         C    34.51451  stem 5.305643      2 -0.6535629  xylem 7.850413  37.74297
+287    R -6.005095 RT09  -3.2689387         C    71.38161  stem 5.305643      3  3.7955414 phloem 4.353973  75.56273
+288    R -6.005095 RT09  -3.2689387         C    75.47882  stem 5.305643      3  3.7955414  xylem 7.850413  83.15638
+289    R -6.005095 RT10  -6.8739637         C    99.05465  root 5.305643      1  3.1620540 phloem 4.353973  98.99726
+290    R -6.005095 RT10  -6.8739637         C    64.59662  root 5.305643      1  3.1620540  xylem 7.850413  68.03567
+291    R -6.005095 RT10  -6.8739637         C    77.94425  root 5.305643      2 -0.6535629 phloem 4.353973  74.07124
+292    R -6.005095 RT10  -6.8739637         C    80.70903  root 5.305643      2 -0.6535629  xylem 7.850413  80.33247
+293    R -6.005095 RT10  -6.8739637         C    55.01433  root 5.305643      3  3.7955414 phloem 4.353973  55.59043
+294    R -6.005095 RT10  -6.8739637         C    71.38217  root 5.305643      3  3.7955414  xylem 7.850413  75.45471
+295    R -6.005095 RT10  -6.8739637         C    58.53895  stem 5.305643      1  3.1620540 phloem 4.353973  58.48156
+296    R -6.005095 RT10  -6.8739637         C    52.48001  stem 5.305643      1  3.1620540  xylem 7.850413  55.91906
+297    R -6.005095 RT10  -6.8739637         C    80.48247  stem 5.305643      2 -0.6535629 phloem 4.353973  76.60946
+298    R -6.005095 RT10  -6.8739637         C    67.21521  stem 5.305643      2 -0.6535629  xylem 7.850413  66.83864
+299    R -6.005095 RT10  -6.8739637         C    51.17831  stem 5.305643      3  3.7955414 phloem 4.353973  51.75441
+300    R -6.005095 RT10  -6.8739637         C    79.49228  stem 5.305643      3  3.7955414  xylem 7.850413  83.56482
+301    R -6.005095 RT11  -1.5900582         C    45.51291  root 5.305643      1  3.1620540 phloem 4.353973  50.73943
+302    R -6.005095 RT11  -1.5900582         C    65.97995  root 5.305643      1  3.1620540  xylem 7.850413  74.70290
+303    R -6.005095 RT11  -1.5900582         C    41.80639  root 5.305643      2 -0.6535629 phloem 4.353973  43.21729
+304    R -6.005095 RT11  -1.5900582         C    73.29576  root 5.305643      2 -0.6535629  xylem 7.850413  78.20310
+305    R -6.005095 RT11  -1.5900582         C    72.21856  root 5.305643      3  3.7955414 phloem 4.353973  78.07856
+306    R -6.005095 RT11  -1.5900582         C    73.71497  root 5.305643      3  3.7955414  xylem 7.850413  83.07142
+307    R -6.005095 RT11  -1.5900582         C    63.93600  stem 5.305643      1  3.1620540 phloem 4.353973  69.16252
+308    R -6.005095 RT11  -1.5900582         C    57.51775  stem 5.305643      1  3.1620540  xylem 7.850413  66.24071
+309    R -6.005095 RT11  -1.5900582         C   110.33768  stem 5.305643      2 -0.6535629 phloem 4.353973 111.74858
+310    R -6.005095 RT11  -1.5900582         C    61.04336  stem 5.305643      2 -0.6535629  xylem 7.850413  65.95070
+311    R -6.005095 RT11  -1.5900582         C    66.84559  stem 5.305643      3  3.7955414 phloem 4.353973  72.70560
+312    R -6.005095 RT11  -1.5900582         C    74.43672  stem 5.305643      3  3.7955414  xylem 7.850413  83.79317
+313    R -6.005095 RT12   5.6594890         C   108.62096  root 5.305643      1  3.1620540 phloem 4.353973 121.09702
+314    R -6.005095 RT12   5.6594890         C    99.43159  root 5.305643      1  3.1620540  xylem 7.850413 115.40409
+315    R -6.005095 RT12   5.6594890         C    73.58859  root 5.305643      2 -0.6535629 phloem 4.353973  82.24903
+316    R -6.005095 RT12   5.6594890         C    72.08602  root 5.305643      2 -0.6535629  xylem 7.850413  84.24291
+317    R -6.005095 RT12   5.6594890         C   101.53432  root 5.305643      3  3.7955414 phloem 4.353973 114.64387
+318    R -6.005095 RT12   5.6594890         C    52.93817  root 5.305643      3  3.7955414  xylem 7.850413  69.54417
+319    R -6.005095 RT12   5.6594890         C    72.14127  stem 5.305643      1  3.1620540 phloem 4.353973  84.61734
+320    R -6.005095 RT12   5.6594890         C    57.06934  stem 5.305643      1  3.1620540  xylem 7.850413  73.04185
+321    R -6.005095 RT12   5.6594890         C    65.34813  stem 5.305643      2 -0.6535629 phloem 4.353973  74.00857
+322    R -6.005095 RT12   5.6594890         C    82.51450  stem 5.305643      2 -0.6535629  xylem 7.850413  94.67139
+323    R -6.005095 RT12   5.6594890         C    45.49400  stem 5.305643      3  3.7955414 phloem 4.353973  58.60355
+324    R -6.005095 RT12   5.6594890         C    68.64779  stem 5.305643      3  3.7955414  xylem 7.850413  85.25378
+325    R -6.005095 RT13   2.6116553         C    44.98614  root 5.305643      1  3.1620540 phloem 4.353973  54.41438
+326    R -6.005095 RT13   2.6116553         C    92.12768  root 5.305643      1  3.1620540  xylem 7.850413 105.05235
+327    R -6.005095 RT13   2.6116553         C    75.73164  root 5.305643      2 -0.6535629 phloem 4.353973  81.34425
+328    R -6.005095 RT13   2.6116553         C    84.64485  root 5.305643      2 -0.6535629  xylem 7.850413  93.75390
+329    R -6.005095 RT13   2.6116553         C    60.61223  root 5.305643      3  3.7955414 phloem 4.353973  70.67395
+330    R -6.005095 RT13   2.6116553         C    58.96061  root 5.305643      3  3.7955414  xylem 7.850413  72.51877
+331    R -6.005095 RT13   2.6116553         C    95.97731  stem 5.305643      1  3.1620540 phloem 4.353973 105.40554
+332    R -6.005095 RT13   2.6116553         C   113.90533  stem 5.305643      1  3.1620540  xylem 7.850413 126.83000
+333    R -6.005095 RT13   2.6116553         C    87.70205  stem 5.305643      2 -0.6535629 phloem 4.353973  93.31466
+334    R -6.005095 RT13   2.6116553         C    93.42373  stem 5.305643      2 -0.6535629  xylem 7.850413 102.53278
+335    R -6.005095 RT13   2.6116553         C    38.50454  stem 5.305643      3  3.7955414 phloem 4.353973  48.56626
+336    R -6.005095 RT13   2.6116553         C    89.74867  stem 5.305643      3  3.7955414  xylem 7.850413 103.30683
+337    R -6.005095 RT14  -0.2808255         C    55.99658  root 5.305643      1  3.1620540 phloem 4.353973  62.53233
+338    R -6.005095 RT14  -0.2808255         C    66.77964  root 5.305643      1  3.1620540  xylem 7.850413  76.81183
+339    R -6.005095 RT14  -0.2808255         C    57.57399  root 5.305643      2 -0.6535629 phloem 4.353973  60.29413
+340    R -6.005095 RT14  -0.2808255         C    64.84391  root 5.305643      2 -0.6535629  xylem 7.850413  71.06049
+341    R -6.005095 RT14  -0.2808255         C    81.58352  root 5.305643      3  3.7955414 phloem 4.353973  88.75275
+342    R -6.005095 RT14  -0.2808255         C    65.26138  root 5.305643      3  3.7955414  xylem 7.850413  75.92706
+343    R -6.005095 RT14  -0.2808255         C    45.94106  stem 5.305643      1  3.1620540 phloem 4.353973  52.47681
+344    R -6.005095 RT14  -0.2808255         C    78.13499  stem 5.305643      1  3.1620540  xylem 7.850413  88.16718
+345    R -6.005095 RT14  -0.2808255         C    45.72069  stem 5.305643      2 -0.6535629 phloem 4.353973  48.44082
+346    R -6.005095 RT14  -0.2808255         C    92.30873  stem 5.305643      2 -0.6535629  xylem 7.850413  98.52530
+347    R -6.005095 RT14  -0.2808255         C    63.45449  stem 5.305643      3  3.7955414 phloem 4.353973  70.62372
+348    R -6.005095 RT14  -0.2808255         C    78.88782  stem 5.305643      3  3.7955414  xylem 7.850413  89.55350
+349    R -6.005095 RT15  -1.5606408         C    85.64397  root 5.305643      1  3.1620540 phloem 4.353973  90.89990
+350    R -6.005095 RT15  -1.5606408         C    53.89328  root 5.305643      1  3.1620540  xylem 7.850413  62.64566
+351    R -6.005095 RT15  -1.5606408         C    68.25242  root 5.305643      2 -0.6535629 phloem 4.353973  69.69273
+352    R -6.005095 RT15  -1.5606408         C    21.92911  root 5.305643      2 -0.6535629  xylem 7.850413  26.86586
+353    R -6.005095 RT15  -1.5606408         C    80.55530  root 5.305643      3  3.7955414 phloem 4.353973  86.44472
+354    R -6.005095 RT15  -1.5606408         C    57.01846  root 5.305643      3  3.7955414  xylem 7.850413  66.40433
+355    R -6.005095 RT15  -1.5606408         C    70.81683  stem 5.305643      1  3.1620540 phloem 4.353973  76.07276
+356    R -6.005095 RT15  -1.5606408         C   100.16111  stem 5.305643      1  3.1620540  xylem 7.850413 108.91349
+357    R -6.005095 RT15  -1.5606408         C    70.65664  stem 5.305643      2 -0.6535629 phloem 4.353973  72.09696
+358    R -6.005095 RT15  -1.5606408         C    69.92742  stem 5.305643      2 -0.6535629  xylem 7.850413  74.86417
+359    R -6.005095 RT15  -1.5606408         C    64.13377  stem 5.305643      3  3.7955414 phloem 4.353973  70.02320
+360    R -6.005095 RT15  -1.5606408         C    87.98858  stem 5.305643      3  3.7955414  xylem 7.850413  97.37445
