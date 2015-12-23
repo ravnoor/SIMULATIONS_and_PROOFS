@@ -2,8 +2,8 @@
 
 # WE LOOK AT THE REGRESSION OF [GLUCOSE] ~ [AMINOACID_A] IN 30 athletes after 15 races:
 
-# we'll make the covariance of the slopes between athletes 0.5, 
-# and the covariance between intercepts of different athletes 0.2
+# we'll make the sd of the slopes between athletes 0.5, 
+# and the sd between intercepts of different athletes 0.2
 # Further we'll establish a correlation between intercepts and slopes of 0.8.
 
 rm(list = ls())
