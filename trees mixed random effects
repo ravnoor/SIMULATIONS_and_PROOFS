@@ -21,7 +21,7 @@ tissue <- rep(c("phloem","xylem"), n * 6)
 
 # Now we build the dependent variable:
 
-# We choose two random intercept "contributions" from N(0,3) with a fixed effect of 6:
+# We choose two random intercept "contributions" from N(0,3) with a fixed effect of 6 for organ:
 organ_contribution     <- 6 + rnorm(2, mean = 0, sd = 3) 
 organ_contribution     <- as.vector(replicate(n, c(rep(organ_contribution[1],6),
                                                    rep(organ_contribution[2],6))))
