@@ -1,0 +1,26 @@
+# WEAK RELATIONSHIP PREDICTOR AND DEPENDENT VARIABLES:
+set.seed(63126)
+n <- 10000
+x <- rnorm(n) # Independent variable
+pr <- exp(2 * x)/(1 + exp(2 * x))  # Probability following logistic regression.
+plot(pr ~ x, pch = 20, cex = 0.2, col = 4,
+     main = "Probability Distribution")
+y <- 1 * (runif(n) < pr)  # Dependent variable
+mod <- glm(y~x, family="binomial") # Logistic regression
+predpr <- predict(mod, type = c("response"))
+(c_statistic <- roc(y ~ predpr))
+library(pROC)
+plot(c_statistic, col = 4,
+     main = "ROC curve S/Sp for diff cutoff levels of pr")
+
+
+# STRONGER RELATIONSHIP BETWEEN PREDICTOR AND DEPENDENT VARIABLES:
+pr <- exp(8 * x)/(1 + exp(8 * x))  # Probability following logistic regression.
+plot(pr ~ x, pch = 20, cex = 0.2, col = 4,
+     main = "Probability Distribution")
+y <- 1 * (runif(n) < pr)  # Dependent variable
+mod <- glm(y~x, family="binomial") # Logistic regression
+predpr <- predict(mod, type = c("response"))
+(c_statistic <- roc(y ~ predpr))
+plot(c_statistic, col = 2,
+     main = "ROC curve S/Sp for diff cutoff levels of pr")
