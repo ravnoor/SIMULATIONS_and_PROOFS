@@ -1,0 +1,11 @@
+# From the post here: http://stats.stackexchange.com/a/191141/67822
+
+mtcars$cyl <- as.factor(mtcars$cyl)
+D <- mtcars
+D <- D[order(D$cyl, decreasing = FALSE),]
+str(D)
+model.matrix(lm(mpg ~ wt * cyl, D)) # This is the model matrix for ANCOVA
+lm(mpg ~ wt * cyl, D)
+
+fit <- aov(mpg ~ wt * cyl, data=D)
+model.matrix(fit)
