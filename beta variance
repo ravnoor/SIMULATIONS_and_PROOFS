@@ -1,0 +1,15 @@
+# Post here http://stats.stackexchange.com/questions/192787/interpretation-of-the-variance-of-a-slope/192827#192827
+
+beta_hat <- NULL
+for (i in 1:10000){
+sample = rnorm(100, 10, 5)
+y_hat <- 2.3 * sample + rnorm(length(sample))
+beta_hat[i] <- lm(y_hat ~ sample - 1)$coefficients
+}
+boxplot(beta_hat, col = "tan1", pch =19, cex = 0.4, horizontal = T, 
+        outcolor = "red", border = "tan4",
+            main= "Beta Hat for Single Regressor \n True Value = 2.3")
+hist(beta_hat, main = "Distribution of Estimated Slopes \n True Value =2.3",
+     border = F, col= "gray34", freq = T)
+
+var(beta_hat)
