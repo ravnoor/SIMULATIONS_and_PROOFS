@@ -1,0 +1,29 @@
+# Goes with this post: http://stats.stackexchange.com/a/193209/67822
+
+set.seed(10)
+subjects <-     c(group_a <- rep("a", 13),
+                  group_b <- rep("b", 12),
+                  group_c <- rep("c", 7))
+
+
+sam <-      c(
+            c(rep("N",2), "A", "N", "A", rep("N",8)),
+            c(rep("A",2), "A", "N", "A", rep("A",3), "N", rep("N",3)),
+            c(sample(c("A","N"), 7, replace = T)))
+
+            (tab = table(subjects,sam))
+            
+            (p_observed = chisq.test(tab, correct = F))
+
+pval <- c(NA, length(sam))
+options(warn=-1)
+for (i in 1:1e4){
+anx     <- sample(sam, length(sam), replace = F)
+tab     <- table(subjects,anx)
+pval[i] <- chisq.test(tab, correct = F)$p.value
+}
+
+str(pval)
+(p_value = mean(pval < p_observed$p.value))
+
+
