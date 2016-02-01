@@ -97,10 +97,13 @@ counter/iterations * 100
 
 # Royal flush:
 
-iterations <- 1e7
+iterations <- 1e4
+counter <- 0
 for (i in 1:iterations){
-    s <- draw(5)
-    if((sum(na.omit(match(c('10','J','Q','K','A'), s[,1])))==15) & (length(unique(s[,2])) == 1)) counter <- counter + 1
+  s <- draw(5)
+  M <- match(c('10','J','Q','K','A'), s[,1])
+  S <- sum(is.na(M))
+  if(S==0) counter <- counter + 1
 }
 
 counter/iterations * 100
