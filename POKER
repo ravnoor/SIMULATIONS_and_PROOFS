@@ -5,6 +5,7 @@ draw <- function (n) deck[sample(nrow(deck), n), ]
 draw(5)
 
 ## For a pair:
+
 iterations <- 1e6
 counter <- 0
 for (i in 1:iterations){
@@ -14,6 +15,18 @@ if(length(unique(s[ , 1])) == 4) counter <- counter + 1
 counter/iterations * 100
 
 # 42.3218% versus Wikipedia 42.2569%
+
+## For two pairs:
+
+iterations <- 1e6
+counter <- 0
+for (i in 1:iterations){
+    s <- draw(5)
+    if((length(unique(s[ , 1])) == 3) & (max(table(s[,1]) == 2)) ) counter <- counter + 1
+}
+counter/iterations * 100
+
+# 4.7733% versus Wikipedia 4.7539%.
 
 ## For three of a kind:
 iterations <- 1e6
@@ -93,19 +106,20 @@ for (i in 1:iterations){
 
 counter/iterations * 100
 
-# 0.0254% versus Wikipedia 0.00139%	
+# 0.0018% versus Wikipedia 0.00139%	
+
 
 # Royal flush:
 
-iterations <- 1e4
+iterations <- 1e6
 counter <- 0
 for (i in 1:iterations){
-  s <- draw(5)
-  M <- match(c('10','J','Q','K','A'), s[,1])
-  S <- sum(is.na(M))
-  if(S==0) counter <- counter + 1
+    s <- draw(5)
+    M <- match(c('10','J','Q','K','A'), s[,1])
+    S <- sum(is.na(M))
+    if((S==0) & length(unique(s[,2]))==1) counter <- counter + 1
 }
 
 counter/iterations * 100
 
-# 0.00265% versus Wikipedia 0.000154%
+# 0.0001% versus Wikipedia 0.000154%
