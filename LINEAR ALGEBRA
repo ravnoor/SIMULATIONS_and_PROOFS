@@ -180,10 +180,32 @@ t(svd(mat)$v) %*% svd(mat)$v
 # [1,]    1    0
 # [2,]    0    1
 
-# And the d? It is simply the squared root of the eigenvalue of A transpose A:
+########################
+# RECTANGULAR MATRICES:#
+########################
 
-(svd(mat)$d)^2
-# [1] 14303.88639    99.32468
+# http://stats.stackexchange.com/q/190122/67822
+# Continuing with `mat` from mtcars
 
-eigen(t(mat)%*%mat)$values
-# [1] 14303.88639    99.32468
+head(mat)
+
+#                  mpg      wt
+#Mazda RX4         21.0   2.620
+#Mazda RX4 Wag     21.0   2.875
+#Datsun 710        22.8   2.320
+
+# What is the RANK? The number of PIVOTS. It's the same for
+# column space and row space:
+
+pracma::rref(mat)
+
+# So there are 2 pivots. Everything else is linearly dependent - zeros
+
+#                    mpg wt
+#Mazda RX4             1  0
+#Mazda RX4 Wag         0  1
+#Datsun 710            0  0
+#...
+# It makes sense since there are only two columns and rank cannot be more than #cols
+
+# Two vectors form the basis of the subspace of R32 that is the column space.
