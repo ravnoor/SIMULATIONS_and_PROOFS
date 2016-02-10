@@ -5,7 +5,7 @@ set.seed(0)
 library(Matrix)
 mat = matrix(runif(9), nrow = 3)
 mat
-
+A <- mat
 #          [,1]      [,2]      [,3]
 #[1,] 0.8966972 0.5728534 0.8983897
 #[2,] 0.2655087 0.9082078 0.9446753
@@ -13,15 +13,119 @@ mat
 
 # Reduced form:
 
-mat[2,] <- mat[2,] - (  mat[1,]   * mat[2,]  / mat[1,1])
-mat[3,] <- mat[3,] - (  mat[2,]   * mat[3,]  / mat[2,2])
-mat[3,] <- mat[3,] - (  mat[1,]   * mat[3,]  / mat[1,1])
+mat[2,] <- mat[2,] - (  mat[1,]   * mat[2,1]  / mat[1,1]) # This is the elimination step for 2,1 or E21 (step1)
+
+# Notice that at this point mat[2,2] has now changed from the original matrix  - not just [2,1]!
+
+#      [,1]      [,2]      [,3]
+# [1,] 0.8966972 0.5728534 0.8983897
+# [2,] 0.0000000 0.7385881 0.6786655
+# [3,] 0.3721239 0.2016819 0.6607978
+
+mat[3,] <- mat[3,] - (  mat[1,]   * mat[3,1]  / mat[1,1]) # This is the E31 step (step2)
+
+#       [,1]        [,2]      [,3]
+# [1,] 0.8966972  0.57285336 0.8983897
+# [2,] 0.0000000  0.73858807 0.6786655
+# [3,] 0.0000000 -0.03604874 0.2879715
+
+mat[3,] <- mat[3,] - (  mat[2,]   * mat[3,2]  / mat[2,2]) # This is the E32 step. [3,2] (step 3)
+#     [,1]      [,2]      [,3]
+# [1,] 0.8966972 0.5728534 0.8983897
+# [2,] 0.0000000 0.7385881 0.6786655
+# [3,] 0.0000000 0.0000000 0.3210956
+
+# This is the U in the LU decomposition:
+
+lu(A)$U
+
+# In the L there are the inverted steps we have taken so far:
+
+lu(A)$L
+
+# Step 1
+set.seed(0)
+library(Matrix)
+mat = matrix(runif(9), nrow = 3)
 mat
 
-#      [,1]      [,2]         [,3]
-#[1,] 0.8966972 0.5728534  0.898389685
-#[2,] 0.0000000 0.3280009 -0.001783042
-#[3,] 0.0000000 0.0000000 -0.001254013
+# First row is left alone and the second row is changed by subtracting the first row times [2,1]/[1,1]= 0.2655087 
+#    1             0                 0
+# 0.2655087        1                 0   In LA = U, there would be a minus sign in front of 0.2655087 
+
+mat[2,] <- mat[2,] - (  mat[1,]   * mat[2,1]  / mat[1,1])
+
+# Step 2
+# Now the third row will be changed similary using the first row times mat[3,1]/mat[1,1]: 0.4149939
+#    1               0                 0
+# 0.2655087          1                 1
+# 0.4149939    0.2377307               1
+
+mat[3,] <- mat[3,] - (  mat[1,]   * mat[3,1]  / mat[1,1])
+
+# Step 3
+# The third row is again changed using the second row times mat[3,2]/mat[2,2] = -0.04880764
+
+#    1                 0                   0
+# 0.2655087            1                   1
+# 0.4149939    -0.04880764                 1
+
+mat[3,] <- mat[3,] - (  mat[2,]   * mat[3,2]  / mat[2,2])
+
+lu(A)$L
+
+# What about the Reduced row echelon form of A:
+
+
+
+rref <- function(A, tol=sqrt(.Machine$double.eps),verbose=FALSE,
+                 fractions=FALSE){
+  ## A: coefficient matrix
+  ## tol: tolerance for checking for 0 pivot
+  ## verbose: if TRUE, print intermediate steps
+  ## fractions: try to express nonintegers as rational numbers
+  ## Written by John Fox
+  # Modified by Geoffrey Brent 2014-12-17 to fix a bug
+  if (fractions) {
+    mass <- require(MASS)
+    if (!mass) stop("fractions=TRUE needs MASS package")
+  }
+  if ((!is.matrix(A)) || (!is.numeric(A)))
+    stop("argument must be a numeric matrix")
+  n <- nrow(A)
+  m <- ncol(A)
+  x.position<-1
+  y.position<-1
+  # change loop:
+  while((x.position<=m) & (y.position<=n)){
+    col <- A[,x.position]
+    col[1:n < y.position] <- 0
+    # find maximum pivot in current column at or below current row
+    which <- which.max(abs(col))
+    pivot <- col[which]
+    if (abs(pivot) <= tol) x.position<-x.position+1     # check for 0 pivot
+    else{
+      if (which > y.position) { A[c(y.position,which),]<-A[c(which,y.position),] } # exchange rows
+      A[y.position,]<-A[y.position,]/pivot # pivot
+      row <-A[y.position,]
+      A <- A - outer(A[,x.position],row) # sweep
+      A[y.position,]<-row # restore current row
+      if (verbose)
+        if (fractions) print(fractions(A))
+      else print(round(A,round(abs(log(tol,10)))))
+      x.position<-x.position+1
+      y.position<-y.position+1
+    }
+  }
+  for (i in 1:n)
+    if (max(abs(A[i,1:m])) <= tol)
+      A[c(i,n),] <- A[c(n,i),] # 0 rows to bottom
+  if (fractions) fractions (A)
+  else round(A, round(abs(log(tol,10))))
+}
+
+rref(A)
+
 
 # Determinant: Product of the Pivots:
 
@@ -58,7 +162,7 @@ mat
 #[3,]    4    6   -2    0
 #[4,]    1    7    0    1
 
-# Step (2, 1):
+# Step (2, 1): E21 makes the position 2,1 a zero
 
 mat[2,] <- mat[2, ] - mat[1, ] * mat[2, 1] / mat[1, 1]
 mat
