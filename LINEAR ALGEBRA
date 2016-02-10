@@ -151,3 +151,31 @@ prod(diag(expand(lu(sym))$U)) # - 476 This is wrong because R did a row exchange
 
 # and...
 2 * 0.5 * -298 * -1.5973154 # 476
+
+########
+##SVD##
+#######
+
+attach(mtcars)
+head(mtcars)
+mat <- as.matrix(mtcars[,c(1,6)])
+str(mat) # Two variables with 32 observations each.
+str(svd(mat)$u) # The u matrix has 32 rows. It's the left singular vectors.
+str(svd(mat)$v) # The v matrix is 2 x 2. It's the Right sing vect matrix.
+str(svd(mat)$d) # Two eigenvalues or singular values
+
+
+t(svd(mat)$u) %*% svd(mat)$u # 2 x 32 multip by 32 x2 
+# Ones in the diagonals because the columns of u are orthonormal
+# And virtual zeros in the off-diagonal because they are perpendic.
+
+#      [,1]         [,2]
+# [1,] 1.000000e+00 1.604619e-17
+# [2,] 1.604619e-17 1.000000e+00
+
+# What about v?
+
+t(svd(mat)$v) %*% svd(mat)$v
+#       [,1] [,2]
+# [1,]    1    0
+# [2,]    0    1
