@@ -87,10 +87,18 @@ lu(A)$L
 
 pracma::rref(A)
 
-
-# Determinant: Product of the Pivots of the Upper Triangular U form (which is now `mat`):
-
+#=========================================================================================
+#=# DETERMINANT: Product of the Pivots of the Upper Triangular U form (which is now `mat`):
+#=========================================================================================
+  
 all.equal(det(A), det(mat), prod(diag(mat))) # [1] TRUE
+
+# [1] 0.2126583
+
+# It is also the Product of the Eigenvalues:
+
+prod(eigen(A)$values)
+# [1] 0.2126583-0i
 
 # What if the matrix is symmetric? Can I just multiply the diagonals:
 
