@@ -37,11 +37,11 @@ mat[3,] <- mat[3,] - (  mat[2,]   * mat[3,2]  / mat[2,2]) # This is the E32 step
 
 # This is the U in the LU decomposition:
 
-lu(A)$U
+expand(lu(A))$U
 
 # In the L there are the inverted steps we have taken so far:
 
-lu(A)$L
+expand(lu(A))$L
 
 # Step 1
 set.seed(0)
@@ -49,16 +49,16 @@ library(Matrix)
 mat = matrix(runif(9), nrow = 3)
 mat
 
-# First row is left alone and the second row is changed by subtracting the first row times [2,1]/[1,1]= 0.2655087 
+# 1st row is left and the 2nd row is changed by subt the 1st row x mat[2,1]/mat[1,1]= 0.2960962 
 #    1             0                 0
-# 0.2655087        1                 0   In LA = U, there would be a minus sign in front of 0.2655087 
+# 0.2960962        1                 0   In LA = U, there would be a minus sign in front of 0.2960962 
 
 mat[2,] <- mat[2,] - (  mat[1,]   * mat[2,1]  / mat[1,1])
 
 # Step 2
 # Now the third row will be changed similary using the first row times mat[3,1]/mat[1,1]: 0.4149939
 #    1               0                 0
-# 0.2655087          1                 1
+# 0.2960962          1                 1
 # 0.4149939    0.2377307               1
 
 mat[3,] <- mat[3,] - (  mat[1,]   * mat[3,1]  / mat[1,1])
@@ -67,12 +67,12 @@ mat[3,] <- mat[3,] - (  mat[1,]   * mat[3,1]  / mat[1,1])
 # The third row is again changed using the second row times mat[3,2]/mat[2,2] = -0.04880764
 
 #    1                 0                   0
-# 0.2655087            1                   1
+# 0.2960962            1                   1
 # 0.4149939    -0.04880764                 1
 
 mat[3,] <- mat[3,] - (  mat[2,]   * mat[3,2]  / mat[2,2])
 
-lu(A)$L
+expand(lu(A))$L
 
 # What about the Reduced row echelon form of A:
 
