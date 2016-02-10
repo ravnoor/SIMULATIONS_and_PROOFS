@@ -39,7 +39,7 @@ mat[3,] <- mat[3,] - (  mat[2,]   * mat[3,2]  / mat[2,2]) # This is the E32 step
 
 expand(lu(A))$U
 
-# In the L there are the inverted steps we have taken so far:
+# In the L there are the steps we have taken so far but with the opposite sign:
 
 expand(lu(A))$L
 
@@ -101,7 +101,7 @@ mat
 #=========================================================================================
 #=# DETERMINANT: Product of the Pivots of the Upper Triangular U form (which is now `mat`):
 #=========================================================================================
-  
+
 all.equal(det(A), det(mat), prod(diag(mat))) # [1] TRUE
 
 # [1] 0.2126583
@@ -125,12 +125,22 @@ prod(diag(sym))      # -20
 det(sym)             # 476 I guess not...
 
 
-lu(sym)$U
-#[,1]       [,2]    [,3]        [,4]
-#[1,]    2 -3.0      4      1.000000
-#[2,]    0  0.5     12      8.500000
-#[3,]    0  0.0   -298   -206.000000
-#[4,]    0  0.0      0     -1.597315
+expand(lu(sym))$U
+#      [,1]      [,2]      [,3]      [,4]     
+#[1,]  4.000000  6.000000 -2.000000  0.000000
+#[2,]         .  9.500000  4.500000  7.000000
+#[3,]         .         .  7.842105  5.421053
+#[4,]         .         .         . -1.597315
 
-prod(diag(lu(sym)$U)) # 476
+prod(diag(expand(lu(sym))$U)) # - 476 This is wrong because R did a row exchange.
+# Notice that the first row of U is the third row of `sym`.
+# Calculating the U without row exchange results in:
 
+#       [,1] [,2]   [,3]    [,4]
+# [1,]    2   -3     4      1
+# [2,]    0   .5    12      8.5
+# [3,]    0    0   -298    206
+# [4,]    0    0    0      -1.5973154
+
+# and...
+2 * 0.5 * -298 * -1.5973154 # 476
