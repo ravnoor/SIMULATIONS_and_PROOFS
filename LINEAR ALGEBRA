@@ -85,119 +85,33 @@ lu(A)$L
 
 # and eliminate backwards.
 
-rref <- function(A, tol=sqrt(.Machine$double.eps),verbose=FALSE,
-                 fractions=FALSE){
-  ## A: coefficient matrix
-  ## tol: tolerance for checking for 0 pivot
-  ## verbose: if TRUE, print intermediate steps
-  ## fractions: try to express nonintegers as rational numbers
-  ## Written by John Fox
-  # Modified by Geoffrey Brent 2014-12-17 to fix a bug
-  if (fractions) {
-    mass <- require(MASS)
-    if (!mass) stop("fractions=TRUE needs MASS package")
-  }
-  if ((!is.matrix(A)) || (!is.numeric(A)))
-    stop("argument must be a numeric matrix")
-  n <- nrow(A)
-  m <- ncol(A)
-  x.position<-1
-  y.position<-1
-  # change loop:
-  while((x.position<=m) & (y.position<=n)){
-    col <- A[,x.position]
-    col[1:n < y.position] <- 0
-    # find maximum pivot in current column at or below current row
-    which <- which.max(abs(col))
-    pivot <- col[which]
-    if (abs(pivot) <= tol) x.position<-x.position+1     # check for 0 pivot
-    else{
-      if (which > y.position) { A[c(y.position,which),]<-A[c(which,y.position),] } # exchange rows
-      A[y.position,]<-A[y.position,]/pivot # pivot
-      row <-A[y.position,]
-      A <- A - outer(A[,x.position],row) # sweep
-      A[y.position,]<-row # restore current row
-      if (verbose)
-        if (fractions) print(fractions(A))
-      else print(round(A,round(abs(log(tol,10)))))
-      x.position<-x.position+1
-      y.position<-y.position+1
-    }
-  }
-  for (i in 1:n)
-    if (max(abs(A[i,1:m])) <= tol)
-      A[c(i,n),] <- A[c(n,i),] # 0 rows to bottom
-  if (fractions) fractions (A)
-  else round(A, round(abs(log(tol,10))))
-}
-
-rref(A)
+pracma::rref(A)
 
 
-# Determinant: Product of the Pivots of the Upper Triangular U form:
+# Determinant: Product of the Pivots of the Upper Triangular U form (which is now `mat`):
 
-all.equal(det(mat), prod(diag(mat)), prod(diag(expand(lu(mat))$U)))
+all.equal(det(A), det(mat), prod(diag(mat))) # [1] TRUE
 
 # What if the matrix is symmetric? Can I just multiply the diagonals:
 
-mat <- matrix(c(2,-3,4,1,-3,5,6,7,4,6,-2,0,1,7,0,1), nrow = 4)
-mat
+sym <- matrix(c(2,-3,4,1,-3,5,6,7,4,6,-2,0,1,7,0,1), nrow = 4)
+sym
 #       [,1] [,2] [,3] [,4]
 # [1,]    2   -3    4    1
 # [2,]   -3    5    6    7
 # [3,]    4    6   -2    0
 # [4,]    1    7    0    1
-prod(diag(mat))      # -20
-det(mat)             # I guess not...
+
+prod(diag(sym))      # -20
+det(sym)             # 476 I guess not...
 
 
-expand(lu(mat))$U
-#        [,1]      [,2]      [,3]      [,4]     
-# [1,]  4.000000  6.000000 -2.000000  0.000000
-# [2,]         .  9.500000  4.500000  7.000000
-# [3,]         .         .  7.842105  5.421053
-# [4,]         .         .         . -1.597315
+lu(sym)$U
+#[,1]       [,2]    [,3]        [,4]
+#[1,]    2 -3.0      4      1.000000
+#[2,]    0  0.5     12      8.500000
+#[3,]    0  0.0   -298   -206.000000
+#[4,]    0  0.0      0     -1.597315
 
-diag(expand(lu(mat))$U)
-prod(diag(expand(lu(mat))$U)) # 476
+prod(diag(lu(sym)$U)) # 476
 
-# Doing it manually - let's get the LU form:
-
-mat
-
-#       [,1] [,2] [,3] [,4]
-#[1,]    2   -3    4    1
-#[2,]   -3    5    6    7
-#[3,]    4    6   -2    0
-#[4,]    1    7    0    1
-
-# Step (2, 1): E21 makes the position 2,1 a zero
-
-mat[2,] <- mat[2, ] - mat[1, ] * mat[2, 1] / mat[1, 1]
-mat
-
-# Step (3, 1):
-mat[3,] <- mat[3, ] - mat[1, ] * mat[3, 1] / mat[1, 1]
-mat
-
-# Step (4, 1):
-mat[4,] <- mat[4, ] - mat[1, ] * mat[4, 1] / mat[1, 1]
-mat
-
-# Step (3, 2):
-mat[3,] <- mat[3, ] - mat[2, ] * mat[3, 2] / mat[2, 2]
-mat
-
-# Step (4, 2):
-
-mat[4,] <- mat[4, ] - mat[2, ] * mat[4, 2] / mat[2, 2]
-mat
-
-# Step (4, 3):
-
-mat[4,] <- mat[4, ] - mat[3, ] * mat[4, 3] / mat[3, 3]
-mat
-
-# Aha!! now we have 4 pivots:
-
-prod(diag(mat))  # [1] 476 
