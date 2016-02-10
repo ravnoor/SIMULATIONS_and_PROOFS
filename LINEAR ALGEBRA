@@ -134,7 +134,7 @@ rref <- function(A, tol=sqrt(.Machine$double.eps),verbose=FALSE,
 rref(A)
 
 
-# Determinant: Product of the Pivots:
+# Determinant: Product of the Pivots of the Upper Triangular U form:
 
 all.equal(det(mat), prod(diag(mat)), prod(diag(expand(lu(mat))$U)))
 
@@ -149,6 +149,8 @@ mat
 # [4,]    1    7    0    1
 prod(diag(mat))      # -20
 det(mat)             # I guess not...
+
+
 expand(lu(mat))$U
 #        [,1]      [,2]      [,3]      [,4]     
 # [1,]  4.000000  6.000000 -2.000000  0.000000
