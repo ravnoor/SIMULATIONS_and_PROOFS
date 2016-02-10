@@ -179,3 +179,11 @@ t(svd(mat)$v) %*% svd(mat)$v
 #       [,1] [,2]
 # [1,]    1    0
 # [2,]    0    1
+
+# And the d? It is simply the squared root of the eigenvalue of A transpose A:
+
+(svd(mat)$d)^2
+# [1] 14303.88639    99.32468
+
+eigen(t(mat)%*%mat)$values
+# [1] 14303.88639    99.32468
