@@ -1,0 +1,90 @@
+###################
+##SQUARE MATRICES##
+###################
+set.seed(0)
+library(Matrix)
+mat = matrix(runif(9), nrow = 3)
+mat
+
+#          [,1]      [,2]      [,3]
+#[1,] 0.8966972 0.5728534 0.8983897
+#[2,] 0.2655087 0.9082078 0.9446753
+#[3,] 0.3721239 0.2016819 0.6607978
+
+# Reduced form:
+
+mat[2,] <- mat[2,] - (  mat[1,]   * mat[2,]  / mat[1,1])
+mat[3,] <- mat[3,] - (  mat[2,]   * mat[3,]  / mat[2,2])
+mat[3,] <- mat[3,] - (  mat[1,]   * mat[3,]  / mat[1,1])
+mat
+
+#      [,1]      [,2]         [,3]
+#[1,] 0.8966972 0.5728534  0.898389685
+#[2,] 0.0000000 0.3280009 -0.001783042
+#[3,] 0.0000000 0.0000000 -0.001254013
+
+# Determinant: Product of the Pivots:
+
+all.equal(det(mat), prod(diag(mat)), prod(diag(expand(lu(mat))$U)))
+
+# What if the matrix is symmetric? Can I just multiply the diagonals:
+
+mat <- matrix(c(2,-3,4,1,-3,5,6,7,4,6,-2,0,1,7,0,1), nrow = 4)
+mat
+#       [,1] [,2] [,3] [,4]
+# [1,]    2   -3    4    1
+# [2,]   -3    5    6    7
+# [3,]    4    6   -2    0
+# [4,]    1    7    0    1
+prod(diag(mat))      # -20
+det(mat)             # I guess not...
+expand(lu(mat))$U
+#        [,1]      [,2]      [,3]      [,4]     
+# [1,]  4.000000  6.000000 -2.000000  0.000000
+# [2,]         .  9.500000  4.500000  7.000000
+# [3,]         .         .  7.842105  5.421053
+# [4,]         .         .         . -1.597315
+
+diag(expand(lu(mat))$U)
+prod(diag(expand(lu(mat))$U)) # 476
+
+# Doing it manually - let's get the LU form:
+
+mat
+
+#       [,1] [,2] [,3] [,4]
+#[1,]    2   -3    4    1
+#[2,]   -3    5    6    7
+#[3,]    4    6   -2    0
+#[4,]    1    7    0    1
+
+# Step (2, 1):
+
+mat[2,] <- mat[2, ] - mat[1, ] * mat[2, 1] / mat[1, 1]
+mat
+
+# Step (3, 1):
+mat[3,] <- mat[3, ] - mat[1, ] * mat[3, 1] / mat[1, 1]
+mat
+
+# Step (4, 1):
+mat[4,] <- mat[4, ] - mat[1, ] * mat[4, 1] / mat[1, 1]
+mat
+
+# Step (3, 2):
+mat[3,] <- mat[3, ] - mat[2, ] * mat[3, 2] / mat[2, 2]
+mat
+
+# Step (4, 2):
+
+mat[4,] <- mat[4, ] - mat[2, ] * mat[4, 2] / mat[2, 2]
+mat
+
+# Step (4, 3):
+
+mat[4,] <- mat[4, ] - mat[3, ] * mat[4, 3] / mat[3, 3]
+mat
+
+# Aha!! now we have 4 pivots:
+
+prod(diag(mat))  # [1] 476 
