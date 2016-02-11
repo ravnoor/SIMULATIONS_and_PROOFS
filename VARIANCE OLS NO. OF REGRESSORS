@@ -1,0 +1,99 @@
+attach(mtcars)
+head(mtcars)
+dat <- cbind(mpg,wt,hp)
+fit <- lm(mpg ~ wt + hp)
+summary(fit)
+#Model matrix X
+model.matrix(fit)
+#Variance-covariance matrix:
+Var_Cov = t(model.matrix(fit)) %*% model.matrix(fit)
+Inv_Var_Cov = solve(Var_Cov)
+#Variance estimate:
+# SSE / (n - p) # p being the number of parameters
+# residuals(fit) # same as: mpg - fitted(fit)
+(MSE = sum(residuals(fit)^2)/(32 - 3)) # Counting the intercept as a parameter
+(MSE = sum((mpg - fitted(fit))^2)/(32 - 3))
+# MSE is the same as RSS (or SSE) divided by error or residual degrees of freed 
+# no. observations−no. indepen't variables−1
+# http://stats.stackexchange.com/a/172161/67822
+
+#variance parameter weight:
+
+sqrt(MSE * Inv_Var_Cov) # The standard errors for each parameter in diag
+
+diag(sqrt(MSE * Inv_Var_Cov))
+summary(fit)$coefficients[4:6]
+
+# INCREASING THE NUMBER OF REGRESSORS:
+
+dat2 <- cbind(dat, disp)
+fit2 <- lm(mpg ~ wt + hp + disp)
+summary(fit2)
+model.matrix(fit2)
+Var_Cov2 = t(model.matrix(fit2)) %*% model.matrix(fit2)
+Inv_Var_Cov2 = solve(Var_Cov2)
+
+(MSE2 = sum(residuals(fit2)^2)/(32 - 4))
+sqrt(MSE2 * Inv_Var_Cov2)
+summary(fit2)$coefficients
+
+sum(residuals(fit2)^2) / sum(residuals(fit)^2) # Better fit
+MSE2/MSE # [1] 1.035411 # Less degrees of freedom
+
+Inv_Var_Cov2[2,2]/Inv_Var_Cov[2,2] # 170 % increase!!!
+# 0.1632352 / 0.0595249
+
+# Why? There was no change in Var_Cov2[2,2]/Var_Cov[2,2]
+
+Var_Cov2[2,2]/Var_Cov[2,2]
+
+# Is it the determinant of Var_Cov:
+
+library(Matrix)
+det(Var_Cov2)/det(Var_Cov) # [1] 65012.45
+
+# prod(diag(expand(lu(Var_Cov))$U))
+#[1] 78341330
+# det(Var_Cov)
+#[1] 78341330
+# prod(diag(expand(lu(Var_Cov2))$U))
+#[1] 5.093162e+12
+# det(Var_Cov2)
+# 5.093162e+12
+
+# The determinant goes in the denom. and it's higher in second
+# model. Hence it would reduce the variance in the end.
+
+#What is the matrix of cofactors for weight:
+det(Var_Cov[c(1,3),c(1,3)])
+det(Var_Cov2[c(1,3,4),c(1,3,4)])
+
+(1 / det(Var_Cov)) * det(Var_Cov[c(1,3),c(1,3)])
+(1/ det(Var_Cov2)) * det(Var_Cov2[c(1,3,4),c(1,3,4)])
+
+# Aha! It's the matrix of cofactors!!!!
+
+# So what about the confidence interval:
+
+summary(fit)$coef
+beta_hat <- summary(fit)$coef[2,1]
+Std.Err <- summary(fit)$coef[2,2]
+beta_hat + c(-1,1) * Std.Err * qt(0.975, 30)
+confint(fit, 'wt', level=0.95)
+
+# And the t-value:
+
+beta_hat/Std.Err # So the higher the Std.Err, the lower the Pr sig.
+
+
+# Alternative variance formula:
+
+alt <- lm(wt ~ hp)
+R_square = summary(alt)$r.squared
+var_wt = var(wt)
+
+sqrt(MSE)/sqrt(31 * var_wt * (1 - R_square)) # 31 cause intercept doesn't count.
+summary(fit)
+
+# So the better the other co-regressors explain wt, the higher
+# the r.squared, and the higher the variance of its parameter estimate.
