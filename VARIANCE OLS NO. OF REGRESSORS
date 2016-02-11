@@ -1,3 +1,4 @@
+# The data is from mtcars, but just a few variables:
 attach(mtcars)
 head(mtcars)
 dat <- cbind(mpg,wt,hp)
