@@ -1,34 +1,42 @@
+# Simulation for this post: http://stats.stackexchange.com/a/195018/67822
 # The data is from mtcars, but just a few variables:
 attach(mtcars)
 head(mtcars)
-dat <- cbind(mpg,wt,hp)
-fit <- lm(mpg ~ wt + hp)
+dat <- cbind(mpg, wt, hp) # First data set
+fit <- lm(mpg ~ wt + hp)  # First OLS
 summary(fit)
-#Model matrix X
+
+# MANUAL CALCULATION OF VARIANCE FOR wt:
+# Model matrix X
 model.matrix(fit)
+
 #Variance-covariance matrix:
 Var_Cov = t(model.matrix(fit)) %*% model.matrix(fit)
-Inv_Var_Cov = solve(Var_Cov)
+Inv_Var_Cov = solve(Var_Cov) # This is the (XtX)' that we will need to multiply times MSE
+
 #Variance estimate:
 # SSE / (n - p) # p being the number of parameters
 # residuals(fit) # same as: mpg - fitted(fit)
+
 (MSE = sum(residuals(fit)^2)/(32 - 3)) # Counting the intercept as a parameter
-(MSE = sum((mpg - fitted(fit))^2)/(32 - 3))
-# MSE is the same as RSS (or SSE) divided by error or residual degrees of freed 
-# no. observations−no. indepen't variables−1
+(MSE = sum((mpg - fitted(fit))^2)/(32 - 3)) # This gives us the same result
+
+# MSE is the same as RSS (or SSE) divided by error or residual degrees of freedom 
+# no. observations − no. indepen't variables − 1
 # http://stats.stackexchange.com/a/172161/67822
 
-#variance parameter weight:
+#Putting it together, the variance (well, standard error) for weight is:
 
 sqrt(MSE * Inv_Var_Cov) # The standard errors for each parameter in diag
 
-diag(sqrt(MSE * Inv_Var_Cov))
-summary(fit)$coefficients[4:6]
+diag(sqrt(MSE * Inv_Var_Cov)) # It is found in the diagonal
+
+summary(fit)$coefficients[4:6] # This is what R gives us in the ouput
 
 # INCREASING THE NUMBER OF REGRESSORS:
 
-dat2 <- cbind(dat, disp)
-fit2 <- lm(mpg ~ wt + hp + disp)
+dat2 <- cbind(dat, disp) # Second data set
+fit2 <- lm(mpg ~ wt + hp + disp) # Second OLS
 summary(fit2)
 model.matrix(fit2)
 Var_Cov2 = t(model.matrix(fit2)) %*% model.matrix(fit2)
@@ -38,10 +46,14 @@ Inv_Var_Cov2 = solve(Var_Cov2)
 sqrt(MSE2 * Inv_Var_Cov2)
 summary(fit2)$coefficients
 
-sum(residuals(fit2)^2) / sum(residuals(fit)^2) # Better fit
-MSE2/MSE # [1] 1.035411 # Less degrees of freedom
+# So the variance for weight is higher, but why?
 
-Inv_Var_Cov2[2,2]/Inv_Var_Cov[2,2] # 170 % increase!!!
+sum(residuals(fit2)^2) / sum(residuals(fit)^2) # Better fit with model 2
+MSE2/MSE # [1] 1.035411                        # Less degrees of freedom bring up the MSE for model 2.
+
+What does the entry look like in the weight-weight intersect of the inverse of AtA?
+
+Inv_Var_Cov2[2,2]/Inv_Var_Cov[2,2]     # 170 % increase with model 2!!!
 # 0.1632352 / 0.0595249
 
 # Why? There was no change in Var_Cov2[2,2]/Var_Cov[2,2]
@@ -51,8 +63,9 @@ Var_Cov2[2,2]/Var_Cov[2,2]
 # Is it the determinant of Var_Cov?
 
 library(Matrix)
-det(Var_Cov2)/det(Var_Cov) # [1] 65012.45
+det(Var_Cov2)/det(Var_Cov) # [1] 65012.45 # It's certainly higher in model 2, and since det is in the denom...
 
+# Testing that the determinants are correctly calculated:
 # prod(diag(expand(lu(Var_Cov))$U))
 #[1] 78341330
 # det(Var_Cov)
