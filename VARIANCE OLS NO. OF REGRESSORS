@@ -47,7 +47,7 @@ Inv_Var_Cov2[2,2]/Inv_Var_Cov[2,2] # 170 % increase!!!
 
 Var_Cov2[2,2]/Var_Cov[2,2]
 
-# Is it the determinant of Var_Cov:
+# Is it the determinant of Var_Cov?
 
 library(Matrix)
 det(Var_Cov2)/det(Var_Cov) # [1] 65012.45
@@ -67,6 +67,8 @@ det(Var_Cov2)/det(Var_Cov) # [1] 65012.45
 #What is the matrix of cofactors for weight:
 det(Var_Cov[c(1,3),c(1,3)])
 det(Var_Cov2[c(1,3,4),c(1,3,4)])
+
+#Does it overcome the influence of the determinant?
 
 (1 / det(Var_Cov)) * det(Var_Cov[c(1,3),c(1,3)])
 (1/ det(Var_Cov2)) * det(Var_Cov2[c(1,3,4),c(1,3,4)])
