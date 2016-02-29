@@ -37,6 +37,7 @@ combo_vec <- function(prx, pry, prz, prv, prw){
   tfx = cbind(prx_counts, pry_counts, prz_counts, prv_counts, prw_counts)
   tfx
 }
+
 tc_pr1 = combo_vec(pr1,pr2,pr3,pr4,pr5)
 tc_pr1 = as.data.frame(tc_pr1)
 tf_1 = tc_pr1[ , !duplicated(colnames(tc_pr1))]
@@ -65,6 +66,9 @@ idf_1 = log(5/(1 + total_count_pr1))
 imp_1 = t(idf_1) * tf_1
 imp_1
 
+
+######################################################################################################
+
 ##IMPORTANT WORDS IN PARAGRAPH 2:
 
 tc_pr2 = combo_vec(pr2,pr1,pr3,pr4,pr5)
@@ -86,7 +90,7 @@ length(total_count_pr2)
 idf_2 = log(5/(1 + total_count_pr2))
 
 imp_2 = t(idf_2) * tf_2
-imp_2
+
 
 imp_2 = imp_2[,names(imp_1)]
 
@@ -95,10 +99,13 @@ imp_2 = imp_2[,names(imp_1)]
 
 sum(as.vector(imp_1)*as.vector(imp_2))
 
+
+#######################################################################################################
+
 ##IMPORTANT WORDS IN PARAGRAPH 5:
 
 tc_pr5 = combo_vec(pr5,pr2,pr3,pr4,pr1)
-tc_pr2 = as.data.frame(tc_pr5)
+tc_pr5 = as.data.frame(tc_pr5)
 tf_5 = tc_pr5[ , !duplicated(colnames(tc_pr5))]
 
 
@@ -116,14 +123,10 @@ length(total_count_pr5)
 idf_5 = log(5/(1 + total_count_pr5))
 
 imp_5 = t(idf_5) * tf_5
-imp_5
+
 
 imp_5 = imp_5[,names(imp_1)]
-
 
 #COMPARING PR1 to PR5:
 
 sum(as.vector(imp_1)*as.vector(imp_5))
-
-
-
