@@ -1,0 +1,129 @@
+paragr1 <- c("Having staked his presidential hopes on the New Hampshire primary only to finish in sixth place, and facing the end of a so-far disastrous second term as governor, Mr. Christie needs a new job. Perhaps he's hitching his ambitions to Mr. Trump because he's promised to make him a winner, like Mr. Trump promises America. Mr. Trump, at least, has managed to do what Mr. Christie couldn't: hoodwink his way to the front of the Republican presidential pack.")
+paragr2 <- c("Addressing a luncheon of Republican governors and donors in Washington on Feb. 19, he warned that Donald J. Trump's increasingly likely nomination would be catastrophic, dooming the party in November. But Mr. Rove, the master strategist of George W. Bush's campaigns, insisted it was not too late for them to stop Mr. Trump, according to three people present.")
+paragr3 <- c("In the span of a few hours across Texas, Mr. Rubio suggested that Mr. Trump had urinated in his trousers and used illegal immigrants to tap out his unceasing Twitter messages. Mr. Trump countered by suggesting that Mr. Rubio's excessive perspiration had no place in the White House and brandishing a water bottle to mock the senator's chronic thirst.")
+paragr4 <- c("At a press conference in Fort Worth, Texas on February 26th, Mr Christie endorsed Donald Trump. He described Mr Trump as the candidate who would provide the strongest leadership for America. For his part Mr Trump said that Mr Christie had been my friend for many years, he's been a spectacular governor. On the day after his previous use of immigrant labourers, alleged involvement with a phony university, and other embarrassments, dominated a televised debate, Mr Trump will doubtless be grateful for Mr Christie's timing, as well as for his support.")
+# Now sports:
+paragr5 <- c("I do hope our friends in the United States will accept that FIFA has promised these reforms, is doing these reforms, and that they will let us work in peace, Sepp Blatter, the longtime FIFA president whose tenure came to an inglorious end under the weight of the corruption scandal, said in an interview after the new rules passed.")
+
+count_vectors = function(paragr){
+  pr <- strsplit(paragr, "[.,!?] *")
+  split_words <- function(x) strsplit(x,split=" ")
+  pr <- do.call(split_words, pr)
+  pr = Reduce(c, pr)
+  freq_pr = table(pr)
+  count = sort(freq_pr, decreasing = T)
+  return(list("paragraph" = pr, "counts" =count))
+}
+
+
+pr1 <- count_vectors(paragr1)
+pr2 <- count_vectors(paragr2)
+pr3 <- count_vectors(paragr3)
+pr4 <- count_vectors(paragr4)
+pr5 <- count_vectors(paragr5)
+
+###TERM FREQUENCY (tf)
+
+combo_vec <- function(prx, pry, prz, prv, prw){
+  prx_counts <- t(as.matrix(prx$counts))
+  pry_counts <- t(as.matrix(pry$counts))
+  prz_counts <- t(as.matrix(prz$counts))
+  prv_counts <- t(as.matrix(prv$counts))
+  prw_counts <- t(as.matrix(prw$counts))
+  for (i in colnames(prx_counts)){
+    prx_counts[1,i] <- prx_counts[1,i]
+  }
+  pry_counts[1,] = 0; prz_counts[1,] = 0; prv_counts[1,] = 0; prw_counts[1,] = 0
+  tfx = cbind(prx_counts, pry_counts, prz_counts, prv_counts, prw_counts)
+  tfx
+}
+tc_pr1 = combo_vec(pr1,pr2,pr3,pr4,pr5)
+tc_pr1 = as.data.frame(tc_pr1)
+tf_1 = tc_pr1[ , !duplicated(colnames(tc_pr1))]
+
+
+
+
+##INVERSE DOCUMENT FREQUENCY: 
+
+V = c(names(pr1$counts),names(pr2$counts), names(pr3$counts), names(pr4$counts), names(pr5$counts))
+
+total_count_pr1 <- vector()
+for(i in unique(V)){
+  docs_with_word = sum(i == V)
+  total_count_pr1[i] <- docs_with_word
+}
+total_count_pr1[1:length(pr1$counts)] <- total_count_pr1[1:length(pr1$counts)] - 1
+names(total_count_pr1) = unique(V) 
+length(total_count_pr1)
+
+idf_1 = log(5/(1 + total_count_pr1))
+
+
+##IMPORTANT WORDS in PARAGRAPH 1:
+
+imp_1 = t(idf_1) * tf_1
+imp_1
+
+##IMPORTANT WORDS IN PARAGRAPH 2:
+
+tc_pr2 = combo_vec(pr2,pr1,pr3,pr4,pr5)
+tc_pr2 = as.data.frame(tc_pr2)
+tf_2 = tc_pr2[ , !duplicated(colnames(tc_pr2))]
+
+
+V = c(names(pr2$counts),names(pr1$counts), names(pr3$counts), names(pr4$counts), names(pr5$counts))
+total_count_pr2 <- vector()
+for(i in unique(V)){
+  docs_with_word = sum(i == V)
+  total_count_pr2[i] <- docs_with_word
+}
+
+total_count_pr2[1:length(pr2$counts)] <- total_count_pr2[1:length(pr2$counts)] - 1
+names(total_count_pr2) = unique(V) 
+length(total_count_pr2)
+
+idf_2 = log(5/(1 + total_count_pr2))
+
+imp_2 = t(idf_2) * tf_2
+imp_2
+
+imp_2 = imp_2[,names(imp_1)]
+
+
+#COMPARING PR1 to PR2:
+
+sum(as.vector(imp_1)*as.vector(imp_2))
+
+##IMPORTANT WORDS IN PARAGRAPH 5:
+
+tc_pr5 = combo_vec(pr5,pr2,pr3,pr4,pr1)
+tc_pr2 = as.data.frame(tc_pr5)
+tf_5 = tc_pr5[ , !duplicated(colnames(tc_pr5))]
+
+
+V = c(names(pr5$counts),names(pr2$counts), names(pr3$counts), names(pr4$counts), names(pr1$counts))
+total_count_pr5 <- vector()
+for(i in unique(V)){
+  docs_with_word = sum(i == V)
+  total_count_pr5[i] <- docs_with_word
+}
+
+total_count_pr5[1:length(pr5$counts)] <- total_count_pr5[1:length(pr5$counts)] - 1
+names(total_count_pr5) = unique(V) 
+length(total_count_pr5)
+
+idf_5 = log(5/(1 + total_count_pr5))
+
+imp_5 = t(idf_5) * tf_5
+imp_5
+
+imp_5 = imp_5[,names(imp_1)]
+
+
+#COMPARING PR1 to PR5:
+
+sum(as.vector(imp_1)*as.vector(imp_5))
+
+
+
