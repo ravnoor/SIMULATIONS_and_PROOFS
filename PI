@@ -1,3 +1,18 @@
+x <- runif(1e4)
+y <- runif(1e4)
+
+radius <- sqrt(x^2 + y^2)
+
+(pi = length(radius[radius < 1]) / length(radius)) * 4
+
+dat <- data.frame(x, y, radius)
+dat <- dat[dat$radius < 1, ]
+head(dat)
+plot(dat$x , dat$y, col='skyblue', pch=19, cex=0.3,
+     main = expression(paste(pi/4, " As Surface Integral")), xlab = "x", ylab = "y")
+
+
+
 # Initial concept:
 
 x <- runif(1e4)
