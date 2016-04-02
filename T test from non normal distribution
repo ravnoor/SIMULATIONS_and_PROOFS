@@ -1,0 +1,84 @@
+# Goes with this: http://stats.stackexchange.com/a/204594/67822
+
+set.seed(1)
+# Parameters for the lognormal distribution:
+mu = 0
+sigma = 1
+# 100,000 samples of 50 observations:
+samples = matrix(rlnorm(5e6, meanlog=mu, sdlog=sigma), nrow=1e5, byrow=T)
+dim(samples)
+# The actual mean and sd:
+mean = exp(mu + sigma^2/2); sd = sqrt((exp(sigma^2)-1) * exp(2*mu+sigma^2))
+
+# Taking the mean and SD of the samples row-wise:
+sam_ave = apply(samples, 1, function(x) mean(x))
+sam_sd = apply(samples, 1, function(x) sd(x))
+sam_var = sam_sd^2
+
+# Splitting the samples in half to compare them pairwise:
+sA = samples[1:50000, ]
+sB = samples[50001:100000, ]
+dim(sA); dim(sB)
+
+#Taking means and sd of the subsamples - redundant and mindless, but...
+sA_ave = apply(sA, 1, function(x) mean(x))
+sB_ave = apply(sB, 1, function(x) mean(x))
+sA_sd = apply(sA, 1, function(x) sd(x))
+sB_sd = apply(sB, 1, function(x) sd(x))
+sA_var = sA_sd^2
+sB_var = sB_sd^2
+
+# Cutoff limits for t-test at 0.95 significance level:
+cutoff = qt(0.975, df = 98)
+
+# Getting p and t values of 50,000 pairwise comparisons:
+pees = rep(5e4, 0)
+tees = rep(5e4, 0)
+for(i in 1:5e4){
+    test = t.test(sA[i, ], sB[i, ], var.equal = T)
+    pees[i] = test$p.value
+    tees[i] = test[1]
+}
+
+# Type I errors:
+(typeI = mean(abs(as.numeric(tees)) > cutoff))
+
+
+# T tests:
+
+# Manual calcs:
+t.test(sA[1,],sB[1,], var.equal = T)
+COMMON= (49*(sA_sd[1]^2+sA_sd[1]^2))/98
+(sA_ave[1] - sB_ave[1])/(sqrt(1/25)*sqrt(COMMON))
+
+# Plotting t's:
+plot(density(as.numeric(tees)), col=5, lwd=6, ylim=c(0,0.40),
+     main = "T tests from Log-Norm Distrib.", xlab="")
+
+x = seq(-4, 4, 0.1)
+curve(dt(x, 8), add = T, col = 4, lwd = 3, lty=2)
+
+legend(x = 2, y = 0.35,legend=c("t's","t pdf"), 
+       border = F, lty=c(1,3), col = c(5,4))
+
+# The "denominators":
+
+COMMON.var =  (49 *  (sA_sd^2 + sB_sd^2)) / 98
+
+CHIs = 98 * COMMON.var/sd^2
+summary(CHIs)
+
+plot(density(CHIs), col=5, lwd=6, xlim = c(0,200), ylim =c(0,0.030),
+     main = "The non-Chi-Squared Denominator", xlab="")
+x = seq(0, 200, 0.1)
+curve(dchisq(x, 98), add = T, col=4, lwd=4, lty=3)
+legend(x = 146, y = 0.025,legend=c("Denms","chi(98)"), 
+       border = F, lty=c(1,3), col = c(5,4))
+
+# Wilcoxson test (in progress...)
+
+pees = rep(5e4, 0)
+for(i in 1:5e4){
+    pees[i] = wilcox.test(sA[i,], sB[i,], paired=F)$p.value
+}
+(typeI = mean(pees > 0.05))
