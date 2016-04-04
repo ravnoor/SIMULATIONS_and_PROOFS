@@ -1,6 +1,7 @@
 # Goes with this: http://stats.stackexchange.com/a/204594/67822
 
 set.seed(1)
+par(mfrow=c(1,1))
 # Parameters for the lognormal distribution:
 mu = 0
 sigma = 1
@@ -35,9 +36,9 @@ cutoff = qt(0.975, df = 98)
 pees = rep(5e4, 0)
 tees = rep(5e4, 0)
 for(i in 1:5e4){
-    test = t.test(sA[i, ], sB[i, ], var.equal = T)
-    pees[i] = test$p.value
-    tees[i] = test[1]
+  test = t.test(sA[i, ], sB[i, ], var.equal = T)
+  pees[i] = test$p.value
+  tees[i] = test[1]
 }
 
 # Type I errors:
@@ -67,9 +68,9 @@ COMMON.var =  (49 *  (sA_sd^2 + sB_sd^2)) / 98
 
 CHIs = 98 * COMMON.var/sd^2
 summary(CHIs)
-
+par(mfrow=c(1,1))
 plot(density(CHIs), col=5, lwd=6, xlim = c(0,200), ylim =c(0,0.030),
-     main = "The non-Chi-Squared Denominator", xlab="")
+     main = "The non-Chi-Squared \"Denominator\"", xlab="")
 x = seq(0, 200, 0.1)
 curve(dchisq(x, 98), add = T, col=4, lwd=4, lty=3)
 legend(x = 146, y = 0.025,legend=c("Denms","chi(98)"), 
@@ -79,7 +80,7 @@ legend(x = 146, y = 0.025,legend=c("Denms","chi(98)"),
 
 pees = rep(5e4, 0)
 for(i in 1:5e4){
-    pees[i] = wilcox.test(sA[i,], sB[i,], paired=F)$p.value
+  pees[i] = wilcox.test(sA[i,], sB[i,], paired=F)$p.value
 }
 (typeI = mean(pees > 0.05))
 
@@ -164,4 +165,3 @@ for(i in 1:5e4){
 # Type II errors and power:
 (typeII = mean(abs(as.numeric(tees)) < cutoff))
 (power = 1 - typeII)
-
