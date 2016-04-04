@@ -82,3 +82,80 @@ for(i in 1:5e4){
     pees[i] = wilcox.test(sA[i,], sB[i,], paired=F)$p.value
 }
 (typeI = mean(pees > 0.05))
+
+
+# POWER:
+
+set.seed(1)
+# Parameters for the lognormal distribution treated:
+mu1 = 4.4
+sigma1 = 0.14
+
+# The actual mean and sd:
+(mean1 = exp(mu1 + sigma1^2/2)); (sd1 = sqrt((exp(sigma1^2)-1) * exp(2*mu1+sigma1^2)))
+
+# Parameters for the lognormal distribution placebo:
+
+mu2 = 4.46
+sigma2 = 0.14
+
+# The actual mean and sd:
+(mean2 = exp(mu2 + sigma2^2/2)); (sd2 = sqrt((exp(sigma2^2)-1) * exp(2*mu2+sigma2^2)))
+
+#Effect size 
+
+mean2 - mean1
+
+
+
+# We want to detect an effect size of 5.
+
+#Power = 80% is considered good
+
+# 100,000 samples of 50 observations:
+treated = matrix(rlnorm(25e5, meanlog=mu1, sdlog=sigma1), nrow=5e4, byrow=T)
+dim(treated)
+placebo = matrix(rlnorm(25e5, meanlog=mu2, sdlog=sigma2), nrow=5e4, byrow=T)
+
+
+#Taking means and sd of the samples
+treated_ave = apply(treated, 1, function(x) mean(x))
+placebo_ave = apply(placebo, 1, function(x) mean(x))
+treated_sd = apply(treated, 1, function(x) sd(x))
+placebo_sd = apply(placebo, 1, function(x) sd(x))
+treated_var = treated_sd^2
+placebo_var = placebo_sd^2
+
+par(mfrow=c(1,2))
+colors=c("firebrick4","burlywood")
+boxplot(treated_ave, placebo_ave, col=colors, pch=20, cex=0.2,
+        outcol = "orange", medcol = "gray75",
+        main="Quantiles Treated v Placebo")
+
+plot(density(treated), col="firebrick4", lwd=2,
+     main = "Density treated v placebo", xlab = "Dyastolic BP",
+     xlim=c(40,140))
+
+abline(v=mean(treated_ave), col="firebrick4")
+lines(density(placebo), col="burlywood", lwd=2)
+abline(v=mean(placebo_ave), col="burlywood")
+legend(100,0.025,legend=c("Treated","Placebo"),
+       col=c("firebrick4","burlywood"),
+       lty=1,
+       border="", bty="n",cex=0.8)
+
+# Cutoff limits for t-test at 0.95 significance level:
+cutoff = qt(0.975, df = 98)
+
+# Getting p and t values of 50,000 pairwise comparisons:
+pees = rep(5e4, 0)
+tees = rep(5e4, 0)
+for(i in 1:5e4){
+  test = t.test(treated[i, ], placebo[i, ], var.equal = T)
+  pees[i] = test$p.value
+  tees[i] = test[1]
+}
+
+# Type II errors and power:
+(typeII = mean(abs(as.numeric(tees)) < cutoff))
+(power = 1 - typeII)
