@@ -131,6 +131,11 @@ colors=c(5,4)
 boxplot(treated_ave, placebo_ave, col=colors, pch=20, cex=0.2,
         outcol = 2, medcol = "gray",
         main="Quantiles Treated v Placebo")
+legend("topleft",legend=c("Treated","Placebo"),
+       col=c(5,4),
+       lty=1,
+       border="", bty="n",cex=0.8)
+
 
 plot(density(treated), col=5, lwd=2,
      main = "Density treated v placebo", xlab = "Dyastolic BP",
@@ -139,7 +144,7 @@ plot(density(treated), col=5, lwd=2,
 abline(v=mean(treated_ave), col=5)
 lines(density(placebo), col=4, lwd=2)
 abline(v=mean(placebo_ave), col=4)
-legend(38,0.04,legend=c("Treated","Placebo"),
+legend(38,0.049,legend=c("Treated","Placebo"),
        col=c(5,4),
        lty=1,
        border="", bty="n",cex=0.8)
