@@ -88,16 +88,16 @@ for(i in 1:5e4){
 
 set.seed(1)
 # Parameters for the lognormal distribution treated:
-mu1 = 4.4
-sigma1 = 0.14
+mu1 = 4.55
+sigma1 = 0.09
 
 # The actual mean and sd:
 (mean1 = exp(mu1 + sigma1^2/2)); (sd1 = sqrt((exp(sigma1^2)-1) * exp(2*mu1+sigma1^2)))
 
 # Parameters for the lognormal distribution placebo:
 
-mu2 = 4.46
-sigma2 = 0.14
+mu2 = 4.65
+sigma2 = 0.09
 
 # The actual mean and sd:
 (mean2 = exp(mu2 + sigma2^2/2)); (sd2 = sqrt((exp(sigma2^2)-1) * exp(2*mu2+sigma2^2)))
@@ -139,7 +139,7 @@ plot(density(treated), col="firebrick4", lwd=2,
 abline(v=mean(treated_ave), col="firebrick4")
 lines(density(placebo), col="burlywood", lwd=2)
 abline(v=mean(placebo_ave), col="burlywood")
-legend(100,0.025,legend=c("Treated","Placebo"),
+legend(40,0.025,legend=c("Treated","Placebo"),
        col=c("firebrick4","burlywood"),
        lty=1,
        border="", bty="n",cex=0.8)
@@ -159,3 +159,4 @@ for(i in 1:5e4){
 # Type II errors and power:
 (typeII = mean(abs(as.numeric(tees)) < cutoff))
 (power = 1 - typeII)
+
