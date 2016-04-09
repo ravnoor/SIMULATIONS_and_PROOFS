@@ -2,8 +2,6 @@
 
 contr.poly(4)
 
-contr.poly(4)
-
 hsb2 = read.table('http://www.ats.ucla.edu/stat/data/hsb2.csv', header=T, sep=",")
 hsb2$readcat<-cut(hsb2$read, 4, ordered = TRUE)
 table(hsb2$readcat) 
@@ -16,8 +14,9 @@ mean(scores)
 (y = scores - mean(scores))
 (seq_len(4) - 1)
 X = outer(y, seq_len(4) - 1, "^")
-(Q = qr(X)$qr)
-(z = Q * (row(Q) == col(Q)))
+(c_Q = qr(X)$qr)
+(z = c_Q * (row(Q) == col(Q)))
+# The actual Q matrix is:
 Q <- qr.Q(qr(X))
 (Q %*% z)
 #This is the same as the call in the function:
