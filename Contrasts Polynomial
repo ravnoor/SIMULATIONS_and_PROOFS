@@ -3,6 +3,15 @@
 contr.poly(4)
 
 hsb2 = read.table('http://www.ats.ucla.edu/stat/data/hsb2.csv', header=T, sep=",")
+
+# or:
+
+library(gsheet)
+url='https://docs.google.com/spreadsheets/d/13LYG-nyhSQKG3kTNxelyi0QcWEuvNRcjafyyz3mLXDA/edit?usp=sharing'
+hsb2 = read.csv(text = gsheet2text(url, format = "csv"))
+
+
+
 hsb2$readcat<-cut(hsb2$read, 4, ordered = TRUE)
 table(hsb2$readcat) 
 mean(hsb2$write)
@@ -15,7 +24,7 @@ mean(scores)
 (seq_len(4) - 1)
 X = outer(y, seq_len(4) - 1, "^")
 (c_Q = qr(X)$qr)
-(z = c_Q * (row(Q) == col(Q)))
+(z = c_Q * (row(c_Q) == col(c_Q)))
 # The actual Q matrix is:
 Q <- qr.Q(qr(X))
 (Q %*% z)
