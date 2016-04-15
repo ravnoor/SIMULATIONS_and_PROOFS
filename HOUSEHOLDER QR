@@ -7,7 +7,6 @@
 # https://stat.ethz.ch/R-manual/R-devel/library/base/html/qraux.html
 #######################################################################################################################################
 
-
 options(scipen=999)
 set.seed(13)
 (X = matrix(c(rnorm(16)), nrow=4, byrow=F))
