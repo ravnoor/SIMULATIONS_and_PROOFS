@@ -9,90 +9,45 @@
 
 options(scipen=999)
 set.seed(13)
-(X = matrix(c(rnorm(16)), 
-            nrow=4, byrow=F))
+(X = matrix(c(rnorm(9)), nrow=3, byrow=F))
 
-
+A=X
 House = function(A){
-    Q= diag(nrow(A))
-    tao = 0
-    rho = 0
-    psQ = diag(nrow(A))
+    Q = diag(nrow(A))
+    House.vectors = matrix(0,nrow=nrow(A),ncol=ncol(A))
     for(r in 1:(nrow(A) - 1)){ 
-        # We will apply Householder to progressively smaller parts of the columns in A
+        # We will apply Householder to progressively the columns in A, decreasing 1 element at a time.
         x = A[r:nrow(A), r] 
-        # We now get the vector v 
+        # We now get the vector v, starting with first entry = norm-2 of x[i] times 1
+        # The sign is to avoid computational issues
         first = (sign(x[1]) * sqrt(sum(x^2))) +  x[1]
-        v = c(first, x[2:length(x)])
-        rho[r] = first
-        # Unitary first entry of u:
-        u = v/((sign(x[1]) * sqrt(sum(x^2))) + x[1])
-        # Tao
-        t = (1 + as.numeric(t(u[2:length(u)])%*%u[2:length(u)])) / 2
+        # We get the rest of v, which is x unchanged, since e1 = [1, 0, 0, ..., 0]
+        # We go the the last column / row, hence the if statement:
+        v = if(length(x) > 1){c(first, x[2:length(x)])}else{v = c(first)}
+        # Now we make the first entry unitary:
+        u = v/first
+        # Tao will be used in the Householder transform, so here it goes:
+        t = as.numeric(t(u)%*%u) / 2
+        # And the Householder vector are stored as in R qr()$qr function:
+        House.vectors[r: nrow(A), r] = u/t
         # The Householder tranformation is:
         I = diag(length(r:nrow(A)))
-        Q_minor = I - 1/t * (u %*% t(u))
-        Q_i  = diag(nrow(A))
-        Q_i[r:nrow(A),r:ncol(A)] = Q_minor
-        # And we apply the Householder reflection - we left multiply the entire A
-        A = round(Q_i %*% A,2)
-        psQ[(r+1):nrow(A),r] = round(u[2:length(u)]/t,3)
-        Q = round(Q_i %*% Q,2)
-        tao[r] = t
+        H.transf = I - 1/t * (u %*% t(u))
+        H_i  = diag(nrow(A))
+        H_i[r:nrow(A),r:ncol(A)] = H.transf
+        # And we apply the Householder reflection - we left multiply the entire A or Q
+        A = H_i %*% A
+        Q = H_i %*% Q
     }
-    DECOMPOSITION = list("Q"= t(Q), "R"= A, "PseudoQ"= psQ, 
-                        "compact form of Q (qr(A)$qr)" =((A*upper.tri(A,diag=T))+(psQ*lower.tri(psQ,diag=F))), 
-                        "rho"=rho, "tao"=tao)
+    DECOMPOSITION = list("Q"= t(Q), "R"= round(A,7), 
+                         "contracted Q as in qr()$qr lower triang"=  
+                         ((A*upper.tri(A,diag=T))+(House.vectors*lower.tri(House.vectors,diag=F))), 
+                         "Householder.vectors" = House.vectors,
+                         "rho"=c(apply(House.vectors[,1:(ncol(House.vectors)-1)], 2, 
+                                     function(x) sum(x^2) / 2), -A[nrow(A),ncol(A)]))
     return(DECOMPOSITION)
 }
 
 (H = House(X))
-round(qr(X)$qr,2) # This is the compact form.
-round(qr.Q(qr(X)),2) # This gives the Q
-round(qr.qy(qr(X), diag(4)),2) # This also gives the Q - compare to...
-H$Q
-
-
-
-
-
-
-
-
-#######################################################################################################################################
-
-#NAIVE HOUSE:
-
-options(scipen=999)
-(X = matrix(c(1,1,1,1,-1.5,-0.5,0.5,1.5,2.25,0.25,0.25, 2.25,-3.275,-0.125,0.125,3.375), 
-            nrow=4, byrow=F))
-
-
-Householder = function(A){
-    Q= diag(nrow(A))
-    for(r in 1:(nrow(A) - 1)){ 
-        # We will apply Householder to progressively smaller parts of the columns in A
-        x = A[r:nrow(A), r] 
-        # We now get the vector v using the positive norm:
-        v = c(sqrt(sum(x^2)) - x[1], - x[2:length(x)])
-        # The unit vector perpendicular to the subspace is:
-        u = v/sqrt(sum(v^2))
-        # The Householder tranformation is:
-        I = diag(length(r:nrow(A)))
-        Q_minor = I - 2 * (u %*% t(u))
-        Q_i  = diag(nrow(A))
-        Q_i[r:nrow(A),r:ncol(A)] = Q_minor
-        # And we apply the Householder reflection - we left multiply the entire A
-        A = round(Q_i %*% A,2)
-        Q = round(Q_i %*% Q,2)
-    }
-    DECOMPOSITION = list("Q"= t(Q), "R"= A)
-    return(DECOMPOSITION)
-}
-(H = Householder(X))
-
-
-# Comparing to Q from R:
-(House = round(qr.Q(qr(X)),2))
-t(House[,1])%*%House[,2]
-round(qr(X)$qr,2)
+qr.Q(qr(X))
+qr(X)
