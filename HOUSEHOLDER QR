@@ -1,5 +1,5 @@
 # Mirroring the qr() function of R through Householder QR decomposition:
-# Target: http://stackoverflow.com/q/36512466/4089351
+
 # Notation: http://www.netlib.org/lapack/lug/node69.html
 # Thanks to: https://youtu.be/d-yPM-bxREs
 # Notation: http://math.stackexchange.com/q/1739445/152225
@@ -9,12 +9,12 @@
 
 options(scipen=999)
 set.seed(13)
-(X = matrix(c(rnorm(9)), nrow=3, byrow=F))
+(X = matrix(c(rnorm(16)), nrow=4, byrow=F))
 
 A=X
 House = function(A){
     Q = diag(nrow(A))
-    House.vectors = matrix(0,nrow=nrow(A),ncol=ncol(A))
+    reflectors = matrix(0,nrow=nrow(A),ncol=ncol(A))
     for(r in 1:(nrow(A) - 1)){ 
         # We will apply Householder to progressively the columns in A, decreasing 1 element at a time.
         x = A[r:nrow(A), r] 
@@ -25,14 +25,14 @@ House = function(A){
         # We go the the last column / row, hence the if statement:
         v = if(length(x) > 1){c(first, x[2:length(x)])}else{v = c(first)}
         # Now we make the first entry unitary:
-        u = v/first
-        # Tao will be used in the Householder transform, so here it goes:
-        t = as.numeric(t(u)%*%u) / 2
-        # And the Householder vector are stored as in R qr()$qr function:
-        House.vectors[r: nrow(A), r] = u/t
+        w = v/first
+        # Tau will be used in the Householder transform, so here it goes:
+        t = as.numeric(t(w)%*%w) / 2
+        # And the "reflectors" are stored as in the R qr()$qr function:
+        reflectors[r: nrow(A), r] = w/t
         # The Householder tranformation is:
         I = diag(length(r:nrow(A)))
-        H.transf = I - 1/t * (u %*% t(u))
+        H.transf = I - 1/t * (w %*% t(w))
         H_i  = diag(nrow(A))
         H_i[r:nrow(A),r:ncol(A)] = H.transf
         # And we apply the Householder reflection - we left multiply the entire A or Q
@@ -40,11 +40,11 @@ House = function(A){
         Q = H_i %*% Q
     }
     DECOMPOSITION = list("Q"= t(Q), "R"= round(A,7), 
-                         "contracted Q as in qr()$qr lower triang"=  
-                         ((A*upper.tri(A,diag=T))+(House.vectors*lower.tri(House.vectors,diag=F))), 
-                         "Householder.vectors" = House.vectors,
-                         "rho"=c(apply(House.vectors[,1:(ncol(House.vectors)-1)], 2, 
-                                     function(x) sum(x^2) / 2), -A[nrow(A),ncol(A)]))
+            "contracted Q as in qr()$qr lower triang"=  
+            ((A*upper.tri(A,diag=T))+(reflectors*lower.tri(reflectors,diag=F))), 
+            "reflectors" = reflectors,
+            "rho"=c(apply(reflectors[,1:(ncol(reflectors)- 1)], 2, 
+                function(x) sum(x^2) / 2), ((-1)^nrow(A))*A[nrow(A),ncol(A)]))
     return(DECOMPOSITION)
 }
 
