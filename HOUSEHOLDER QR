@@ -16,7 +16,7 @@ House = function(A){
     Q = diag(nrow(A))
     reflectors = matrix(0,nrow=nrow(A),ncol=ncol(A))
     for(r in 1:(nrow(A) - 1)){ 
-        # We will apply Householder to progressively the columns in A, decreasing 1 element at a time.
+        # We will apply Householder to the columns in A, decreasing 1 vector at a time.
         x = A[r:nrow(A), r] 
         # We now get the vector v, starting with first entry = norm-2 of x[i] times 1
         # The sign is to avoid computational issues
