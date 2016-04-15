@@ -7,6 +7,7 @@
 # https://stat.ethz.ch/R-manual/R-devel/library/base/html/qraux.html
 #######################################################################################################################################
 
+
 options(scipen=999)
 set.seed(13)
 (X = matrix(c(rnorm(16)), nrow=4, byrow=F))
@@ -40,7 +41,7 @@ House = function(A){
         Q = H_i %*% Q
     }
     DECOMPOSITION = list("Q"= t(Q), "R"= round(A,7), 
-            "contracted Q as in qr()$qr lower triang"=  
+            "compact Q as in qr()$qr"=  
             ((A*upper.tri(A,diag=T))+(reflectors*lower.tri(reflectors,diag=F))), 
             "reflectors" = reflectors,
             "rho"=c(apply(reflectors[,1:(ncol(reflectors)- 1)], 2, 
