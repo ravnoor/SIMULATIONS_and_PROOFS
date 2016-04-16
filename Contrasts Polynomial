@@ -1,18 +1,12 @@
 # Goes with this post: http://stats.stackexchange.com/a/206345/67822
 
-# Goes with this post: http://stats.stackexchange.com/a/206345/67822
-
-contr.poly(4)
-
-hsb2 = read.table('http://www.ats.ucla.edu/stat/data/hsb2.csv', header=T, sep=",")
-
-# or:
-
 library(gsheet)
 url='https://docs.google.com/spreadsheets/d/13LYG-nyhSQKG3kTNxelyi0QcWEuvNRcjafyyz3mLXDA/edit?usp=sharing'
 hsb2 = read.csv(text = gsheet2text(url, format = "csv"))
 
+contr.poly(4)
 
+hsb2 = read.table('http://www.ats.ucla.edu/stat/data/hsb2.csv', header=T, sep=",")
 
 hsb2$readcat<-cut(hsb2$read, 4, ordered = TRUE)
 table(hsb2$readcat) 
