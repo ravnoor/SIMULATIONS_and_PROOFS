@@ -10,19 +10,32 @@ ff <- function(i, j) {
   return (i2)
 }
 
-e <- function(i) {
-  if (i[1] == D) {
+e <- function(i) {   # i will be the vector c(0, 0, 0, 6)
+  
+  if (i[1] == D) {   # when we get to c(6,...) we stop.
     return (0)
   }
   
-  numerator <- D
+  numerator <- D     # We assign 6 to the numerator: We need to see 6 faces 3 times.
   
-  n <- length(i)
-  for (j in 2:n) {
-    if (i[j] > 0) {
+  n <- length(i)     # The length of i is 4.
+  for (j in 2:n) {   # j is the number of times each face needs to be seen: from 1 to 4.
+    if (i[j] > 0) {  # we check entries 2 through 4 of the c(...,...,...,...) vector see if > 0.
+                     
+      # we perform j*i opperation named ff above:
+            #  so that every j from 2 to 4 that is not negative gets reduced by 1.
+            #  and the adjacent entry to the left increased by 1.
+            #  on the  first run it will only be j=4 in c(0,0,0,6) turning into c(0,0,1,5)
+      # and then we perform the function e to this new vector c(0,0,1,5)
+      # so basically starting a tree...
+      # and we multiply every one of these vectors by the number of faces to be seen the...
+      # corresponding number of times
+      # to add the result to the numerator:
       numerator <- numerator + (i[j] * e(ff(i, j)))
     }
   }
+  
+  # The denominator is the number of sides of the dice minus the initial i_0
   denominator <- D - i[1]
   return(numerator/denominator)
 }
