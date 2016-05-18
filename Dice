@@ -1,6 +1,6 @@
 # http://math.stackexchange.com/q/1789795/152225
 
-![Recursive formula](https://cloud.githubusercontent.com/assets/9312897/15367433/f8b7964a-1cf6-11e6-9662-f6ba25f8435e.png)
+![Recursive formula](https://cloud.githubusercontent.com/assets/9312897/15367433/f8b7964a-1cf6-11e6-9662-f6ba25f8435e.png?raw=true)
 
 D <- 6
 options(digits=16) 
