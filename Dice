@@ -1,5 +1,7 @@
 # http://math.stackexchange.com/q/1789795/152225
 
+![Recursive formula](http://example.com/images/logo.png)
+
 D <- 6
 options(digits=16) 
 
