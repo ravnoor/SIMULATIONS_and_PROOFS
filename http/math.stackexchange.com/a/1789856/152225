@@ -1,0 +1,29 @@
+D <- 6
+options(digits=16) 
+
+ff <- function(i, j) {
+  i2 <- i
+  i2[j] <- (i2[j] - 1)
+  i2[j-1] <- (i2[j-1] + 1)
+  return (i2)
+}
+
+e <- function(i) {
+  if (i[1] == D) {
+    return (0)
+  }
+  
+  numerator <- D
+  
+  n <- length(i)
+  for (j in 2:n) {
+    if (i[j] > 0) {
+      numerator <- numerator + (i[j] * e(ff(i, j)))
+    }
+  }
+  denominator <- D - i[1]
+  return(numerator/denominator)
+}
+
+res = e(c(0, 0, 0, D))
+cat("Result: ",res,"\n")
