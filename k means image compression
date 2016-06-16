@@ -1,0 +1,93 @@
+require(png)
+
+scanned = readPNG('bird_small.png')
+
+dim(scanned)
+ready = scanned[,,1:3]
+dim(ready)
+is.array(ready)
+
+
+long_form = apply(ready, 3, t)
+dim(long_form); is.matrix(long_form)
+
+temp = long_form[sample(nrow(long_form)),]
+
+# K centroids = 20
+k = 20
+initial_centroids = temp[1:k,]
+
+
+
+# Closest centroids:
+
+group = matrix(rep(0, nrow(long_form)), ncol=1)
+for (i in 1:nrow(long_form)){
+  index = 0
+  w = 10^10
+  for (j in 1:k){
+    sum_sq = sum((long_form[i, ] - initial_centroids[j, ])^2)
+    if(sum_sq < w){
+      w = sum_sq
+      index = j
+    } 
+  }
+  group[i] = index
+}
+
+# Recalculate centroids:
+
+new_centroids = matrix(rep(0, k*3), ncol=3)
+for(i in 1:k){
+  new_centroids[i,]=colMeans(long_form[group==i,])
+}
+
+# Regrouping:
+
+
+for(t in 1:10){
+  
+  closest = matrix(rep(0, nrow(long_form)), ncol=1)
+  for (i in 1:nrow(long_form)){
+    index = 0
+    w = 10^10
+    for (j in 1:k){
+      sum_sq = sum((long_form[i, ] - new_centroids[j, ])^2)
+      if(sum_sq < w){
+        w = sum_sq
+        index = j
+      } 
+    }
+    closest[i] = index
+  }
+  
+  # Third iteration of centroids:
+  
+  new_centroids = matrix(rep(0, k*3), ncol=3)
+  for(i in 1:k){
+    new_centroids[i,]=colMeans(long_form[group==i,])
+  }
+}
+
+
+for(i in 1:k){
+  long_form[closest==i,] = new_centroids[i,]
+}
+dim(long_form)
+
+### Reversing long_form:
+dim(long_form) = dim(ready)
+compressed = apply(long_form, 3, t)
+dim(compressed) = dim(long_form)
+dim(compressed)
+
+is.array(compressed)
+
+ones = matrix(1, dim(ready)[1], dim(ready)[2])
+
+compressed = array(c(compressed,ones), dim= c(dim(ready)[1],dim(ready)[2],4))
+dim(compressed)
+is.array(compressed)
+
+writePNG(compressed,"compressed_image.png")
+
