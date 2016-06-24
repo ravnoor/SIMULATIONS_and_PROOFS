@@ -1,6 +1,9 @@
 ## http://www.r-bloggers.com/linear-regression-by-gradient-descent/
 
 library(R.matlab)
+# If the dataset is not already there, download from GoogleDrive on this link:
+# https://drive.google.com/open?id=0Bwl-HpVJ_5PeeXNWYnhDZzBGTmM
+# and place the file in the R directory.
 data <- readMat('data.mat')
 str(data)
 
