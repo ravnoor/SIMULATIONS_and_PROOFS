@@ -1,0 +1,9 @@
+library(tm) 
+
+data = iris$Sepal.Length
+data = as.matrix(data)
+
+k.means = kmeans(data,3)
+library(cluster)
+clusplot(data, k.means$cluster)
+boxplot(iris$Sepal.Length ~ iris$Species)
