@@ -83,7 +83,8 @@ for (i in 1:nrow(data)){
 data = cbind(data, closest)
 head(data)
 palette(c("purple2","indianred1", "orchid1"))
-plot(data[,1:4], col=as.factor(data[,5]+1), pch=19, cex=.8)
+plot(data[,1:4], col=as.factor(data[,5]+1), 
+     pch=19, cex=.6)
 
 table(closest)
 #In-built R functions:
@@ -94,4 +95,5 @@ dat = iris[,1:4]
 
 
 library(cluster)
-clusplot(dat, k.means$cluster)
+clusplot(dat, k.means$cluster, shade=T, color=T,
+         labels=2, cex=.5, main="K Means Clustering")
