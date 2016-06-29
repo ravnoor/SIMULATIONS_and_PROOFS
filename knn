@@ -60,8 +60,6 @@ table(data_test[ ,5], fit)
 
 # COMPARE TO K MEANS:
 
-library(tm) 
-
 
 set.seed(62916)
 head(iris)
@@ -144,12 +142,15 @@ for (i in 1:nrow(data)){
 
 data = cbind(data, closest)
 head(data)
-palette(c("purple2","indianred1","orchid1"))
-plot(data[,1:4], col=as.factor(data[,5]), pch=19, cex=.9)
+palette(c("purple2","indianred1", "orchid1"))
+plot(data[,1:4], col=as.factor(data[,5]+1), pch=19, cex=.8)
+
 
 table(closest)
+
 #In-built R functions:
 
+library(tm) 
 
 dat = iris[,1:4]
 (k.means = kmeans(dat, k))
