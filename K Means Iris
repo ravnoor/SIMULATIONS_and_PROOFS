@@ -97,4 +97,4 @@ dat = iris[,1:4]
 library(cluster)
 palette(c("orchid1","indianred1","purple2"))
 clusplot(dat, k.means$cluster, shade=T, color=T,
-         labels=2, cex=.9, main="K Means Clustering")
+         labels=2, cex=.7, main="K Means Clustering")
