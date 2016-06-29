@@ -56,3 +56,104 @@ library(class)
 
 fit <- knn(train= data_train[ ,1:4], test = data_test[ ,1:4], cl= data_train[,5], k=13)
 table(data_test[ ,5], fit)
+
+
+# COMPARE TO K MEANS:
+
+library(tm) 
+
+
+set.seed(62916)
+head(iris)
+data <- iris[order(runif(nrow(iris))), ] #Shuffling the deck
+head(data)
+rownames(data) <- NULL
+data = iris[,1:4]
+head(data)
+
+temp = data[sample(nrow(data)),] #Preliminary step to select random centroids.
+head(temp)
+
+length(unique(iris$Species)) # K centroids = 3 because there are three species:
+
+k = 3
+initial_centroids = temp[1:k,] # Selecting three random examples as initial centroids
+
+# Closest initial centroids to each data point:
+
+group = matrix( , nrow=nrow(data)) #Starting an empty pre-allocation matrix
+for (i in 1:nrow(data)){
+  index = 0
+  w = 10^10
+  for (j in 1:k){
+    sum_sq = sum((data[i, ] - initial_centroids[j, ])^2)
+    if(sum_sq < w){
+      w = sum_sq
+      index = j
+    } 
+  }
+  group[i] = index
+}
+
+# Recalculate centroids:
+
+new_centroids = matrix( , nrow=k, ncol=ncol(initial_centroids))
+for(i in 1:k){
+  new_centroids[i,]=colMeans(data[group==i,])
+}
+new_centroids
+
+# Re-clustering around new centroids:
+
+for(t in 1:10){   # t is the number of iterations
+  closest = matrix( , nrow=nrow(data), ncol=1)
+  
+  for (i in 1:nrow(data)){
+    index = 0
+    w = 10^10
+    for (j in 1:k){
+      sum_sq = sum((data[i, ] - new_centroids[j, ])^2)
+      if(sum_sq < w){
+        w = sum_sq
+        index = j
+      } 
+    }
+    closest[i] = index
+  }
+  
+  new_centroids = matrix(, nrow=k, ncol=ncol(initial_centroids))
+  for(i in 1:k){
+    new_centroids[i,]=colMeans(data[closest==i,])
+  }
+}
+
+closest = matrix( , nrow=nrow(data), ncol=1)
+
+for (i in 1:nrow(data)){
+  index = 0
+  w = 10^10
+  for (j in 1:k){
+    sum_sq = sum((data[i, ] - new_centroids[j, ])^2)
+    if(sum_sq < w){
+      w = sum_sq
+      index = j
+    } 
+  }
+  closest[i] = index
+}
+
+data = cbind(data, closest)
+head(data)
+palette(c("purple2","indianred1","orchid1"))
+plot(data[,1:4], col=as.factor(data[,5]), pch=19, cex=.9)
+
+table(closest)
+#In-built R functions:
+
+
+dat = iris[,1:4]
+(k.means = kmeans(dat, k))
+
+
+library(cluster)
+clusplot(dat, k.means$cluster)
