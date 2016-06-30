@@ -1,0 +1,7 @@
+set.seed(10)
+plot(cumsum(rnorm(1000)), type="l", ylim =c(-75,75), col=rgb(.3,0,.8,.2),lwd=.5,
+     main="Random Walk", ylab="Cumulative sum",xlab="Iteration")
+for (i in 1:100){
+  lines(cumsum(rnorm(1000)), col=rgb(.3,0,.8,.2),lwd=.5)
+}
+abline(h=0)
