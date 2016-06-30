@@ -1,4 +1,3 @@
-library(tm) 
 
 
 set.seed(62916)
@@ -89,7 +88,7 @@ plot(data[,1:4], col=as.factor(data[,5]+1),
 table(closest)
 #In-built R functions:
 
-
+library(tm)
 dat = iris[,1:4]
 (k.means = kmeans(dat, k))
 
