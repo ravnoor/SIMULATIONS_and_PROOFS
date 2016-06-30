@@ -1,7 +1,8 @@
 set.seed(10)
-plot(cumsum(rnorm(1000)), type="l", ylim =c(-75,75), col=rgb(.3,0,.8,.2),lwd=.5,
+plot(cumsum(rnorm(10000)), type="l", ylim =c(-500,500), col=rgb(.3,0,.8,.2),lwd=.5,
      main="Random Walk", ylab="Cumulative sum",xlab="Iteration")
 for (i in 1:100){
-  lines(cumsum(rnorm(1000)), col=rgb(.3,0,.8,.2),lwd=.5)
+  c = cumsum(rnorm(10000))
+  lines(c, col=ifelse(c[500:10000]>0,rgb(.3,0,.8,.2),rgb(.8,0,.2,.2)),lwd=.5)
 }
 abline(h=0)
