@@ -1,3 +1,4 @@
+
 set.seed(10)
 no.steps = 10000
 frac = 0.5 * no.steps
@@ -5,7 +6,10 @@ var = 0.5^2
 first.walk = cumsum(rnorm(no.steps))
 plot(first.walk, type="l", 
      ylim =c(-200,200), 
-     col=rgb(.3,0,.8,.2), lwd=.5,
+     col=ifelse(abs(sum(sign(first.walk[frac:no.steps])))==
+                  (no.steps - frac + 1),
+                rgb(.3,0,.8,.2),rgb(.8,0,.2,.2)), 
+     lwd=.5,
      main="Random Walk", ylab="Cumulative sum",xlab="Iteration")
 for (i in 1:100){
   c = cumsum(rnorm(no.steps))
