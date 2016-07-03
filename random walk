@@ -1,23 +1,27 @@
 
-set.seed(10)
-no.steps = 10000
+no.steps = 1e6
 frac = 0.5 * no.steps
 var = 0.5^2
-first.walk = cumsum(rnorm(no.steps))
-plot(first.walk, type="l", 
-     ylim =c(-200,200), 
+first.walk = cumsum(sample(c(-1,1), no.steps, replace=T))
+plot(first.walk, type="l",
+     ylim = c(-3000,3000),
      col=ifelse(abs(sum(sign(first.walk[frac:no.steps])))==
                   (no.steps - frac + 1),
                 rgb(.3,0,.8,.2),rgb(.8,0,.2,.2)), 
      lwd=.5,
      main="Random Walk", ylab="Cumulative sum",xlab="Iteration")
-for (i in 1:100){
-  c = cumsum(rnorm(no.steps))
-  lines(c, col=ifelse(abs(sum(sign(c[frac:no.steps])))==
+
+
+for (i in 1:5){
+  c = cumsum(sample(c(-1,1), no.steps, replace=T))
+  lines(c, 
+        col=ifelse(abs(sum(sign(c[frac:no.steps])))==
                         (no.steps - frac + 1),
                       rgb(.3,0,.8,.2),rgb(.8,0,.2,.2)),lwd=.5)
 }
+
 abline(h=0)
+
 curve(sqrt(x * var), xlim = c(0,no.steps), n = no.steps, lwd=1, 
       col='yellow',add = TRUE)
 curve(-sqrt(x * var), xlim = c(0,no.steps), n = no.steps, lwd=1,
