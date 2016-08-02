@@ -1,0 +1,65 @@
+two_by_two<-matrix(c(107,22,3,185),nrow=2,byrow=T)
+dimnames(two_by_two) <- list(c("pos","neg"),c("pos","neg"))
+names(dimnames(two_by_two)) <-c("us","them")
+a <- two_by_two
+a
+
+
+addmargins(two_by_two)
+proportions <- round(100 * prop.table(two_by_two),1)
+proportions
+
+addmargins(proportions)
+
+
+us_pos <- round((a[1,1] + a[1,2])/sum(a),2)
+us_pos
+b <- binom.test(a[1,1] + a[1,2],sum(a))[4] 
+b
+
+them_pos <- round((a[1,1] + a[2,1])/sum(a),2)
+them_pos
+c <- binom.test(a[1,1] + a[2,1],sum(a))[4] 
+c
+
+mosaicplot(two_by_two,main="Are Their Reads Same as Our Reads?", shade = T,
+           xlab="Us",ylab="Them")
+
+
+library(plotrix)
+estvals <- rbind(c(us_pos, b$conf.int[1], b$conf.int[2]),
+                 c(them_pos, c$conf.int[1], c$conf.int[2]))
+
+plotCI(estvals[,1], ui=estvals[,3], li=estvals[,2], 
+       gap=0, xlim=c(0,3),xaxt ="n",
+       lwd=5,col="dark red",scol="black", sfrac= 0.02, 
+       pch=18,cex=3,main="Proportions",err="y")
+axis(side=1,at =1:2,labels=c("Us","Them"))
+
+OR.hat <- ((a[1,1]+a[1,2])/(a[2,1]+a[2,2])) / ((a[1,1]+a[2,1])/(a[1,2]+a[2,2]))
+OR.hat
+
+#[1] 1.291248
+
+alpha <- 0.05
+std <- sqrt(1/a[1,1] + 1/a[1,2] + 1/a[2,1] + 1/a[2,2])
+OR.CI <- exp(log(OR.hat) + qnorm(p = c(alpha/2, 1 - alpha/2)) * std)
+round(OR.CI,2)
+
+#[1] 0.38 4.42
+
+library(exact2x2)
+mcnemar.exact(two_by_two)
+
+#Exact McNemar test (with central confidence intervals)
+
+#data:  two_by_two
+#b = 22, c = 3, p-value = 0.0001565
+#alternative hypothesis: true odds ratio is not equal to 1
+#95 percent confidence interval:
+#2.203174 38.268974
+#sample estimates:
+#odds ratio   #7.333333 
+
+relative.cond.prob <- (a[1,2]/(a[1,2]+(a[1,1]))/(a[2,1]/(a[2,1]+(a[2,2]))))
+relative.cond.prob
