@@ -1,0 +1,11 @@
+# Wikipedia https://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test
+
+after = c(125, 115, 130, 140, 140, 115, 140, 125, 140, 135)
+before = c(110, 122, 125, 120, 140, 124, 123, 137, 135, 145)
+sgn = sign(after-before)
+abs = abs(after - before)
+d = data.frame(after,before,sgn,abs)
+d$rank = rank(replace(abs,abs==0,NA), na='keep')
+d$multi = d$sgn * d$rank
+
+(W=abs(sum(d$multi, na.rm = T)))
