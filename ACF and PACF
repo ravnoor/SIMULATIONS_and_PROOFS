@@ -1,0 +1,58 @@
+x=seq(pi, 10 * pi, 0.1)
+y = 0.1 * x + sin(x) + rnorm(x)
+y = ts(y, start=1800)
+par(mfrow=c(2,1)); par(mar = c(2,2,1,1))
+plot(y) 
+abline(h=0)
+acf(y)
+
+#Detrending:
+
+model=lm(y ~ I(1801:2083))
+summary(model1)
+
+st.y = y - predict(model)
+
+par(mfrow=c(1,2))
+par(mar = c(2,2,3,1))
+plot(y, main="Times series with trend", col='tan4') 
+abline(model)
+plot(st.y, main = "Time series de-trended", col='orange2')
+abline(h=0)
+acf(st.y)
+
+
+ACF = 0
+ACF[1] = cor(st.y, st.y)
+for(i in 1:30){
+  lag = st.y[-c(1:i)]
+  clipped.y = st.y[1:length(lag)]
+  ACF[i + 1] = cor(clipped.y, lag)  
+}
+
+plot(ACF, ylim = c(-.3, 1), xlim = c(-.01,28),type="h", main = "ACF Manual calculation")
+abline(h = 0)
+
+
+#PACF:
+PACF = 0
+for(j in 2:25){
+  cols = j
+  rows = length(st.y) - j + 1
+  
+  lag = matrix(0, rows, j)
+  
+for(i in 1:cols){
+  lag[ ,i] = st.y[i : (i + rows - 1)]
+}
+  lag = as.data.frame(lag)
+  fit = lm(lag$V1 ~ . - 1, data = lag)
+  PACF[j] = coef(fit)[j - 1]
+}
+
+PACF
+head(pacf(st.y, plot = F))
+
+plot(PACF[-1], xlim = c(1,25), ylim = c(-.2,.35), type="h", main = "PACF Manual calculation")
+abline(h = 0)
+pacf(st.y)
